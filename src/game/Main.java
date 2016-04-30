@@ -1,11 +1,17 @@
 package game;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import game.Board;
 import game.Capture;
 import game.Move;
 import game.MoveGenerator;
 import game.Spot;
 import game.Tree;
+import game.model.Piece;
+import game.model.Player;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 
@@ -18,34 +24,48 @@ public class Main {
 
 	public static void startGame() throws IOException
 	{
+		Random ran = new Random();
+		Integer round = ran.nextInt(2); // chi inizia?
+		Player p1;
+		Player p2;
 		Board aBoard = new Board();
 		printBoard(aBoard.getBoard());
-		while(true)
-		{
-	//		aBoard.setBoard();
-			aBoard = playerMove(aBoard);
-			if(aBoard.getCapture()) 
-			{printBoard(aBoard.getBoard()); System.out.println("player win?"+aBoard.getCapture()); endGame("player");}
+		Boolean end = false;
+		do {
+			//		aBoard.setBoard();
+			if(round == 0){
+				//aBoard = playerMove(aBoard);
+				p1.move();
+				/*if(aBoard.getCapture())
+				{
+					printBoard(aBoard.getBoard());
+					System.out.println("player win?"+aBoard.getCapture());
+					endGame("player");
+				}*/
+				end = endGame(p2);
+			}
+			else{
+				// aBoard = computerMove(aBoard);
+				p2.move();
+				/*if(aBoard.getCapture())
+				{
+					printBoard(aBoard.getBoard());
+					System.out.println("computer win?"+aBoard.getCapture());
+					endGame("computer");
+				}*/
+				end = endGame(p1);
+			}  
 			printBoard(aBoard.getBoard());
-			aBoard = computerMove(aBoard);
-			if(aBoard.getCapture()) 
-			{printBoard(aBoard.getBoard());System.out.println("computer win?"+aBoard.getCapture()); ;endGame("computer");}
-			printBoard(aBoard.getBoard());
-		}
+		}while(!end);
 	}
 
-	public static void endGame(String winner)
+	public static Boolean endGame(Player loser)
 	{
-		if(winner.equals("player"))
+		if(loser.hasLost()==true)
 		{
-			System.out.println("You Win :D");
-			System.exit(0);
-		}
-		else
-		{
-			System.out.println("You Lose :(");
-			System.exit(0);
-		} 
+			return true;
+		} //else
+		return false;
 	}
 
 	private static Board computerMove(Board aBoard) {

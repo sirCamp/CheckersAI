@@ -19,7 +19,7 @@ public class Piece {
         this.value = value;
         this.colPosition = colPosition;
         this.rowPosition = rowPosition;
-    } 
+    }
 
     public Integer getColPosition() {
         return colPosition;
