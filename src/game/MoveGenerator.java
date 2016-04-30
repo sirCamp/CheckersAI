@@ -45,7 +45,7 @@ public class MoveGenerator {
 
 
                     if (board[row][column] != null) {
-                        occupier = board[row][column].getOccupier();
+                        occupier = board[row][column].getOccupier().getName();
 
                         if (Arrays.asList(pieces).contains(occupier)) {
 //		            	System.out.println("***** for Occupier "+occupier+"******");

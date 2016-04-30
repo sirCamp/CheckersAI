@@ -110,7 +110,7 @@ public class Move {
 		}
 
 		board[pieceRow + rowAlter][pieceCol + colAlter].setOccupier(board[pieceRow][pieceCol].getOccupier());
-		board[pieceRow][pieceCol].setOccupier("X");
+		board[pieceRow][pieceCol].setOccupier(null);
 		return board;
 	}
 
@@ -129,7 +129,7 @@ public class Move {
 		}
 
 		board[pieceRow + rowAlter][pieceCol + colAlter].setOccupier(board[pieceRow][pieceCol].getOccupier());
-		board[pieceRow][pieceCol].setOccupier("X");
+		board[pieceRow][pieceCol].setOccupier(null);
 		return board;
 
 	}
@@ -168,7 +168,7 @@ public class Move {
 		int rowAlter = getRowAlter(who, direction);        // to specify spot to be used.
 		int colAlter = getColAlter(who, direction);
 		board[pieceRow + rowAlter][pieceCol + colAlter].setOccupier(board[pieceRow][pieceCol].getOccupier());
-		board[pieceRow][pieceCol].setOccupier("X");
+		board[pieceRow][pieceCol].setOccupier(null);
 		return board;
 
 	}
@@ -207,14 +207,14 @@ public class Move {
 		int rowAlter = getRowAlter(who, direction);        // to specify spot to be used.
 		int colAlter = getColAlter(who, direction);
 		if (pieceCol == 0) {
-			if (isPlayer && !board[pieceRow][pieceCol].getOccupier().equals("X"))
+			if (isPlayer && !(board[pieceRow][pieceCol].getOccupier() == null))
 				System.out.println("there are no Left spots for " + board[pieceRow][pieceCol].getOccupier() + ", you are at edge");
 			can = false;
 		} else {
 			if (Main.inBounds((pieceRow + rowAlter), (pieceCol + colAlter)) && board[pieceRow + rowAlter][pieceCol + colAlter] != null && board[pieceRow + rowAlter][pieceCol + colAlter].getOccupier().equals("X")) {
 				can = true;
 			} else {
-				if (isPlayer && !board[pieceRow][pieceCol].getOccupier().equals("X"))
+				if (isPlayer && !(board[pieceRow][pieceCol].getOccupier() == null))
 					System.out.println("the left spot of " + board[pieceRow][pieceCol].getOccupier() + "  is occupied");
 				can = false;
 			}

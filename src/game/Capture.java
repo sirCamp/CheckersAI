@@ -160,10 +160,10 @@ public class Capture {
         }
 
         // kill victim
-        board[pieceRow + rowAlter][pieceCol + colAlter].setOccupier("X");
+        board[pieceRow + rowAlter][pieceCol + colAlter].setOccupier(null);
         // change killer position
         board[pieceRow + (2 * rowAlter)][pieceCol + (colAlter * 2)].setOccupier(board[pieceRow][pieceCol].getOccupier());
-        board[pieceRow][pieceCol].setOccupier("X");
+        board[pieceRow][pieceCol].setOccupier(null);
         return board;
     }
 
@@ -181,10 +181,10 @@ public class Capture {
         }
 
         // kill victim
-        board[pieceRow + rowAlter][pieceCol + colAlter].setOccupier("X");
+        board[pieceRow + rowAlter][pieceCol + colAlter].setOccupier(null);
         // change killer position
         board[pieceRow + (2 * rowAlter)][pieceCol + (colAlter * 2)].setOccupier(board[pieceRow][pieceCol].getOccupier());
-        board[pieceRow][pieceCol].setOccupier("X");
+        board[pieceRow][pieceCol].setOccupier(null);
         return board;
     }
 

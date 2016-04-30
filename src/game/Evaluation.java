@@ -17,7 +17,7 @@ public class Evaluation {
         if (command.equals("move")) {
             for (int row = 0; row <= 5; row++) {
                 for (int column = 0; column <= 5; column++) {
-                    occupier = (board[row][column] != null) ? board[row][column].getOccupier() : "";
+                    occupier = (board[row][column] != null) ? board[row][column].getOccupier().getName() : "";
                     if (board[row][column] != null && !occupier.equals("X")) {
                         if (Arrays.asList(whitePieces).contains(occupier)) {
 
