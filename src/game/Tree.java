@@ -1,6 +1,6 @@
 package game;
 
-import game.Spot;
+import game.model.Spot;
 import java.lang.Math;
 import java.util.Iterator;
 import java.util.LinkedList;

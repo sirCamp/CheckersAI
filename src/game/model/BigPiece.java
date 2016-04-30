@@ -1,7 +1,5 @@
 package game.model;
 
-import game.Spot;
-
 /**
  * Created by stefano on 30/04/16.
  */

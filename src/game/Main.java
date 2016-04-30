@@ -1,6 +1,8 @@
 package game;
 
+import game.model.Board;
 import game.model.Player;
+import game.model.Spot;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -159,6 +161,7 @@ public class Main {
 	            {
 
 					if(board[row][column].getOccupier()!= null) {
+
 						System.out.print("[" + board[row][column].getOccupier().getName() + "]");
 					}
 					else{

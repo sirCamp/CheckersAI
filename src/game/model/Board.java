@@ -1,7 +1,4 @@
-package game;
-import game.Spot;
-import game.model.Piece;
-import game.model.Player;
+package game.model;
 
 public class Board {
 
@@ -20,6 +17,9 @@ public class Board {
         this.p1 = p1;
         this.p2 = p2;
 
+        int bCount = 0; // id per pedine nere
+        int wCount = 0; // id per pedine bianche
+
 		for(int i=0; i<8; i++){
 
             for(int j=0; j<8; j++){
@@ -31,13 +31,12 @@ public class Board {
                 else{
 
                     k++;
-                    int bCount = 0; // id per pedine nere
-                    int wCount = 0; // id per pedine bianche
+
                     Piece pedina = null; //casella vuota
                     if(i<3){
 
 
-                        //pedina = "b"+Integer.toString(bCount); //per inserire pedine nere
+
                         pedina = p1.getPiece().get(bCount);
                         bCount++;
                     }
@@ -45,6 +44,7 @@ public class Board {
 
                         if (i > 4) {
                             pedina = p2.getPiece().get(wCount);
+                            System.out.println(pedina.getName());
                             wCount++;
                         }
                     }

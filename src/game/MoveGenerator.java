@@ -1,6 +1,6 @@
 package game;
 
-import game.*;
+import game.model.Spot;
 
 import java.util.Arrays;
 import java.util.Iterator;

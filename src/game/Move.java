@@ -1,6 +1,5 @@
 package game;
-import game.Main;
-import game.Spot;
+import game.model.Spot;
 public class Move {
 
 

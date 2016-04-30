@@ -1,8 +1,6 @@
 package game;
 
-import game.Main;
-import game.Move;
-import game.Spot;
+import game.model.Spot;
 
 import java.util.Arrays;
 

@@ -1,6 +1,6 @@
 package game;
 
-import game.Spot;
+import game.model.Spot;
 
 import java.util.Arrays;
 
