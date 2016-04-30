@@ -12,6 +12,14 @@ public class Piece {
     Integer colPosition;
     Integer rowPosition;
 
+    public Piece(String name, Boolean eaten, Integer value, Integer colPosition, Integer rowPosition) {
+        this.name = name;
+        this.eaten = eaten;
+        this.value = value;
+        this.colPosition = colPosition;
+        this.rowPosition = rowPosition;
+    } 
+
     public Integer getColPosition() {
         return colPosition;
     }
