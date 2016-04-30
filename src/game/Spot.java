@@ -1,13 +1,15 @@
 package game;
 
+import game.model.Piece;
+
 public class Spot {
 	
 	private int value;
-	private String occupier;
+	private Piece occupier;
 	private String name;
 	
 	
-	public Spot(String name,int value, String occupier)
+	public Spot(String name,int value, Piece occupier)
 	{
 		this.value = value;
 		this.occupier = occupier;
@@ -15,25 +17,27 @@ public class Spot {
 		
 	}
 
-	
-	public int getValue()
-	{
+	public int getValue() {
 		return value;
 	}
-	
-	public String getOccupier()
-	{
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public Piece getOccupier() {
 		return occupier;
 	}
-	
-	public void setOccupier(String newOccupier)
-	{
-		 occupier= newOccupier;
+
+	public void setOccupier(Piece occupier) {
+		this.occupier = occupier;
 	}
-	
-	public String getName()
-	{
+
+	public String getName() {
 		return name;
 	}
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

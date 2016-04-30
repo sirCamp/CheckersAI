@@ -5,6 +5,7 @@ import game.Spot;
 /**
  * Created by stefano on 30/04/16.
  */
+
 public class BigPiece extends Piece{
 
     public BigPiece(String name, Boolean eaten, Integer value, Integer colPosition, Integer rowPosition){

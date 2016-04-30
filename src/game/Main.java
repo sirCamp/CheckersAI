@@ -28,25 +28,25 @@ public class Main {
 		Integer round = ran.nextInt(2); // chi inizia?
 		Player p1 = new Player("b");
 		Player p2 = new Player("w");
-		Board aBoard = new Board();
+		Board aBoard = new Board(p1,p2);
 		printBoard(aBoard.getBoard());
 		Boolean end = false;
 		do {
 			//		aBoard.setBoard();
 			if(round == 0){
 				//aBoard = playerMove(aBoard);
-				p1.move();
+				//p1.move();
 				/*if(aBoard.getCapture())
 				{
 					printBoard(aBoard.getBoard());
 					System.out.println("player win?"+aBoard.getCapture());
 					endGame("player");
 				}*/
-				end = endGame(p2);
+				//end = endGame(p2);
 			}
-			else{
+			else {
 				// aBoard = computerMove(aBoard);
-				p2.move();
+				//p2.move();
 				/*if(aBoard.getCapture())
 				{
 					printBoard(aBoard.getBoard());
@@ -55,6 +55,7 @@ public class Main {
 				}*/
 				end = endGame(p1);
 			}
+
 			printBoard(aBoard.getBoard());
 		}while(!end);
 	}
@@ -162,7 +163,15 @@ public class Main {
 	         {
 	            if(board!= null && board[row][column]!= null)
 	            {
-	            	System.out.print("["+board[row][column].getOccupier()+"]");
+
+					if(board[row][column].getOccupier()!= null) {
+						System.out.print("[" + board[row][column].getOccupier().getName() + "]");
+					}
+					else{
+						System.out.print("[__]");
+					}
+
+
 	            } 
 	            else
 	            {
@@ -170,6 +179,7 @@ public class Main {
 	            }
 	         }
 	      }
+
 		 System.out.println("\n___________________________________________");
 	}
 	static boolean inBounds(int row, int col)

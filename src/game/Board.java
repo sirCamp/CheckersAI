@@ -1,14 +1,24 @@
 package game;
 import game.Spot;
+import game.model.Piece;
+import game.model.Player;
 
 public class Board {
-	private Spot[][] board = new Spot[8][8]; // 8x8 board
+
+    private Spot[][] board = new Spot[8][8]; // 8x8 board
 	
 	private boolean capture= false;
 
-	public Board()
+    private Player p1;
+
+    private Player p2;
+
+	public Board(Player p1, Player p2)
 	{
         int k=0; // serve per costruire l'id della poszione
+
+        this.p1 = p1;
+        this.p2 = p2;
 
 		for(int i=0; i<8; i++){
 
@@ -23,16 +33,19 @@ public class Board {
                     k++;
                     int bCount = 0; // id per pedine nere
                     int wCount = 0; // id per pedine bianche
-                    String pedina ="__";
+                    Piece pedina = null;
                     if(i<3){
+
+
+                        //pedina = "b"+Integer.toString(bCount); //per inserire pedine nere
+                        pedina = p1.getPiece().get(bCount);
                         bCount++;
-                        pedina = "b"+Integer.toString(bCount); //per inserire pedine nere
                     }
                     else {
 
                         if (i > 4) {
+                            pedina = p2.getPiece().get(wCount);
                             wCount++;
-                            pedina = "w" + Integer.toString(wCount); //per inserire pedine bianche
                         }
                     }
                     String position = "S"+Integer.toString(k);
