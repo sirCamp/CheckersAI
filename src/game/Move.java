@@ -1,6 +1,6 @@
-package Game;
-import Game.Main;
-import Game.Spot;
+package game;
+import game.Main;
+import game.Spot;
 public class Move {
 
 
@@ -17,11 +17,11 @@ public class Move {
 	}
 
 
-	public static boolean canMoveRight(String Who, Spot[][] board, int pieceRow, int pieceCol, boolean isPlayer) {
+	public static boolean canMoveRight(String who, Spot[][] board, int pieceRow, int pieceCol, boolean isPlayer) {
 		boolean can;
 		int rowAlter;        // Alter  row to determine desired position
 		int colAlter;        // Alter column to determine desired position
-		if (Who.equals("player")) {
+		if (who.equals("player")) {
 			rowAlter = -1;
 			colAlter = 1;
 		} else {
@@ -47,11 +47,11 @@ public class Move {
 	}
 
 
-	public static boolean canMoveLeft(String Who, Spot[][] board, int pieceRow, int pieceCol, boolean isPlayer) {
+	public static boolean canMoveLeft(String who, Spot[][] board, int pieceRow, int pieceCol, boolean isPlayer) {
 		boolean can;
 		int rowAlter;        // Alter  row to determine desired position
 		int colAlter;        // Alter column to determine desired position
-		if (Who.equals("player")) {
+		if (who.equals("player")) {
 			rowAlter = -1;
 			colAlter = -1;
 		} else {
@@ -78,15 +78,15 @@ public class Move {
 	}
 
 
-	public static Spot[][] move(String path, String Who, Spot[][] board, int pieceRow, int pieceCol) {
+	public static Spot[][] move(String path, String who, Spot[][] board, int pieceRow, int pieceCol) {
 		if (path.equals("moveLeft")) {
 			System.out.println("Move Left!");
-			return moveLeft(Who, board, pieceRow, pieceCol);
+			return moveLeft(who, board, pieceRow, pieceCol);
 
 		} else //if(path.equals("moveRight"))
 		{
 			System.out.println("Move Right!");
-			return moveRight(Who, board, pieceRow, pieceCol);
+			return moveRight(who, board, pieceRow, pieceCol);
 
 		}
 /*	else
@@ -97,11 +97,11 @@ public class Move {
 	}
 
 
-	public static Spot[][] moveLeft(String Who, Spot[][] board, int pieceRow, int pieceCol) {
+	public static Spot[][] moveLeft(String who, Spot[][] board, int pieceRow, int pieceCol) {
 		int rowAlter;        // to specify spot to be used.
 		int colAlter;
 
-		if (Who.equals("player")) {
+		if (who.equals("player")) {
 			rowAlter = -1;
 			colAlter = -1;
 		} else {
@@ -115,12 +115,12 @@ public class Move {
 	}
 
 
-	public static Spot[][] moveRight(String Who, Spot[][] board, int pieceRow, int pieceCol) {
+	public static Spot[][] moveRight(String who, Spot[][] board, int pieceRow, int pieceCol) {
 
 		int rowAlter;        // to specify spot to be used.
 		int colAlter;
 
-		if (Who.equals("player")) {
+		if (who.equals("player")) {
 			rowAlter = -1;
 			colAlter = 1;
 		} else {
@@ -137,22 +137,23 @@ public class Move {
 	/////////////// MIE AGGIUNTE ///////////////
 
 
-	public static Spot[][] move(String path, String Who, Spot[][] board, int pieceRow, int pieceCol) {
+	public static Spot[][] moveNew(String path, String who, Spot[][] board, int pieceRow, int pieceCol) {
 		if (path.equals("moveLeft")) {
 			System.out.println("Move Left!");
-			return doMove(Who, board, pieceRow, pieceCol, "left");
+			return doMove(who, board, pieceRow, pieceCol, "left");
 		} else if (path.equals("moveRight")) {
 			System.out.println("Move Right!");
-			return doMove(Who, board, pieceRow, pieceCol, "right");
+			return doMove(who, board, pieceRow, pieceCol, "right");
 		} else if (true) { //damona	 TODO
 			if (path.equals("moveRightBack")) {
 				System.out.println("Move right back!");
-				return doMove(Who, board, pieceRow, pieceCol, "rightB");
+				return doMove(who, board, pieceRow, pieceCol, "rightB");
 			} else { //if(path.equals("moveLeftBack")) {
 				System.out.println("Move left back!");
-				return doMove(Who, board, pieceRow, pieceCol, "leftB");
+				return doMove(who, board, pieceRow, pieceCol, "leftB");
 			}
 		}
+        return null;
 /*	else
 	{
 		System.out.println("This should never be reached");
@@ -160,46 +161,49 @@ public class Move {
 	}*/
 	}
 
-	public static Spot[][] doMove(String Who, Spot[][] board, int pieceRow, int pieceCol, String direction) {
+	public static Spot[][] doMove(String who, Spot[][] board, int pieceRow, int pieceCol, String direction) {
 
-		int rowAlter getRowAlter(Who, direction);        // to specify spot to be used.
-		int colAlter getColAlter(Who, direction);
+		int rowAlter = getRowAlter(who, direction);        // to specify spot to be used.
+		int colAlter = getColAlter(who, direction);
 		board[pieceRow + rowAlter][pieceCol + colAlter].setOccupier(board[pieceRow][pieceCol].getOccupier());
 		board[pieceRow][pieceCol].setOccupier("X");
 		return board;
 
 	}
 
-	int getRowAlter() {
+	public static int getRowAlter(String who, String direction) {
 		/*
 		if(player)
 			case direction
 		/*
-		if (Who.equals("player")) {
+		if (who.equals("player")) {
 			rowAlter = -1;
 			colAlter = 1;
 		} else {
 			rowAlter = 1;
 			colAlter = 1;
-		}*/
+		}
 		if(pc)
 			case direction
 		 */
+        return 0;
 	}
 
-	int getColAlter() {
+    public static int getColAlter(String who, String direction) {
 		/*
 		if(player)
 			case direction
 		if(pc)
 			case direction
 		 */
+
+        return 0;
 	}
 
-	public static boolean canMove(String Who, Spot[][] board, int pieceRow, int pieceCol, boolean isPlayer, direction) {
+	public static boolean canMove(String who, Spot[][] board, int pieceRow, int pieceCol, boolean isPlayer, String direction) {
 		boolean can;
-		int rowAlter getRowAlter(Who, direction);        // to specify spot to be used.
-		int colAlter getColAlter(Who, direction);
+		int rowAlter = getRowAlter(who, direction);        // to specify spot to be used.
+		int colAlter = getColAlter(who, direction);
 		if (pieceCol == 0) {
 			if (isPlayer && !board[pieceRow][pieceCol].getOccupier().equals("X"))
 				System.out.println("there are no Left spots for " + board[pieceRow][pieceCol].getOccupier() + ", you are at edge");

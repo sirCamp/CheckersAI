@@ -1,10 +1,10 @@
-package Game;
-import Game.Board;
-import Game.Capture;
-import Game.Move;
-import Game.MoveGenerator;
-import Game.Spot;
-import Game.Tree;
+package game;
+import game.Board;
+import game.Capture;
+import game.Move;
+import game.MoveGenerator;
+import game.Spot;
+import game.Tree;
 import java.io.*;
 import java.util.StringTokenizer;
 
@@ -135,10 +135,10 @@ public class Main {
 
 	static void printBoard(Spot[][] board) 
 	{
-		 for (int row =0; row <= 5; row++)
+		 for (int row =0; row <8 ; row++)
 	      {
 			 System.out.println();
-	         for (int column =0; column <= 5; column++)
+	         for (int column =0; column < 8; column++)
 	         {
 	            if(board!= null && board[row][column]!= null)
 	            {
@@ -154,6 +154,6 @@ public class Main {
 	}
 	static boolean inBounds(int row, int col)
 	{
-		return row<=5  && col <=5 && row>=0 && col>=0;
+		return row<8  && col <8 && row>=0 && col>=0;
 	}
 }
