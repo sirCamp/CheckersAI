@@ -10,10 +10,10 @@ public class Piece {
     String name;
     Boolean eaten = false;
     Integer value = 0;
-    Integer colPosition;
     Integer rowPosition;
+    Integer colPosition;
 
-    public Piece(String name, Boolean eaten, Integer value, Integer colPosition, Integer rowPosition) {
+    public Piece(String name, Boolean eaten, Integer value, Integer rowPosition, Integer colPosition) {
         this.name = name;
         this.eaten = eaten;
         this.value = value;

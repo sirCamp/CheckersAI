@@ -26,8 +26,8 @@ public class Main {
 	{
 		Random ran = new Random();
 		Integer round = ran.nextInt(2); // chi inizia?
-		Player p1;
-		Player p2;
+		Player p1 = new Player("b");
+		Player p2 = new Player("w");
 		Board aBoard = new Board();
 		printBoard(aBoard.getBoard());
 		Boolean end = false;
@@ -54,7 +54,7 @@ public class Main {
 					endGame("computer");
 				}*/
 				end = endGame(p1);
-			}  
+			}
 			printBoard(aBoard.getBoard());
 		}while(!end);
 	}
