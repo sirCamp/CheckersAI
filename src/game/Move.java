@@ -138,6 +138,8 @@ public class Move {
 
 
 	public static Spot[][] moveNew(String path, String who, Spot[][] board, int pieceRow, int pieceCol) {
+
+
 		if (path.equals("moveLeft")) {
 			System.out.println("Move Left!");
 			return doMove(who, board, pieceRow, pieceCol, "left");

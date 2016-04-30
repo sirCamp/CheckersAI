@@ -23,7 +23,7 @@ public class Board {
                     k++;
                     int bCount = 0; // id per pedine nere
                     int wCount = 0; // id per pedine bianche
-                    String pedina ="X";
+                    String pedina ="__";
                     if(i<3){
                         bCount++;
                         pedina = "b"+Integer.toString(bCount); //per inserire pedine nere

@@ -6,6 +6,7 @@ import game.Spot;
  * Created by enry8 on 30/04/16.
  */
 public class Piece {
+
     String name;
     Boolean eaten = false;
     Integer value = 0;
