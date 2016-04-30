@@ -26,14 +26,14 @@ public class Board {
 
                 if((i+j)%2 == 0){
 
-                    board[i][j] = null; //casella vuota
+                    board[i][j] = null; //casella non utilizzabile
                 }
                 else{
 
                     k++;
                     int bCount = 0; // id per pedine nere
                     int wCount = 0; // id per pedine bianche
-                    Piece pedina = null;
+                    Piece pedina = null; //casella vuota
                     if(i<3){
 
 

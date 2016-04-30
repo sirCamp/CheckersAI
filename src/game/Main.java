@@ -1,16 +1,10 @@
 package game;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import game.Board;
-import game.Capture;
-import game.Move;
-import game.MoveGenerator;
-import game.Spot;
-import game.Tree;
-import game.model.Piece;
+
 import game.model.Player;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -26,8 +20,8 @@ public class Main {
 	{
 		Random ran = new Random();
 		Integer round = ran.nextInt(2); // chi inizia?
-		Player p1 = new Player("b");
-		Player p2 = new Player("w");
+		Player p1 = new Player("default", "p1", "b");
+		Player p2 = new Player("default", "p2", "w");
 		Board aBoard = new Board(p1,p2);
 		printBoard(aBoard.getBoard());
 		Boolean end = false;
