@@ -1,4 +1,5 @@
 package game;
+import game.model.Board;
 import game.model.Spot;
 public class Move {
 
@@ -32,7 +33,7 @@ public class Move {
 				System.out.println("there are no right spots for" + board[pieceRow][pieceCol].getOccupier() + ", you are at edge");
 			can = false;
 		} else {
-			if (Main.inBounds((pieceRow + rowAlter), (pieceCol + colAlter)) && board[pieceRow + rowAlter][pieceCol + colAlter] != null && board[pieceRow + rowAlter][pieceCol + colAlter].getOccupier().equals("X")) {
+			if (Board.inBounds((pieceRow + rowAlter), (pieceCol + colAlter)) && board[pieceRow + rowAlter][pieceCol + colAlter] != null && board[pieceRow + rowAlter][pieceCol + colAlter].getOccupier().equals("X")) {
 				can = true;
 			} else {
 				if (isPlayer && !board[pieceRow][pieceCol].getOccupier().equals("X"))
@@ -63,7 +64,7 @@ public class Move {
 			can = false;
 		} else {
 
-			if (Main.inBounds((pieceRow + rowAlter), (pieceCol + colAlter)) && board[pieceRow + rowAlter][pieceCol + colAlter] != null && board[pieceRow + rowAlter][pieceCol + colAlter].getOccupier().equals("X")) {
+			if (Board.inBounds((pieceRow + rowAlter), (pieceCol + colAlter)) && board[pieceRow + rowAlter][pieceCol + colAlter] != null && board[pieceRow + rowAlter][pieceCol + colAlter].getOccupier().equals("X")) {
 				can = true;
 			} else {
 				if (isPlayer && !board[pieceRow][pieceCol].getOccupier().equals("X"))
@@ -210,7 +211,7 @@ public class Move {
 				System.out.println("there are no Left spots for " + board[pieceRow][pieceCol].getOccupier() + ", you are at edge");
 			can = false;
 		} else {
-			if (Main.inBounds((pieceRow + rowAlter), (pieceCol + colAlter)) && board[pieceRow + rowAlter][pieceCol + colAlter] != null && board[pieceRow + rowAlter][pieceCol + colAlter].getOccupier().equals("X")) {
+			if (Board.inBounds((pieceRow + rowAlter), (pieceCol + colAlter)) && board[pieceRow + rowAlter][pieceCol + colAlter] != null && board[pieceRow + rowAlter][pieceCol + colAlter].getOccupier().equals("X")) {
 				can = true;
 			} else {
 				if (isPlayer && !(board[pieceRow][pieceCol].getOccupier() == null))

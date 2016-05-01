@@ -12,23 +12,23 @@ public class BigPiece extends Piece{
     }
 
     @Override
-    public Boolean canMove(Spot[][] board, String direction) {
-        return super.canMove(board, direction);
+    public Boolean canMove(Spot[][] board, String direction, String colour, Integer rowAlt, Integer colAlt) {
+        return super.canMove(board, direction, colour, rowAlt, colAlt);
     }
 
     @Override
-    public Spot[][] move(String direction, Spot[][] board) {
-        return super.move(direction, board);
+    public Spot[][] move(Spot[][] board, String direction, String colour) {
+        return super.move(board, direction, colour);
     }
 
     @Override
-    public String colAlter(String direction) {
-        return super.colAlter(direction);
+    public Integer colAlter(String colour, String direction) {
+        return super.colAlter(colour, direction);
     }
 
     @Override
-    public String rowAlter(String direction) {
-        return super.rowAlter(direction);
+    public Integer rowAlter(String colour, String direction) {
+        return super.rowAlter(colour, direction);
     }
 
 }

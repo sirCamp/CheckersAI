@@ -1,5 +1,6 @@
 package game;
 
+import game.model.Board;
 import game.model.Spot;
 
 import java.util.Arrays;
@@ -35,14 +36,14 @@ public class Capture {
             colAlter = -1;
         }
 
-        if (Main.inBounds(row + rowAlter, column + colAlter) && board[row + rowAlter][column + colAlter] != null
+        if (Board.inBounds(row + rowAlter, column + colAlter) && board[row + rowAlter][column + colAlter] != null
                 ) {
 
         }
 
 
         boolean victimExists = false;
-        if (Main.inBounds(row + rowAlter, column + colAlter) && board[row + rowAlter][column + colAlter] != null
+        if (Board.inBounds(row + rowAlter, column + colAlter) && board[row + rowAlter][column + colAlter] != null
                 && !board[row + rowAlter][column + colAlter].getOccupier().equals("X")
                 && !Move.canMoveLeft(who, board, row, column, isPlayer)) {
             victimExists = true;
@@ -51,7 +52,7 @@ public class Capture {
 
         //*******************
 
-        boolean safeLand = Main.inBounds(row + rowAlter, column + colAlter) && Move.canMoveLeft(who, board, row + rowAlter, column + colAlter, isPlayer);
+        boolean safeLand = Board.inBounds(row + rowAlter, column + colAlter) && Move.canMoveLeft(who, board, row + rowAlter, column + colAlter, isPlayer);
 
         if (who == "player")    // if player, check if victim is actually a black piece
         {
@@ -92,14 +93,14 @@ public class Capture {
         }
 
         boolean victimExists = false;
-        if (Main.inBounds(row + rowAlter, column + colAlter) &&
+        if (Board.inBounds(row + rowAlter, column + colAlter) &&
                 board[row + rowAlter][column + colAlter] != null
                 && !board[row + rowAlter][column + colAlter].getOccupier().equals("X")
                 && !Move.canMoveLeft(who, board, row, column, isPlayer)) {
             victimExists = true;
         }
 
-        boolean safeLand = Main.inBounds(row + rowAlter, column + colAlter) && Move.canMoveRight(who, board, row + rowAlter, column + colAlter, isPlayer);
+        boolean safeLand = Board.inBounds(row + rowAlter, column + colAlter) && Move.canMoveRight(who, board, row + rowAlter, column + colAlter, isPlayer);
 
         if (who == "player")    // if player, check if victim is actually a black piece
         {

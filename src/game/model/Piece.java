@@ -80,20 +80,75 @@ public class Piece {
         this.eaten = eaten;
     }
 
-    public Boolean canMove(Spot[][] board, String direction){
-        return false;
+    public Boolean canMove(Spot[][] board, String direction, String colour, Integer rowAlt, Integer colAlt){
+        Boolean can = false;
+        if(direction.equals("moveLeft")){
+            if((colour.equals("b") && this.colPosition == 7) ||
+                (colour.equals("w") && this.colPosition == 0)){ // bordo sx
+                can = false;
+            }
+            else {
+                if (Board.inBounds((this.rowPosition + rowAlt), (this.colPosition + colAlt)) &&
+                        board[this.rowPosition + rowAlt][this.colPosition + colAlt] != null &&
+                        board[this.rowPosition + rowAlt][this.colPosition + colAlt].getOccupier().equals(null)) {
+                    can = true;
+                }
+            }
+        } else if(direction.equals("moveRight")) {
+            if ((colour.equals("w") && this.colPosition == 7) ||
+                    (colour.equals("b") && this.colPosition == 0)) { // bordo sx
+                can = false;
+            } else {
+                if (Board.inBounds((this.rowPosition + rowAlt), (this.colPosition + colAlt)) &&
+                        board[this.rowPosition + rowAlt][this.colPosition + colAlt] != null &&
+                        board[this.rowPosition + rowAlt][this.colPosition + colAlt].getOccupier().equals(null)) {
+                    can = true;
+                }
+            }
+        }
+        return can;
     }
 
-    public Spot[][] move(String direction, Spot[][] board){
-        return null;
+    public Spot[][] move(Spot[][] board, String direction, String colour){
+        Integer rowAlt = this.rowAlter(colour, direction); //spostamento x
+        Integer colAlt = this.colAlter(colour, direction); //spostamento y
+        if(this.canMove(board, direction, colour, rowAlt, colAlt)){
+            Integer newRow = this.rowPosition + rowAlt;
+            Integer newCol = this.colPosition + colAlt;
+            board[newRow][newCol].setOccupier(board[this.rowPosition][this.colPosition].getOccupier());
+            board[this.rowPosition][this.colPosition].setOccupier(null);
+            this.rowPosition = newRow;
+            this.colPosition = newCol;
+        }
+        return board;
     }
 
-    public String colAlter(String direction){
-        return null;
+    public Integer colAlter(String colour, String direction){
+        Integer alter = 0;
+        if(colour.equals("b")){
+            alter = 1;
+        }else{
+            alter = -1;
+        }
+        return alter;
     }
 
-    public String rowAlter(String direction){
-        return null;
+    public Integer rowAlter(String colour, String direction){
+        Integer alter = 0;
+        if(colour.equals("b")){
+            if(direction.equals("moveLeft")){
+                alter = 1;
+            } else if(direction.equals("moveRight")){
+                alter = -1;
+            }
+        } else if(colour.equals("w")) {
+            if(direction.equals("moveLeft")){
+                alter = -1;
+            } else if(direction.equals("moveRight")){
+                alter = 1;
+            }
+        }
+        return alter;
     }
 
 }

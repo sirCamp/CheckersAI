@@ -73,9 +73,14 @@ public class Board {
 	
 	public boolean getCapture()
 	{
-		return capture;
+
+        return capture;
 	}
-	                                                                                                                            
+
+    public static Boolean inBounds(Integer row, Integer col)
+    {
+        return (row<8  && col <8 && row>=0 && col>=0);
+    }
 	                                                                                                                            
 }                                                                                                                               
                                                                                                                                 
