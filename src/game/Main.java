@@ -21,7 +21,7 @@ public class Main {
 	public static void startGame() throws IOException
 	{
 		Random ran = new Random();
-		Integer round = ran.nextInt(2); // chi inizia?
+		Integer round = ran.nextInt(2); // who starts?
 		Player p1 = new Player("default", "p1", "b");
 		Player p2 = new Player("default", "p2", "w");
 		Board aBoard = new Board(p1,p2);

@@ -44,7 +44,7 @@ public class Capture {
 
         boolean victimExists = false;
         if (Board.inBounds(row + rowAlter, column + colAlter) && board[row + rowAlter][column + colAlter] != null
-                && !board[row + rowAlter][column + colAlter].getOccupier().equals("X")
+                && !board[row + rowAlter][column + colAlter].getOccupier().equals("__")
                 && !Move.canMoveLeft(who, board, row, column, isPlayer)) {
             victimExists = true;
         }
@@ -95,7 +95,7 @@ public class Capture {
         boolean victimExists = false;
         if (Board.inBounds(row + rowAlter, column + colAlter) &&
                 board[row + rowAlter][column + colAlter] != null
-                && !board[row + rowAlter][column + colAlter].getOccupier().equals("X")
+                && !board[row + rowAlter][column + colAlter].getOccupier().equals("__")
                 && !Move.canMoveLeft(who, board, row, column, isPlayer)) {
             victimExists = true;
         }

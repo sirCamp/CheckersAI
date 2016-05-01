@@ -6,29 +6,38 @@ package game.model;
 
 public class BigPiece extends Piece{
 
-    public BigPiece(String name, Boolean eaten, Integer value, Integer colPosition, Integer rowPosition){
+    public BigPiece(String name, String colour, Boolean eaten, Integer value, Integer colPosition, Integer rowPosition){
 
-        super(name, eaten, value, colPosition, rowPosition);
+        super(name, colour, eaten, value, colPosition, rowPosition);
     }
 
     @Override
-    public Boolean canMove(Spot[][] board, String direction, String colour, Integer rowAlt, Integer colAlt) {
-        return super.canMove(board, direction, colour, rowAlt, colAlt);
+    public Boolean canMove(Spot[][] board, String direction, Integer rowAlt, Integer colAlt) {
+        return super.canMove(board, direction, rowAlt, colAlt);
     }
 
     @Override
-    public Spot[][] move(Spot[][] board, String direction, String colour) {
-        return super.move(board, direction, colour);
+    public Spot[][] move(Spot[][] board, String direction) {
+        return super.move(board, direction);
     }
 
     @Override
-    public Integer colAlter(String colour, String direction) {
-        return super.colAlter(colour, direction);
+    public Integer colAlter(String direction) {
+        return super.colAlter(direction);
     }
 
     @Override
-    public Integer rowAlter(String colour, String direction) {
-        return super.rowAlter(colour, direction);
+    public Integer rowAlter(String direction) {
+        return super.rowAlter(direction);
     }
 
+    @Override
+    public Boolean canCapture(String direction, Spot[][] board, Boolean isPlayer) {
+        return super.canCapture(direction, board, isPlayer);
+    }
+
+    @Override
+    public Spot[][] capture(String direction, Spot[][] board, boolean isPlayer) {
+        return super.capture(direction, board, isPlayer);
+    }
 }

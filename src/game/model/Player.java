@@ -37,7 +37,7 @@ public class Player {
                     j=0;
                 }
             }
-            piece.add(new Piece(colour+Integer.toString(i), false, 1, k, j));
+            piece.add(new Piece(colour+Integer.toString(i), colour, false, 1, k, j));
             //= colour+Integer.toString(bCount);
             j+=2;
             if(j>=8){
