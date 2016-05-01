@@ -77,9 +77,28 @@ public class Board {
         return capture;
 	}
 
-    public static Boolean inBounds(Integer row, Integer col)
-    {
+    public static Boolean inBounds(Integer row, Integer col) {
         return (row<8  && col <8 && row>=0 && col>=0);
+    }
+
+    public void printBoard(){
+        for (int row =0; row <8 ; row++){
+            System.out.println();
+            for (int column =0; column < 8; column++){
+                if(board!= null && board[row][column]!= null){
+                    if(board[row][column].getOccupier()!= null){
+                        System.out.print("[" + board[row][column].getOccupier().getName() + "]");
+                    }
+                    else{
+                        System.out.print("[__]");
+                    }
+                }
+                else{
+                    System.out.print(" * ");
+                }
+            }
+        }
+        System.out.println("\n___________________________________________");
     }
 	                                                                                                                            
 }                                                                                                                               

@@ -25,7 +25,8 @@ public class Main {
 		Player p1 = new Player("default", "p1", "b");
 		Player p2 = new Player("default", "p2", "w");
 		Board aBoard = new Board(p1,p2);
-		printBoard(aBoard.getBoard());
+		aBoard.printBoard();
+		//printBoard(aBoard.getBoard());
 		Boolean end = false;
 		do {
 			//		aBoard.setBoard();
@@ -51,8 +52,7 @@ public class Main {
 				}*/
 				end = endGame(p1);
 			}
-
-			printBoard(aBoard.getBoard());
+			aBoard.printBoard();
 		}while(!end);
 	}
 
@@ -150,34 +150,5 @@ public class Main {
 	return board;	
 	}
 
-	static void printBoard(Spot[][] board) 
-	{
-		 for (int row =0; row <8 ; row++)
-	      {
-			 System.out.println();
-	         for (int column =0; column < 8; column++)
-	         {
-	            if(board!= null && board[row][column]!= null)
-	            {
-
-					if(board[row][column].getOccupier()!= null) {
-
-						System.out.print("[" + board[row][column].getOccupier().getName() + "]");
-					}
-					else{
-						System.out.print("[__]");
-					}
-
-
-	            } 
-	            else
-	            {
-	            	System.out.print(" * ");
-	            }
-	         }
-	      }
-
-		 System.out.println("\n___________________________________________");
-	}
 
 }
