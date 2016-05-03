@@ -13,19 +13,17 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-	public static void main(String[]args) throws IOException
-	{
+	public static void main(String[]args) throws IOException, CloneNotSupportedException {
 		startGame();
 	}
 
-	public static void startGame() throws IOException
-	{
+	public static void startGame() throws IOException, CloneNotSupportedException {
 		Random ran = new Random();
 		Integer round = ran.nextInt(2); // who starts?
 		Player p1 = new Player("default", "p1", "b");
 		Player p2 = new Player("default", "p2", "w");
-		Board aBoard = new Board(p1,p2);
-		aBoard.printBoard();
+		Board board = new Board(p1,p2);
+		board.printBoard();
 		//printBoard(aBoard.getBoard());
 		Boolean end = false;
 		do {
@@ -42,6 +40,8 @@ public class Main {
 				//end = endGame(p2);
 			}
 			else {
+				p2.move(board);
+
 				// aBoard = computerMove(aBoard);
 				//p2.move();
 				/*if(aBoard.getCapture())
@@ -52,7 +52,7 @@ public class Main {
 				}*/
 				end = endGame(p1);
 			}
-			aBoard.printBoard();
+			board.printBoard();
 		}while(!end);
 	}
 

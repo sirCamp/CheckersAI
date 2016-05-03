@@ -29,6 +29,11 @@ public class Spot {
 		return occupier;
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+
 	public void setOccupier(Piece occupier) {
 		this.occupier = occupier;
 	}

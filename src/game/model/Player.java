@@ -1,6 +1,8 @@
 package game.model;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import game.Tree;
+import game.moveGenerator.MiniMaxTree;
 
 import java.util.ArrayList;
 
@@ -13,6 +15,7 @@ public class Player {
     private String name;
     private String colour;
     private Integer eatenPieces = 0;
+    private Integer defaultDepth = 3;
 
     public Player(String algorithm, String name, String colour) {
         this.piece = piece;
@@ -47,7 +50,7 @@ public class Player {
         }
     }
 
-    public ArrayList<Piece> getPiece() {
+    public ArrayList<Piece> getPieceList() {
         return piece;
     }
 
@@ -87,10 +90,43 @@ public class Player {
             return false;
     }
 
+    public Piece getSinglePiece(Integer index){
+        return piece.get(index);
+    }
+
+    public Piece getPieceByName(String name){
+        Integer i=0; Boolean found = false;
+        while(i<piece.size() && !found){
+            if(piece.get(i).getName().equals(name)){
+                found = true;
+            }else{
+                i++;
+            }
+        }
+        return piece.get(i);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public Boolean hasLost(){
         if(this.eatenPieces == 12){
             return true;
         } //else
         return false;
+    }
+
+    public void move(Board board) throws CloneNotSupportedException {
+        MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this);
+        String[] move = tree.decideMove().split(" ");
+        Piece singlePiece = getPieceByName(move[0]);
+        if(move[1].indexOf("move") > -1){ // more efficient than method String.contains
+            singlePiece.move(board.getBoard(), move[1]);
+        }
+        else if(move[1].indexOf("capture") > -1){
+            singlePiece.capture(move[1], board.getBoard(), false);
+        }
     }
 }

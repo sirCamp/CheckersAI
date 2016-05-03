@@ -47,6 +47,7 @@ public class Piece {
         this.rowPosition = rowPosition;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -163,7 +164,7 @@ public class Piece {
     }
 
 
-    public Boolean canCapture(String direction, Spot[][] board, Boolean isPlayer) {
+    public Boolean canCapture(Spot[][] board, String direction, Boolean isPlayer) {
         Boolean can = false;
         Integer newRow = this.rowPosition + this.rowAlter(direction );
         Integer newCol = this.colPosition + this.colAlter(direction);

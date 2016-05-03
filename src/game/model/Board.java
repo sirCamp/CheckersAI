@@ -37,13 +37,13 @@ public class Board {
 
 
 
-                        pedina = p1.getPiece().get(bCount);
+                        pedina = p1.getPieceList().get(bCount);
                         bCount++;
                     }
                     else {
 
                         if (i > 4) {
-                            pedina = p2.getPiece().get(wCount);
+                            pedina = p2.getPieceList().get(wCount);
                             System.out.println(pedina.getName());
                             wCount++;
                         }
@@ -76,6 +76,15 @@ public class Board {
 
         return capture;
 	}
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public Board copy() throws CloneNotSupportedException {
+        return (Board) this.clone();
+    }
 
     public static Boolean inBounds(Integer row, Integer col) {
         return (row<8  && col <8 && row>=0 && col>=0);
