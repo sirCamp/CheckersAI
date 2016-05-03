@@ -8,11 +8,11 @@ import java.util.ArrayList;
  * Created by enry8 on 30/04/16.
  */
 public class Player {
-    ArrayList<Piece> piece = new ArrayList<Piece>();
-    String algorithm = "default";
-    String name;
-    String colour;
-    Integer eatenPieces = 0;
+    private ArrayList<Piece> piece = new ArrayList<Piece>();
+    private String algorithm = "default";
+    private String name;
+    private String colour;
+    private Integer eatenPieces = 0;
 
     public Player(String algorithm, String name, String colour) {
         this.piece = piece;

@@ -7,12 +7,12 @@ import java.util.Arrays;
  */
 public class Piece {
 
-    String name;
-    Boolean eaten = false;
-    Integer value = 0;
-    Integer rowPosition;
-    Integer colPosition;
-    String colour;
+    private String name;
+    private Boolean eaten = false;
+    private Integer value = 0;
+    private Integer rowPosition;
+    private Integer colPosition;
+    private String colour;
 
     public Piece(String name, String colour, Boolean eaten, Integer value, Integer rowPosition, Integer colPosition) {
         this.name = name;
