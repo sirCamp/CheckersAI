@@ -7,7 +7,6 @@ package game.model;
 public class BigPiece extends Piece{
 
     public BigPiece(String name, String colour, Boolean eaten, Integer value, Integer colPosition, Integer rowPosition){
-
         super(name, colour, eaten, value, colPosition, rowPosition);
     }
 

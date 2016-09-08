@@ -66,14 +66,10 @@ public class Board {
 	}
 
 	public void setCapture(boolean capture) {
-		
 		this.capture = capture;
-		
 	}
 	
-	public boolean getCapture()
-	{
-
+	public boolean getCapture(){
         return capture;
 	}
 
