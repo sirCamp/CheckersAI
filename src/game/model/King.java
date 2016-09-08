@@ -4,9 +4,9 @@ package game.model;
  * Created by stefano on 30/04/16.
  */
 
-public class BigPiece extends Piece{
+public class King extends Piece{
 
-    public BigPiece(String name, String colour, Boolean eaten, Integer value, Integer colPosition, Integer rowPosition){
+    public King(String name, String colour, Boolean eaten, Integer value, Integer colPosition, Integer rowPosition){
         super(name, colour, eaten, value, colPosition, rowPosition);
     }
 
