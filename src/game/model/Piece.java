@@ -19,8 +19,8 @@ public class Piece {
         this.colour = colour;
         this.eaten = eaten;
         this.value = value;
-        this.colPosition = colPosition;
         this.rowPosition = rowPosition;
+        this.colPosition = colPosition;
     }
 
     public String getColour() {
@@ -48,6 +48,12 @@ public class Piece {
     }
 
 
+
+
+
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,7 +63,7 @@ public class Piece {
 
         if (name != null ? !name.equals(piece.name) : piece.name != null) return false;
         if (eaten != null ? !eaten.equals(piece.eaten) : piece.eaten != null) return false;
-        return value != null ? value.equals(piece.value) : piece.value == null;
+        return (value != null ? value.equals(piece.value) : piece.value == null);
 
     }
 
@@ -68,6 +74,11 @@ public class Piece {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
+
+
+
+
+
 
     public String getName() {
         return name;
@@ -138,7 +149,7 @@ public class Piece {
             }
         } else if(direction.equals("moveRight")) {
             if ((colour.equals("w") && this.colPosition > 7) ||
-                    (colour.equals("b") && this.colPosition < 0)) { // bordo sx
+                    (colour.equals("b") && this.colPosition < 0)) { // bordo dx
                 can = false;
             } else {
                 if (Board.inBounds((newRow), (newCol)) &&
@@ -200,6 +211,15 @@ public class Piece {
         this.rowPosition = beyondRow;
         this.colPosition = beyondCol;
         return board;
+    }
+
+    public Boolean canCaptureAgain(Spot[][] board, Boolean isPlayer) {
+
+        // se il giocatore ha mangiato, si controlla se deve mangiare ancora
+
+        Boolean anotherMove = false;
+        anotherMove = canCapture(board, "left", isPlayer) || canCapture(board, "right", isPlayer);
+        return anotherMove;
     }
 
 

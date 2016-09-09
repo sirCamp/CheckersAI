@@ -4,7 +4,7 @@ public class Board {
 
     private Spot[][] board = new Spot[8][8]; // 8x8 board
 	
-	private boolean capture= false;
+	private boolean capture= false; //???
 
     private Player p1;
 
@@ -24,7 +24,7 @@ public class Board {
 
             for(int j=0; j<8; j++){
 
-                if((i+j)%2 == 0){
+                if((i+j)%2 == 0){ // tutte le caselle occupate hanno il valore col+row dispari
 
                     board[i][j] = null; //casella non utilizzabile
                 }
@@ -34,14 +34,10 @@ public class Board {
 
                     Piece pedina = null; //casella vuota
                     if(i<3){
-
-
-
                         pedina = p1.getPieceList().get(bCount);
                         bCount++;
                     }
                     else {
-
                         if (i > 4) {
                             pedina = p2.getPieceList().get(wCount);
                             System.out.println(pedina.getName());

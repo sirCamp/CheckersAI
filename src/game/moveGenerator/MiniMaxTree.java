@@ -40,7 +40,7 @@ public class MiniMaxTree {
 
     }
 
-    private void createTree(Player player) throws CloneNotSupportedException { //TODO: to be extended with bigPieces
+    private void createTree(Player player) throws CloneNotSupportedException { //TODO: to be extended with Kings
         tree.add(new Node(null, 0, null, 0, board.copy(), player)); // current state
         for (int i = 1; i < depth; i++) { // foreach depth
             for (int j = 0; j < tree.size(); j++) {

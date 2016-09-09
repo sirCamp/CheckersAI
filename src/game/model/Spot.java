@@ -3,18 +3,17 @@ package game.model;
 import game.model.Piece;
 
 public class Spot {
-	
+
+	private String name;
 	private int value;
 	private Piece occupier;
-	private String name;
-	
+
 	
 	public Spot(String name,int value, Piece occupier)
 	{
+		this.name = name;
 		this.value = value;
 		this.occupier = occupier;
-		this.name = name;
-		
 	}
 
 	public int getValue() {

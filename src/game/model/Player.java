@@ -10,7 +10,8 @@ import java.util.ArrayList;
  * Created by enry8 on 30/04/16.
  */
 public class Player {
-    private ArrayList<Piece> piece = new ArrayList<Piece>();
+
+    private ArrayList<Piece> pieces = new ArrayList<Piece>();
     private String algorithm = "default";
     private String name;
     private String colour;
@@ -18,44 +19,43 @@ public class Player {
     private Integer defaultDepth = 3;
 
     public Player(String algorithm, String name, String colour) {
-        this.piece = piece;
         this.algorithm = algorithm;
         this.name = name;
         this.colour = colour;
-        int j = 1, k = 0;
-        Boolean justChanged = true;
+        int col = 1, row = 0;
+        Boolean isNewRow = true;
         if(this.colour.equals("w")){
-            k+=5;
+            row+=5;
         }
-        for(int i=0; i<12; i++){
-            if(k%2 == 0){
-                if(justChanged==true){
-                    justChanged = false;
-                    j=1;
+        for(int pieceCount =0; pieceCount<12; pieceCount++){
+            /* in base alla riga, pari o dispari, le pedine si disporranno nelle posizioni pari o dispari. Lo si fa invocando*/
+            if(isNewRow==true){
+                if(row%2 == 0){
+                    isNewRow = false;
+                    col=1;
+                }
+                else{
+                    isNewRow = false;
+                    col=0;
                 }
             }
-            else{
-                if(justChanged==true){
-                    justChanged = false;
-                    j=0;
-                }
-            }
-            piece.add(new Piece(colour+Integer.toString(i), colour, false, 1, k, j));
-            //= colour+Integer.toString(bCount);
-            j+=2;
-            if(j>=8){
-                k++;
-                justChanged=true;
+
+            pieces.add(new Piece(colour+Integer.toString(pieceCount), colour, false, 1, row, col));
+            // colour+Integer.toString(pieceCount) =>il nome della pedina: b1, w3, ...
+            col+=2;
+            if(col>=8){ // finita l'inizializzazione di una riga, si passa alla successiva
+                row++;
+                isNewRow=true;
             }
         }
     }
 
     public ArrayList<Piece> getPieceList() {
-        return piece;
+        return pieces;
     }
 
-    public void setPiece(ArrayList<Piece> piece) {
-        this.piece = piece;
+    public void setPieces(ArrayList<Piece> pieces) {
+        this.pieces = pieces;
     }
 
     public String getAlgorithm() {
@@ -82,7 +82,7 @@ public class Player {
         this.eatenPieces++;
     }
 
-    public Boolean newBigPiece() {
+    public Boolean newKing() {
         if (eatenPieces > 0) {
             this.eatenPieces--;
             return true;
@@ -90,20 +90,18 @@ public class Player {
             return false;
     }
 
-    public Piece getSinglePiece(Integer index){
-        return piece.get(index);
-    }
-
     public Piece getPieceByName(String name){
         Integer i=0; Boolean found = false;
-        while(i<piece.size() && !found){
-            if(piece.get(i).getName().equals(name)){
+        while(i<pieces.size() && !found){
+            if(pieces.get(i).getName().equals(name)){
                 found = true;
             }else{
                 i++;
             }
         }
-        return piece.get(i);
+        if(!found)
+            return null;
+        return pieces.get(i);
     }
 
     @Override
@@ -120,7 +118,7 @@ public class Player {
 
     public void move(Board board) throws CloneNotSupportedException {
         MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this);
-        String[] move = tree.decideMove().split(" ");
+        String[] move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
         Piece singlePiece = getPieceByName(move[0]);
         if(move[1].indexOf("move") > -1){ // more efficient than method String.contains
             singlePiece.move(board.getBoard(), move[1]);
