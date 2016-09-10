@@ -133,7 +133,11 @@ public class Player {
             singlePiece.move(board.getBoard(), move[1]);
         }
         else if(move[1].indexOf("capture") > -1){
-            singlePiece.capture(move[1], board.getBoard());
+            Piece eatenPiece = singlePiece.capture(move[1], board.getBoard());
+            this.getPieceList().remove(eatenPiece);
+            this.incrEatenPieces();
+            mustEatAgain(board, singlePiece);
+            System.out.println(this.getEatenPieces());
         }
     }
 
@@ -159,7 +163,44 @@ public class Player {
             || ((move.indexOf("capture") > -1) && (piece.canCapture(board, move)))){
             can = true;
         }
+        // controlla se è possibile mangiare e di conseguenza obbligatorio
+        if((move.indexOf("capture") == -1) && this.mustEat(board)){
+            System.out.println("Not a valid move. Must eat!");
+            can = false;
+        }
         return can;
+    }
+
+    private Boolean mustEat(Spot[][] board){
+        Boolean must = false;
+        for(Piece piece : this.getPieceList()){
+            if(piece.canCapture(board, "captureLeft") ||  piece.canCapture(board, "captureRight"))
+                must = true;
+        }
+        return must;
+    }
+
+    private void mustEatAgain(Board board, Piece piece) throws IOException {
+        String[] move = null;
+        while(piece.canCapture(board.getBoard(), "captureLeft") ||  piece.canCapture(board.getBoard(), "captureRight")){ // ripetuto finchè la pedina può mangiare
+            board.printBoard();
+            System.out.println(piece.getName() + " must eat again. Choose your movement.");
+            InputStreamReader isr = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(isr);
+            move = br.readLine().split(" ");
+            if(move[1].indexOf("capture") > -1) {
+                if ((this.colour.equals("b") && move[0].indexOf("b") > -1) ||
+                (this.colour.equals("w") && move[0].indexOf("w") > -1)) {
+                    if((move[1].indexOf("capture") > -1) && (piece.canCapture(board.getBoard(), move[1]))){
+                        Piece eatenPiece = piece.capture(move[1], board.getBoard());
+
+                        this.getPieceList().remove(eatenPiece);
+                        this.incrEatenPieces();
+                        System.out.println(this.getEatenPieces());
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -91,12 +91,13 @@ public class King extends Piece{
     }
 
     @Override
-    public Spot[][] capture(String direction, Spot[][] board) {
+    public Piece capture(String direction, Spot[][] board) {
         Integer newRow = this.getRowPosition() + this.rowAlter(direction); //spostamento x
         Integer newCol = this.getColPosition() + this.colAlter(direction); //spostamento y
 
         // kill victim
-        board[newRow][newCol].setOccupier(null); // TODO: gestire i pezzi eaten del player
+        Piece eatenPiece = board[newRow][newCol].getOccupier();
+        board[newRow][newCol].setOccupier(null);
         // change killer position
         Integer beyondRow = newRow + this.rowAlter(direction); // position x beyond the piece that would be eaten
         Integer beyondCol = newCol + this.colAlter(direction); // position y beyond the piece that would be eaten
@@ -104,7 +105,7 @@ public class King extends Piece{
         board[this.getRowPosition()][this.getColPosition()].setOccupier(null);
         this.setRowPosition(beyondRow);
         this.setColPosition(beyondCol);
-        return board;
+        return eatenPiece;
     }
 
     @Override

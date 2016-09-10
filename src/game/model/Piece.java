@@ -157,8 +157,6 @@ public class Piece {
         Integer beyondRow = newRow + this.rowAlter(direction); // position x beyond the piece that would be eaten
         Integer beyondCol = newCol + this.colAlter(direction); // position y beyond the piece that would be eaten
         Boolean safeLand = Board.inBounds(beyondRow, beyondCol) && this.canMove(board, direction, 2);
-
-        System.out.println(victimExists+" "+safeLand);
         if (victimExists && safeLand){
             can = true;
         }
@@ -166,12 +164,14 @@ public class Piece {
     }
 
 
-    public Spot[][] capture(String direction, Spot[][] board) {
+    public Piece capture(String direction, Spot[][] board) {
         Integer newRow = this.rowPosition + this.rowAlter(direction); //spostamento x
         Integer newCol = this.colPosition + this.colAlter(direction); //spostamento y
 
         // kill victim
-        board[newRow][newCol].setOccupier(null); // TODO: gestire i pezzi eaten del player
+
+        Piece eatenPiece = board[newRow][newCol].getOccupier();
+        board[newRow][newCol].setOccupier(null);
         // change killer position
         Integer beyondRow = newRow + this.rowAlter(direction); // position x beyond the piece that would be eaten
         Integer beyondCol = newCol + this.colAlter(direction); // position y beyond the piece that would be eaten
@@ -179,7 +179,7 @@ public class Piece {
         board[this.rowPosition][this.colPosition].setOccupier(null);
         this.rowPosition = beyondRow;
         this.colPosition = beyondCol;
-        return board;
+        return eatenPiece;
     }
 
     public Boolean canCaptureAgain(Spot[][] board) {
