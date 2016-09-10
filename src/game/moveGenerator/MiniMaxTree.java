@@ -73,16 +73,14 @@ public class MiniMaxTree {
     }
 
     private Boolean establishPossibleMovement(Spot[][] board, Piece piece, String direction){
-        Integer newRow = piece.getRowPosition() +  piece.rowAlter(direction); //spostamento x
-        Integer newCol = piece.getColPosition() + piece.colAlter(direction); //spostamento y
-        if(piece.canMove(board, direction, newRow, newCol)){
+        if(piece.canMove(board, direction, 1)){
             return true;
         }
         return false;
     }
 
     private Boolean establishPossibleCapture(Spot[][] board, Piece piece, String direction){
-        if(piece.canCapture(board, direction, false)){
+        if(piece.canCapture(board, direction)){
             return true;
         }
         return false;

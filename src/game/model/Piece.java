@@ -113,12 +113,13 @@ public class Piece {
         return alter;
     }
 
-    public Boolean canMove(Spot[][] board, String direction, Integer newRow, Integer newCol){
+    public Boolean canMove(Spot[][] board, String direction, Integer eating){
+        Integer newRow = this.rowPosition +  (this.rowAlter(direction)*eating); //spostamento x, 2x se si sta mangiando
+        Integer newCol = this.colPosition + (this.colAlter(direction)*eating); //spostamento y, 2y se si sta mangiando
         Boolean can = false;
         if(((direction.equals("moveLeft")) && (this.colPosition < 0))
             || ((direction.equals("moveRight")) && (this.colPosition > 7))){ // bordo sx
                 can = false;
-                System.out.println("cant");
         }
         else {
             if (Board.inBounds((newRow), (newCol)) &&
@@ -133,20 +134,15 @@ public class Piece {
     public Spot[][] move(Spot[][] board, String direction){
         Integer newRow = this.rowPosition +  this.rowAlter(direction); //spostamento x
         Integer newCol = this.colPosition + this.colAlter(direction); //spostamento y
-
-        System.out.println(newRow + " "+newCol);
-        if(this.canMove(board, direction, newRow, newCol)){
-            board[newRow][newCol].setOccupier(board[this.rowPosition][this.colPosition].getOccupier());
-            board[this.rowPosition][this.colPosition].setOccupier(null);
-            this.rowPosition = newRow;
-            this.colPosition = newCol;
-            System.out.println(this.getRowPosition()+" "+this.getColPosition());
-        }
+        board[newRow][newCol].setOccupier(board[this.rowPosition][this.colPosition].getOccupier());
+        board[this.rowPosition][this.colPosition].setOccupier(null);
+        this.rowPosition = newRow;
+        this.colPosition = newCol;
         return board;
     }
 
 
-    public Boolean canCapture(Spot[][] board, String direction, Boolean isPlayer) {
+    public Boolean canCapture(Spot[][] board, String direction) {
         Boolean can = false;
         Integer newRow = this.rowPosition + this.rowAlter(direction );
         Integer newCol = this.colPosition + this.colAlter(direction);
@@ -155,12 +151,14 @@ public class Piece {
         if (Board.inBounds(newRow, newCol) && board[newRow][newCol] != null
                 && !(board[newRow][newCol].getOccupier() == null)
                 && !(board[newRow][newCol].getOccupier().getColour().equals(this.colour)) //colore pedina diverso
-                && !this.canMove(board, direction, newRow, newCol)){
+                && !this.canMove(board, direction, 1)){
             victimExists = true;
         }
         Integer beyondRow = newRow + this.rowAlter(direction); // position x beyond the piece that would be eaten
         Integer beyondCol = newCol + this.colAlter(direction); // position y beyond the piece that would be eaten
-        Boolean safeLand = Board.inBounds(beyondRow, beyondCol) && this.canMove(board, direction, beyondRow, beyondCol);
+        Boolean safeLand = Board.inBounds(beyondRow, beyondCol) && this.canMove(board, direction, 2);
+
+        System.out.println(victimExists+" "+safeLand);
         if (victimExists && safeLand){
             can = true;
         }
@@ -168,7 +166,7 @@ public class Piece {
     }
 
 
-    public Spot[][] capture(String direction, Spot[][] board, boolean isPlayer) {
+    public Spot[][] capture(String direction, Spot[][] board) {
         Integer newRow = this.rowPosition + this.rowAlter(direction); //spostamento x
         Integer newCol = this.colPosition + this.colAlter(direction); //spostamento y
 
@@ -184,12 +182,12 @@ public class Piece {
         return board;
     }
 
-    public Boolean canCaptureAgain(Spot[][] board, Boolean isPlayer) {
+    public Boolean canCaptureAgain(Spot[][] board) {
 
         // se il giocatore ha mangiato, si controlla se deve mangiare ancora
 
         Boolean anotherMove = false;
-        anotherMove = canCapture(board, "left", isPlayer) || canCapture(board, "right", isPlayer);
+        anotherMove = canCapture(board, "left") || canCapture(board, "right");
         return anotherMove;
     }
 

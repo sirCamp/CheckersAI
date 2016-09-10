@@ -95,7 +95,7 @@ public class Node{
             piece.move(this.state.getBoard(), move);
         }
         else if(move.indexOf("capture") > -1){
-            piece.capture(move, this.state.getBoard(), false);
+            piece.capture(move, this.state.getBoard());
         }
     }
 }

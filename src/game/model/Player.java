@@ -107,11 +107,6 @@ public class Player {
         return pieces.get(i);
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
     public Boolean hasLost(){
         if(this.eatenPieces == 12){
             return true;
@@ -119,42 +114,52 @@ public class Player {
         return false;
     }
 
-    public void move(Board board) throws CloneNotSupportedException {
+    public void move(Board board) throws CloneNotSupportedException, IOException {
         String[] move = null;
-        if(this.algorithm.equals("human")) {
-            move = this.readMove();
-        }
-        else {
-            MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this);
-            move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
-        }
-        Piece singlePiece = getPieceByName(move[0]);
+        Boolean can = false;
+        Piece singlePiece = null;
+        do {
+            if (this.algorithm.equals("human")) {
+                move = this.readMove();
+            } else {
+                MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this);
+                move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
+            }
+            singlePiece = getPieceByName(move[0]);
+            can = isAValidMove(board.getBoard(), singlePiece, move[1]);
+        }while(!can);
+        // all checks are passed -> action is possible
         if(move[1].indexOf("move") > -1){ // more efficient than method String.contains
             singlePiece.move(board.getBoard(), move[1]);
         }
         else if(move[1].indexOf("capture") > -1){
-            singlePiece.capture(move[1], board.getBoard(), false);
+            singlePiece.capture(move[1], board.getBoard());
         }
     }
 
-    private String[] readMove() {
+    /* the following function reads the user input and checks if it is correct*/
+    private String[] readMove() throws IOException {
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
         String[] move = null;
         Boolean correct = false;
         do {
             System.out.println("Choose your movement");
-            try {
-                move = br.readLine().split(" ");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            move = br.readLine().split(" ");
             if((move[1].indexOf("move") > -1) || (move[1].indexOf("capture") > -1))
-                if((this.colour.equals("b") && move[0].indexOf("b")>-1) || (this.colour.equals("w") && move[0].indexOf("w")>-1))
+                if((this.colour.equals("b") && move[0].indexOf("b")>-1) || (this.colour.equals("w") && move[0].indexOf("w")>-1)) // mossa ordinata dal giocatore alle proprie pedine
                     correct = true;
         }while(!correct);
-
         return move;
+    }
+
+    private Boolean isAValidMove(Spot[][] board, Piece piece, String move){
+        Boolean can = false;
+        if((move.indexOf("move") > -1) && (piece.canMove(board, move, 1))
+            || ((move.indexOf("capture") > -1) && (piece.canCapture(board, move)))){
+            can = true;
+        }
+        return can;
     }
 
 }
