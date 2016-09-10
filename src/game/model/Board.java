@@ -40,7 +40,6 @@ public class Board {
                     else {
                         if (i > 4) {
                             pedina = p2.getPieceList().get(wCount);
-                            System.out.println(pedina.getName());
                             wCount++;
                         }
                     }

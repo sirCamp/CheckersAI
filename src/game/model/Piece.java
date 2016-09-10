@@ -47,13 +47,6 @@ public class Piece {
         this.rowPosition = rowPosition;
     }
 
-
-
-
-
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,11 +67,6 @@ public class Piece {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
-
-
-
-
-
 
     public String getName() {
         return name;
@@ -105,7 +93,7 @@ public class Piece {
     }
 
 
-    public Integer colAlter(String direction){
+    public Integer rowAlter(String direction){
         Integer alter = 0;
         if(this.colour.equals("b")){
             alter = 1;
@@ -115,48 +103,28 @@ public class Piece {
         return alter;
     }
 
-    public Integer rowAlter(String direction){
+    public Integer colAlter(String direction){ // left e right si intendono rispetto alla scacchiera
         Integer alter = 0;
-        if(this.colour.equals("b")){
-            if(direction.equals("moveLeft") || direction.equals("captureLeft")){
-                alter = 1;
-            } else if(direction.equals("moveRight")|| direction.equals("captureRight")){
-                alter = -1;
-            }
-        } else if(this.colour.equals("w")) {
-            if(direction.equals("moveLeft")|| direction.equals("captureLeft")){
-                alter = -1;
-            } else if(direction.equals("moveRight")|| direction.equals("captureRight")){
-                alter = 1;
-            }
+        if(direction.equals("moveLeft") || direction.equals("captureLeft")){
+            alter = -1;
+        } else if(direction.equals("moveRight")|| direction.equals("captureRight")){
+            alter = 1;
         }
         return alter;
     }
 
     public Boolean canMove(Spot[][] board, String direction, Integer newRow, Integer newCol){
         Boolean can = false;
-        if(direction.equals("moveLeft")){
-            if((this.colour.equals("b") && this.colPosition > 7) ||
-                (this.colour.equals("w") && this.colPosition < 0)){ // bordo sx
+        if(((direction.equals("moveLeft")) && (this.colPosition < 0))
+            || ((direction.equals("moveRight")) && (this.colPosition > 7))){ // bordo sx
                 can = false;
-            }
-            else {
-                if (Board.inBounds((newRow), (newCol)) &&
-                        board[newRow][newCol] != null &&
-                        board[newRow][newCol].getOccupier().equals(null)) {
-                    can = true;
-                }
-            }
-        } else if(direction.equals("moveRight")) {
-            if ((colour.equals("w") && this.colPosition > 7) ||
-                    (colour.equals("b") && this.colPosition < 0)) { // bordo dx
-                can = false;
-            } else {
-                if (Board.inBounds((newRow), (newCol)) &&
-                        board[newRow][newCol] != null &&
-                        board[newRow][newCol].getOccupier().equals(null)) {
-                    can = true;
-                }
+                System.out.println("cant");
+        }
+        else {
+            if (Board.inBounds((newRow), (newCol)) &&
+                board[newRow][newCol] != null &&
+                board[newRow][newCol].getOccupier() == (null)) {
+                can = true;
             }
         }
         return can;
@@ -165,11 +133,14 @@ public class Piece {
     public Spot[][] move(Spot[][] board, String direction){
         Integer newRow = this.rowPosition +  this.rowAlter(direction); //spostamento x
         Integer newCol = this.colPosition + this.colAlter(direction); //spostamento y
+
+        System.out.println(newRow + " "+newCol);
         if(this.canMove(board, direction, newRow, newCol)){
             board[newRow][newCol].setOccupier(board[this.rowPosition][this.colPosition].getOccupier());
             board[this.rowPosition][this.colPosition].setOccupier(null);
             this.rowPosition = newRow;
             this.colPosition = newCol;
+            System.out.println(this.getRowPosition()+" "+this.getColPosition());
         }
         return board;
     }

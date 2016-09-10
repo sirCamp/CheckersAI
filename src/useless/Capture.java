@@ -1,4 +1,4 @@
-package game;
+package useless;
 
 import game.model.Board;
 import game.model.Spot;

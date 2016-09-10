@@ -3,6 +3,8 @@ package game;
 import game.model.Board;
 import game.model.Player;
 import game.model.Spot;
+import useless.Capture;
+import useless.Move;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,15 +22,16 @@ public class Main {
 	public static void startGame() throws IOException, CloneNotSupportedException {
 		Random ran = new Random();
 		Integer round = ran.nextInt(2); // who starts?
-		Player p1 = new Player("default", "p1", "b");
-		Player p2 = new Player("default", "p2", "w");
+		Player p1 = new Player("human", "p1", "b");
+		Player p2 = new Player("human", "p2", "w");
 		Board board = new Board(p1,p2);
 		board.printBoard();
-		//printBoard(aBoard.getBoard());
 		Boolean end = false;
 		do {
 			//		aBoard.setBoard();
 			if(round == 0){
+				System.out.println("p1 (black) has to move");
+				p1.move(board);
 				//aBoard = playerMove(aBoard);
 				//p1.move();
 				/*if(aBoard.getCapture())
@@ -38,8 +41,10 @@ public class Main {
 					endGame("player");
 				}*/
 				//end = endGame(p2);
+				round = 1;
 			}
 			else {
+				System.out.println("p2 (white) has to move");
 				p2.move(board);
 
 				// aBoard = computerMove(aBoard);
@@ -50,6 +55,7 @@ public class Main {
 					System.out.println("computer win?"+aBoard.getCapture());
 					endGame("computer");
 				}*/
+				round = 0;
 				end = endGame(p1);
 			}
 			board.printBoard();
@@ -64,6 +70,9 @@ public class Main {
 		} //else
 		return false;
 	}
+
+
+	/*
 
 	private static Board computerMove(Board aBoard) {
 		System.out.println("\n\n Computer's turn:" );
@@ -149,6 +158,6 @@ public class Main {
 		
 	return board;	
 	}
-
+*/
 
 }

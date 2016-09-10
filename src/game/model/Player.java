@@ -4,6 +4,9 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import game.Tree;
 import game.moveGenerator.MiniMaxTree;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +15,7 @@ import java.util.ArrayList;
 public class Player {
 
     private ArrayList<Piece> pieces = new ArrayList<Piece>();
-    private String algorithm = "default";
+    private String algorithm = "human";
     private String name;
     private String colour;
     private Integer eatenPieces = 0;
@@ -117,8 +120,14 @@ public class Player {
     }
 
     public void move(Board board) throws CloneNotSupportedException {
-        MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this);
-        String[] move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
+        String[] move = null;
+        if(this.algorithm.equals("human")) {
+            move = this.readMove();
+        }
+        else {
+            MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this);
+            move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
+        }
         Piece singlePiece = getPieceByName(move[0]);
         if(move[1].indexOf("move") > -1){ // more efficient than method String.contains
             singlePiece.move(board.getBoard(), move[1]);
@@ -127,4 +136,25 @@ public class Player {
             singlePiece.capture(move[1], board.getBoard(), false);
         }
     }
+
+    private String[] readMove() {
+        InputStreamReader isr = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(isr);
+        String[] move = null;
+        Boolean correct = false;
+        do {
+            System.out.println("Choose your movement");
+            try {
+                move = br.readLine().split(" ");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if((move[1].indexOf("move") > -1) || (move[1].indexOf("capture") > -1))
+                if((this.colour.equals("b") && move[0].indexOf("b")>-1) || (this.colour.equals("w") && move[0].indexOf("w")>-1))
+                    correct = true;
+        }while(!correct);
+
+        return move;
+    }
+
 }
