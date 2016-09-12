@@ -43,7 +43,7 @@ public class Player {
                 }
             }
 
-            pieces.add(new Piece(colour+Integer.toString(pieceCount), colour, false, 1, row, col));
+            pieces.add(new Piece(colour+Integer.toString(pieceCount), colour, 1, row, col));
             // colour+Integer.toString(pieceCount) =>il nome della pedina: b1, w3, ...
             col+=2;
             if(col>=8){ // finita l'inizializzazione di una riga, si passa alla successiva
@@ -131,13 +131,14 @@ public class Player {
         // all checks are passed -> action is possible
         if(move[1].indexOf("move") > -1){ // more efficient than method String.contains
             singlePiece.move(board.getBoard(), move[1]);
+            this.checkIfBecomeKing(singlePiece, board);
         }
         else if(move[1].indexOf("capture") > -1){
             Piece eatenPiece = singlePiece.capture(move[1], board.getBoard());
-            this.getPieceList().remove(eatenPiece);
-            this.incrEatenPieces();
+            board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
+            board.getOtherPlayer(this).incrEatenPieces();
             mustEatAgain(board, singlePiece);
-            System.out.println(this.getEatenPieces());
+            this.checkIfBecomeKing(singlePiece, board);
         }
     }
 
@@ -150,9 +151,11 @@ public class Player {
         do {
             System.out.println("Choose your movement");
             move = br.readLine().split(" ");
-            if((move[1].indexOf("move") > -1) || (move[1].indexOf("capture") > -1))
-                if((this.colour.equals("b") && move[0].indexOf("b")>-1) || (this.colour.equals("w") && move[0].indexOf("w")>-1)) // mossa ordinata dal giocatore alle proprie pedine
-                    correct = true;
+            if(move.length>1) { // per evitare comandi che contengono una sola parola -> errati
+                if ((move[1].indexOf("move") > -1) || (move[1].indexOf("capture") > -1))
+                    if ((this.colour.equals("b") && move[0].indexOf("b") > -1) || (this.colour.equals("w") && move[0].indexOf("w") > -1)) // mossa ordinata dal giocatore alle proprie pedine
+                        correct = true;
+            }
         }while(!correct);
         return move;
     }
@@ -165,7 +168,7 @@ public class Player {
         }
         // controlla se è possibile mangiare e di conseguenza obbligatorio
         if((move.indexOf("capture") == -1) && this.mustEat(board)){
-            System.out.println("Not a valid move. Must eat!");
+            System.out.println("Not a valid move. One of these pieces must eat!");
             can = false;
         }
         return can;
@@ -174,15 +177,23 @@ public class Player {
     private Boolean mustEat(Spot[][] board){
         Boolean must = false;
         for(Piece piece : this.getPieceList()){
-            if(piece.canCapture(board, "captureLeft") ||  piece.canCapture(board, "captureRight"))
+            if(piece.canCapture(board, "captureLeft") ||  piece.canCapture(board, "captureRight")){
                 must = true;
+                System.out.println(piece.getName() + " can eat.");
+            }
+            if((piece instanceof King) && (piece.canCapture(board, "captureDownLeft") ||  piece.canCapture(board, "captureDownRight"))){
+                System.out.println(piece.getName() + " can eat.");
+                must = true;
+            }
         }
         return must;
     }
 
     private void mustEatAgain(Board board, Piece piece) throws IOException {
         String[] move = null;
-        while(piece.canCapture(board.getBoard(), "captureLeft") ||  piece.canCapture(board.getBoard(), "captureRight")){ // ripetuto finchè la pedina può mangiare
+        while((piece.canCapture(board.getBoard(), "captureLeft") ||  piece.canCapture(board.getBoard(), "captureRight"))
+        || ((piece instanceof King) && (piece.canCapture(board.getBoard(), "captureDownLeft") ||  piece.canCapture(board.getBoard(), "captureDownRight")))){
+            // ripetuto finchè la pedina può mangiare
             board.printBoard();
             System.out.println(piece.getName() + " must eat again. Choose your movement.");
             InputStreamReader isr = new InputStreamReader(System.in);
@@ -194,13 +205,27 @@ public class Player {
                     if((move[1].indexOf("capture") > -1) && (piece.canCapture(board.getBoard(), move[1]))){
                         Piece eatenPiece = piece.capture(move[1], board.getBoard());
 
-                        this.getPieceList().remove(eatenPiece);
-                        this.incrEatenPieces();
-                        System.out.println(this.getEatenPieces());
+                        board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
+                        board.getOtherPlayer(this).incrEatenPieces();
                     }
                 }
             }
         }
+    }
+
+    private Boolean checkIfBecomeKing(Piece piece, Board board) throws IOException {
+        Boolean become = false;
+        if(!(piece instanceof King) && ((piece.getColour().equals("b") && piece.getRowPosition() == 7) ||
+            (piece.getColour().equals("w") && piece.getRowPosition() == 0))){
+            King king = new King(piece);
+            this.getPieceList().remove(piece);
+            this.getPieceList().add(king);
+            board.getBoard()[king.getRowPosition()][king.getColPosition()].setOccupier(king);
+            System.out.println(king.getName());
+            mustEatAgain(board, piece);
+            become = true;
+        }
+        return become;
     }
 
 }

@@ -42,6 +42,7 @@ public class Main {
 				}*/
 				//end = endGame(p2);
 				round = 1;
+				end = endGame(p2);
 			}
 			else {
 				System.out.println("p2 (white) has to move");
@@ -60,10 +61,10 @@ public class Main {
 			}
 			board.printBoard();
 		}while(!end);
+		endGameMessage(round);
 	}
 
-	public static Boolean endGame(Player loser)
-	{
+	public static Boolean endGame(Player loser){
 		if(loser.hasLost()==true)
 		{
 			return true;
@@ -71,6 +72,14 @@ public class Main {
 		return false;
 	}
 
+	public static void endGameMessage(Integer round){
+		String winner = "";
+		if(round == 1){
+			winner = "p1 (black) ";
+		}else winner = "p2 (white) ";
+		System.out.println(winner + "won the game!");
+		return;
+	}
 
 	/*
 

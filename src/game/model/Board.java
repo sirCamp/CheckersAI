@@ -100,6 +100,14 @@ public class Board {
         }
         System.out.println("\n___________________________________________");
     }
-	                                                                                                                            
+
+
+    public Player getOtherPlayer(Player p){
+        Player otherP = null;
+        if(p.getName().equals(this.p1.getName()))
+            otherP = this.p2;
+        else otherP = this.p1;
+        return otherP;
+    }
 }                                                                                                                               
                                                                                                                                 

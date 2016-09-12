@@ -8,16 +8,14 @@ import java.util.Arrays;
 public class Piece {
 
     private String name;
-    private Boolean eaten = false;
     private Integer value = 0;
     private Integer rowPosition;
     private Integer colPosition;
     private String colour;
 
-    public Piece(String name, String colour, Boolean eaten, Integer value, Integer rowPosition, Integer colPosition) {
+    public Piece(String name, String colour, Integer value, Integer rowPosition, Integer colPosition) {
         this.name = name;
         this.colour = colour;
-        this.eaten = eaten;
         this.value = value;
         this.rowPosition = rowPosition;
         this.colPosition = colPosition;
@@ -55,7 +53,6 @@ public class Piece {
         Piece piece = (Piece) o;
 
         if (name != null ? !name.equals(piece.name) : piece.name != null) return false;
-        if (eaten != null ? !eaten.equals(piece.eaten) : piece.eaten != null) return false;
         return (value != null ? value.equals(piece.value) : piece.value == null);
 
     }
@@ -63,7 +60,6 @@ public class Piece {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (eaten != null ? eaten.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
@@ -82,14 +78,6 @@ public class Piece {
 
     public void setValue(Integer value) {
         this.value = value;
-    }
-
-    public Boolean getEaten() {
-        return eaten;
-    }
-
-    public void setEaten(Boolean eaten) {
-        this.eaten = eaten;
     }
 
 

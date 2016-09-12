@@ -7,7 +7,7 @@ package game.model;
 public class King extends Piece{
 
     public King(Piece p){
-        super(p.getName(), p.getColour(), p.getEaten(), p.getValue(), p.getColPosition(), p.getColPosition());
+        super(p.getColour()+p.getName(), p.getColour(), p.getValue(), p.getRowPosition(), p.getColPosition());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class King extends Piece{
             else {
                 if (Board.inBounds((newRow), (newCol)) &&
                         board[newRow][newCol] != null &&
-                        board[newRow][newCol].getOccupier().equals(null)) {
+                        board[newRow][newCol].getOccupier() == (null)) {
                     can = true;
                 }
             }
