@@ -24,7 +24,7 @@ public class Node{
     private Map<String, Node> children;
     private Player player;
 
-    public Node(String move, Integer value, Node father, Integer depth, Board state, Player player) {
+    public Node(String move, Integer value, Node father, Integer depth, Player player, Board state) {
         this.move = move;
         this.value = value;
         this.father = father;

@@ -16,19 +16,16 @@ import java.util.List;
 
 public class MiniMaxTree {
     private ArrayList<Node> tree = new ArrayList<Node>();
-    private Board board;
     private double value = 0;
     private Integer depth = 1;
     private boolean isCapture;
 
-    public MiniMaxTree(Board board, Integer depth, Player player) throws CloneNotSupportedException {
-        this.board = board;
+    public MiniMaxTree(Board board, Integer depth, String player) throws CloneNotSupportedException {
         this.depth = depth;
-        createTree(player);
-    }
-
-    public Board getBoard() {
-        return this.board;
+        Board copyBoard = board.copy();
+        Player p1 = copyBoard.getPlayerByName(player);
+        Player otherPlayer = copyBoard.getOtherPlayer(p1);
+        createTree(board.copy(), p1, otherPlayer);
     }
 
     public ArrayList<Node> getTree() {
@@ -40,23 +37,27 @@ public class MiniMaxTree {
 
     }
 
-    private void createTree(Player player) throws CloneNotSupportedException { //TODO: to be extended with Kings
-        tree.add(new Node(null, 0, null, 0, board.copy(), player)); // current state
+    private void createTree(Board board, Player player, Player otherP) throws CloneNotSupportedException { //TODO: to be extended with Kings
+        tree.add(new Node(null, 0, null, 0, otherP, board.copy())); // current state
+        Player currentPlayer = player;
         for (int i = 1; i < depth; i++) { // foreach depth
+            if(i % 2 == 1) // to understand if it is min or max
+                currentPlayer = player;
+            else currentPlayer = otherP;
             for (int j = 0; j < tree.size(); j++) {
                 if(tree.get(j).getDepth()==i-1){ //foreach node inserted on previous iteration (depth = depth -1 ->
-                    for (Piece piece : player.getPieceList()) { // node that have tree.get(j) as father
+                    for (Piece piece : currentPlayer.getPieceList()) { // node that have tree.get(j) as father
                         if (establishPossibleMovement(tree.get(j).getState().getBoard(), piece, "moveLeft")) {
-                           tree.add(this.createNode(piece, "moveLeft", depth, player, tree.get(j)));
+                           tree.add(this.createNode(piece, "moveLeft", depth, currentPlayer, tree.get(j), tree.get(j).getState()));
                         }
                         if (establishPossibleMovement(tree.get(j).getState().getBoard(), piece, "moveRight")) {
-                            tree.add(this.createNode(piece, "moveRight", depth, player, tree.get(j)));
+                            tree.add(this.createNode(piece, "moveRight", depth, currentPlayer, tree.get(j), tree.get(j).getState()));
                         }
                         if (establishPossibleCapture(tree.get(j).getState().getBoard(), piece, "captureLeft")) {
-                            tree.add(this.createNode(piece, "captureLeft", depth, player, tree.get(j)));
+                            tree.add(this.createNode(piece, "captureLeft", depth, currentPlayer, tree.get(j), tree.get(j).getState()));
                         }
                         if (establishPossibleCapture(tree.get(j).getState().getBoard(), piece, "captureRight")) {
-                            tree.add(this.createNode(piece, "captureRight", depth, player, tree.get(j)));
+                            tree.add(this.createNode(piece, "captureRight", depth, currentPlayer, tree.get(j), tree.get(j).getState()));
                         }
                     }
                 }
@@ -65,8 +66,8 @@ public class MiniMaxTree {
     }
 
 
-    private Node createNode(Piece piece, String move, Integer depth, Player player, Node father) throws CloneNotSupportedException {
-        Node tmp = new Node(piece.getName() + move, 0, father, depth, board.copy(), player);
+    private Node createNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws CloneNotSupportedException {
+        Node tmp = new Node(piece.getName() +" "+ move, 0, father, depth, player, board.copy());
         tmp.performAction(piece, move);
         tmp.setValue(0);
         return tmp;
@@ -119,11 +120,21 @@ public class MiniMaxTree {
                 while(i>0 && father == tree.get(i).getFather()){
                     i--;
                 }
-                if(isEven){
-                    tree.get(tree.indexOf(tree.get(i).getFather())).setValue(findMinValue(i, k));
-                } else{ //isOdd
-                    tree.get(tree.indexOf(tree.get(i).getFather())).setValue(findMaxValue(i, k));
+                if(tree.get(i).getDepth()>0){
+                    if(isEven){
+                        tree.get(tree.indexOf(tree.get(i).getFather())).setValue(findMinValue(i, k));
+                    } else{ //isOdd
+                        tree.get(tree.indexOf(tree.get(i).getFather())).setValue(findMaxValue(i, k));
+                    }
                 }
+            }
+
+
+
+
+            for(Node x : tree){
+                System.out.println(x.getMove());
+                System.out.println(x.getValue());
             }
             // the tree contains all the values
             // the following part of the algorithm, will choose the best node

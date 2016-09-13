@@ -1,8 +1,6 @@
-package game;
+package useless;
 
 import game.model.Spot;
-import useless.Capture;
-import useless.Move;
 
 import java.util.Arrays;
 import java.util.Iterator;

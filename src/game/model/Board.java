@@ -1,6 +1,6 @@
 package game.model;
 
-public class Board {
+public class Board implements Cloneable{
 
     private Spot[][] board = new Spot[8][8]; // 8x8 board
 	
@@ -108,6 +108,22 @@ public class Board {
             otherP = this.p2;
         else otherP = this.p1;
         return otherP;
+    }
+
+    public Player getP1(){
+        return p1;
+    }
+
+    public Player getP2(){
+        return p2;
+    }
+
+    public Player getPlayerByName(String name){
+        Player p = null;
+        if(p1.getName().equals(name))
+            p = p1;
+        else p = p2;
+        return p;
     }
 }                                                                                                                               
                                                                                                                                 

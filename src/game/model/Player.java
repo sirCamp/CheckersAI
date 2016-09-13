@@ -1,7 +1,5 @@
 package game.model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import game.Tree;
 import game.moveGenerator.MiniMaxTree;
 
 import java.io.BufferedReader;
@@ -122,7 +120,7 @@ public class Player {
             if (this.algorithm.equals("human")) {
                 move = this.readMove();
             } else {
-                MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this);
+                MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this.getName());
                 move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
             }
             singlePiece = getPieceByName(move[0]);
