@@ -23,6 +23,7 @@ public class MiniMaxTree {
     public MiniMaxTree(Board board, Integer depth, String player) throws CloneNotSupportedException {
         this.depth = depth;
         Board copyBoard = board.copy();
+        System.out.println(copyBoard + " e "+board);
         Player p1 = copyBoard.getPlayerByName(player);
         Player otherPlayer = copyBoard.getOtherPlayer(p1);
         createTree(board.copy(), p1, otherPlayer);
@@ -88,7 +89,8 @@ public class MiniMaxTree {
     }
 
     public String decideMove(){
-        Node choice = this.exploreTree();
+        //Node choice = this.exploreTree();
+        Node choice = this.getTree().get(1);
         String move = choice.getMove();
         return move;
     }
@@ -172,7 +174,7 @@ public class MiniMaxTree {
         Integer max = tree.get(0).getValue();
         Integer index = 1;
         Boolean found = false;
-        while(index < tree.size() && tree.get(index).getDepth() == depth){
+        while(index < tree.size() && tree.get(index).getDepth() == 1){
             if(tree.get(index).getValue() == max){
                 found = true;
             }else {

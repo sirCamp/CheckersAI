@@ -122,6 +122,7 @@ public class Player {
             } else {
                 MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this.getName());
                 move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
+                System.out.println("PC: " + move);
             }
             singlePiece = getPieceByName(move[0]);
             can = isAValidMove(board.getBoard(), singlePiece, move[1]);
