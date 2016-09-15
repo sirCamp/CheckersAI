@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Created by enry8 on 30/04/16.
  */
-public class Piece {
+public class Piece implements Cloneable{
 
     private String name;
     private Integer value = 0;
@@ -19,6 +19,20 @@ public class Piece {
         this.value = value;
         this.rowPosition = rowPosition;
         this.colPosition = colPosition;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Piece p = (Piece) super.clone();
+        p.name = new String(this.name);
+        p.value = new Integer(this.value);
+        p.rowPosition = new Integer(this.rowPosition);
+        p.colPosition = new Integer(this.colPosition);
+        return p;
+    }
+
+    public Board copy() throws CloneNotSupportedException {
+        return (Board) this.clone();
     }
 
     public String getColour() {
@@ -105,8 +119,9 @@ public class Piece {
         Integer newRow = this.rowPosition +  (this.rowAlter(direction)*eating); //spostamento x, 2x se si sta mangiando
         Integer newCol = this.colPosition + (this.colAlter(direction)*eating); //spostamento y, 2y se si sta mangiando
         Boolean can = false;
-        if(((direction.equals("moveLeft")) && (this.colPosition < 0))
-            || ((direction.equals("moveRight")) && (this.colPosition > 7))){ // bordo sx
+        //System.out.println(this.getName() + " d "+ direction + " p " + this.colPosition);
+        if(((direction.equals("moveLeft")) && (this.colPosition <= 0))
+            || ((direction.equals("moveRight")) && (this.colPosition >= 7))){ // bordo sx
                 can = false;
         }
         else {

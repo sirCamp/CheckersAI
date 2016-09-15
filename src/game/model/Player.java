@@ -6,23 +6,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by enry8 on 30/04/16.
  */
-public class Player {
+public class Player implements Cloneable{
 
     private ArrayList<Piece> pieces = new ArrayList<Piece>();
     private String algorithm = "human";
     private String name;
     private String colour;
     private Integer eatenPieces = 0;
-    private Integer defaultDepth = 3;
+    private Integer defaultDepth;
 
-    public Player(String algorithm, String name, String colour) {
+    public Player(String algorithm, String name, String colour){
+        this(algorithm, name, colour, 3);
+    }
+
+    public Player(String algorithm, String name, String colour, Integer defaultDepth) {
         this.algorithm = algorithm;
         this.name = name;
         this.colour = colour;
+        this.defaultDepth = defaultDepth;
         int col = 1, row = 0;
         Boolean isNewRow = true;
         if(this.colour.equals("w")){
@@ -49,6 +55,19 @@ public class Player {
                 isNewRow=true;
             }
         }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Player p = (Player) super.clone();
+        p.eatenPieces = new Integer(this.eatenPieces);
+        p.pieces = new ArrayList<Piece>(this.pieces.size());
+        for (Piece piece: this.pieces) p.pieces.add((Piece) piece.clone());
+        return p;
+    }
+
+    public Board copy() throws CloneNotSupportedException {
+        return (Board) this.clone();
     }
 
     public ArrayList<Piece> getPieceList() {
@@ -120,9 +139,9 @@ public class Player {
             if (this.algorithm.equals("human")) {
                 move = this.readMove();
             } else {
-                MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this.getName());
+                board.printBoard();
+                MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this.getName(), this.getAlgorithm());
                 move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
-                System.out.println("PC: " + move);
             }
             singlePiece = getPieceByName(move[0]);
             can = isAValidMove(board.getBoard(), singlePiece, move[1]);
@@ -173,7 +192,7 @@ public class Player {
         return can;
     }
 
-    private Boolean mustEat(Spot[][] board){
+    public Boolean mustEat(Spot[][] board){
         Boolean must = false;
         for(Piece piece : this.getPieceList()){
             if(piece.canCapture(board, "captureLeft") ||  piece.canCapture(board, "captureRight")){

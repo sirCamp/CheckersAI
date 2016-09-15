@@ -2,10 +2,10 @@ package game.model;
 
 import game.model.Piece;
 
-public class Spot {
+public class Spot implements Cloneable{
 
 	private String name;
-	private int value;
+	private Integer value;
 	private Piece occupier;
 
 	
@@ -14,6 +14,19 @@ public class Spot {
 		this.name = name;
 		this.value = value;
 		this.occupier = occupier;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Spot s = (Spot) super.clone();
+		s.name = new String(this.name);
+		s.value = new Integer(this.value);
+		s.occupier = (Piece) this.occupier.clone();
+		return s;
+	}
+
+	public Board copy() throws CloneNotSupportedException {
+		return (Board) this.clone();
 	}
 
 	public int getValue() {
@@ -26,11 +39,6 @@ public class Spot {
 
 	public Piece getOccupier() {
 		return occupier;
-	}
-
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
 	}
 
 	public void setOccupier(Piece occupier) {

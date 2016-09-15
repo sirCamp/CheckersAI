@@ -1,10 +1,12 @@
 package game.model;
 
+import java.util.Arrays;
+
 public class Board implements Cloneable{
 
     private Spot[][] board = new Spot[8][8]; // 8x8 board
 	
-	private boolean capture= false; //???
+	private boolean capture = false; //???
 
     private Player p1;
 
@@ -13,25 +15,18 @@ public class Board implements Cloneable{
 	public Board(Player p1, Player p2)
 	{
         int k=0; // serve per costruire l'id della poszione
-
         this.p1 = p1;
         this.p2 = p2;
-
         int bCount = 0; // id per pedine nere
         int wCount = 0; // id per pedine bianche
 
 		for(int i=0; i<8; i++){
-
             for(int j=0; j<8; j++){
-
                 if((i+j)%2 == 0){ // tutte le caselle occupate hanno il valore col+row dispari
-
                     board[i][j] = null; //casella non utilizzabile
                 }
                 else{
-
                     k++;
-
                     Piece pedina = null; //casella vuota
                     if(i<3){
                         pedina = p1.getPieceList().get(bCount);
@@ -48,7 +43,35 @@ public class Board implements Cloneable{
                 }
             }
         }
-	}	                                                                                                                        
+	}
+
+    public Board(Player p1, Player p2, Boolean copy){
+        int k=0; // serve per costruire l'id della poszione
+        this.p1 = p1;
+        this.p2 = p2;
+        for(int i=0; i<8; i++){
+            for(int j=0; j<8; j++){
+                if((i+j)%2 == 0){ // tutte le caselle occupate hanno il valore col+row dispari
+
+                    board[i][j] = null; //casella non utilizzabile
+                }
+                else{
+
+                    k++;
+
+                    Piece pedina = null; //casella vuota
+                    String position = "S"+Integer.toString(k);
+                    board[i][j] = new Spot(position, 1, pedina);
+                }
+            }
+        }
+        for(int i=0; i< this.p1.getPieceList().size(); i++){
+            board[this.p1.getPieceList().get(i).getRowPosition()][this.p1.getPieceList().get(i).getColPosition()].setOccupier(this.p1.getPieceList().get(i));
+        }
+        for(int i=0; i< this.p2.getPieceList().size(); i++){
+            board[this.p2.getPieceList().get(i).getRowPosition()][this.p2.getPieceList().get(i).getColPosition()].setOccupier(this.p2.getPieceList().get(i));
+        }
+    }
 	                                                                                                                            
 	public Spot[][] getBoard()                                                                                                  
 	{                                                                                                                           
@@ -70,7 +93,8 @@ public class Board implements Cloneable{
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+        Board b = new Board((Player)this.p1.clone(), (Player) this.p2.clone(), true);
+        return b;
     }
 
     public Board copy() throws CloneNotSupportedException {

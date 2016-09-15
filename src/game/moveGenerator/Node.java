@@ -21,7 +21,6 @@ public class Node{
     private Node father = null;
     private Integer depth = 0; // Max
     private Board state;
-    private Map<String, Node> children;
     private Player player;
 
     public Node(String move, Integer value, Node father, Integer depth, Player player, Board state) {
@@ -29,12 +28,7 @@ public class Node{
         this.value = value;
         this.father = father;
         this.depth = depth;
-        try {
-            this.state = state.copy();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        this.children = children;
+        this.state = state;
         this.player = player;
     }
 
@@ -54,14 +48,6 @@ public class Node{
         this.state = state;
     }
 
-    public Map<String, Node> getChildren() {
-        return children;
-    }
-
-    public void setChildren(Map<String, Node> children) {
-        this.children = children;
-    }
-
     public String getMove() {
         return move;
     }
@@ -79,7 +65,7 @@ public class Node{
     }
 
     public void setValue(Integer value) {
-        this.value = value; // TODO: implement evalFunction maybe with another function: this is used to set result of min and max
+        this.value = value;
     }
 
     public Node getFather() {

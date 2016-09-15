@@ -21,8 +21,8 @@ public class Main {
 
 	public static void startGame() throws IOException, CloneNotSupportedException {
 		Random ran = new Random();
-		Integer round = ran.nextInt(2); // who starts?
-		Player p1 = new Player("huma", "p1", "b");
+		Integer round = 0; //ran.nextInt(2); // who starts?
+		Player p1 = new Player("pc", "p1", "b", 2);
 		Player p2 = new Player("human", "p2", "w");
 		Board board = new Board(p1,p2);
 		board.printBoard();

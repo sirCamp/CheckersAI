@@ -4,10 +4,19 @@ package game.model;
  * Created by stefano on 30/04/16.
  */
 
-public class King extends Piece{
+public class King extends Piece implements Cloneable{
 
     public King(Piece p){
         super(p.getColour()+p.getName(), p.getColour(), p.getValue(), p.getRowPosition(), p.getColPosition());
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public Board copy() throws CloneNotSupportedException {
+        return (Board) this.clone();
     }
 
     @Override
