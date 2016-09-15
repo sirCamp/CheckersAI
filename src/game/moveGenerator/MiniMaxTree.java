@@ -1,9 +1,6 @@
 package game.moveGenerator;
 
-import game.model.Board;
-import game.model.Piece;
-import game.model.Player;
-import game.model.Spot;
+import game.model.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,7 +22,6 @@ public class MiniMaxTree {
         Board copyBoard = board.copy();
         Player p1 = copyBoard.getPlayerByName(player);
         Player otherPlayer = copyBoard.getOtherPlayer(p1);
-        copyBoard.printBoard();
         createTree(copyBoard, p1, otherPlayer);
     }
 
@@ -44,9 +40,8 @@ public class MiniMaxTree {
                 currentPlayer = player;
             else currentPlayer = otherP;
             for (int j = 0; j < tree.size(); j++) {
-                System.out.println("cycle "+ j);
                 if(tree.get(j).getDepth()==i-1){ //foreach node inserted on previous iteration (depth = depth -1 ->
-                    if(currentPlayer.mustEat(tree.get(j).getState().getBoard())){
+                    if(currentPlayer.mustEat(tree.get(j).getState().getBoard(), false)){
                         mustEat = true;
                     }
                     for (Piece piece : currentPlayer.getPieceList()) { // node that have tree.get(j) as father
@@ -63,6 +58,22 @@ public class MiniMaxTree {
                         }
                         if (establishPossibleCapture(tree.get(j).getState(), piece, "captureRight")) {
                             tree.add(this.createNode(piece, "captureRight", i, currentPlayer, tree.get(j), tree.get(j).getState()));
+                        }
+                        if(piece instanceof King){
+                            if(!mustEat){
+                                if (establishPossibleMovement(tree.get(j).getState(), piece, "moveDownLeft")) {
+                                    tree.add(this.createNode(piece, "moveDownLeft", i, currentPlayer, tree.get(j), tree.get(j).getState()));
+                                }
+                                if (establishPossibleMovement(tree.get(j).getState(), piece, "moveDownRight")) {
+                                    tree.add(this.createNode(piece, "moveDownRight", i, currentPlayer, tree.get(j), tree.get(j).getState()));
+                                }
+                            }
+                            if (establishPossibleCapture(tree.get(j).getState(), piece, "captureDownLeft")) {
+                                tree.add(this.createNode(piece, "captureDownLeft", i, currentPlayer, tree.get(j), tree.get(j).getState()));
+                            }
+                            if (establishPossibleCapture(tree.get(j).getState(), piece, "captureDownRight")) {
+                                tree.add(this.createNode(piece, "captureDownRight", i, currentPlayer, tree.get(j), tree.get(j).getState()));
+                            }
                         }
                     }
                 }
@@ -195,8 +206,8 @@ public class MiniMaxTree {
         Integer max = tree.get(0).getValue();
         Integer index = 1;
         Boolean found = false;
-        for(int i = 1; i< tree.size(); i++)
-            System.out.println(tree.get(i).getValue() + " d "+ tree.get(i).getDepth() + " m " + tree.get(i).getMove() + " dopo " +tree.get(i).getFather().getMove());
+/*        for(int i = 1; i< tree.size(); i++)
+            System.out.println(tree.get(i).getValue() + " d "+ tree.get(i).getDepth() + " m " + tree.get(i).getMove() + " dopo " +tree.get(i).getFather().getMove());*/
         while(!found && index < tree.size() && tree.get(index).getDepth() == 1){
             if(tree.get(index).getValue() == max){
                 found = true;

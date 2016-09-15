@@ -139,12 +139,12 @@ public class Player implements Cloneable{
             if (this.algorithm.equals("human")) {
                 move = this.readMove();
             } else {
-                board.printBoard();
                 MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this.getName(), this.getAlgorithm());
                 move = tree.decideMove().split(" "); // l'array contiene il nome della pedina e la direzione da seguire
+                System.out.println("PC: "+move[0]+" "+move[1]);
             }
             singlePiece = getPieceByName(move[0]);
-            can = isAValidMove(board.getBoard(), singlePiece, move[1]);
+            can = isAValidMove(board.getBoard(), singlePiece, move[1], this.getAlgorithm().equals("human"));
         }while(!can);
         // all checks are passed -> action is possible
         if(move[1].indexOf("move") > -1){ // more efficient than method String.contains
@@ -167,7 +167,7 @@ public class Player implements Cloneable{
         String[] move = null;
         Boolean correct = false;
         do {
-            System.out.println("Choose your movement");
+            System.out.println("Choose your movement:");
             move = br.readLine().split(" ");
             if(move.length>1) { // per evitare comandi che contengono una sola parola -> errati
                 if ((move[1].indexOf("move") > -1) || (move[1].indexOf("capture") > -1))
@@ -178,29 +178,31 @@ public class Player implements Cloneable{
         return move;
     }
 
-    private Boolean isAValidMove(Spot[][] board, Piece piece, String move){
+    private Boolean isAValidMove(Spot[][] board, Piece piece, String move, Boolean isHuman){
         Boolean can = false;
         if((move.indexOf("move") > -1) && (piece.canMove(board, move, 1))
             || ((move.indexOf("capture") > -1) && (piece.canCapture(board, move)))){
             can = true;
         }
         // controlla se è possibile mangiare e di conseguenza obbligatorio
-        if((move.indexOf("capture") == -1) && this.mustEat(board)){
+        if((move.indexOf("capture") == -1) && this.mustEat(board, isHuman)){
             System.out.println("Not a valid move. One of these pieces must eat!");
             can = false;
         }
         return can;
     }
 
-    public Boolean mustEat(Spot[][] board){
+    public Boolean mustEat(Spot[][] board, Boolean isHuman){
         Boolean must = false;
         for(Piece piece : this.getPieceList()){
             if(piece.canCapture(board, "captureLeft") ||  piece.canCapture(board, "captureRight")){
                 must = true;
-                System.out.println(piece.getName() + " can eat.");
+                if(isHuman)
+                    System.out.println(piece.getName() + " can eat.");
             }
             if((piece instanceof King) && (piece.canCapture(board, "captureDownLeft") ||  piece.canCapture(board, "captureDownRight"))){
-                System.out.println(piece.getName() + " can eat.");
+                if(isHuman)
+                    System.out.println(piece.getName() + " can eat.");
                 must = true;
             }
         }

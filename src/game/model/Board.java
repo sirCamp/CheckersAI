@@ -52,13 +52,10 @@ public class Board implements Cloneable{
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
                 if((i+j)%2 == 0){ // tutte le caselle occupate hanno il valore col+row dispari
-
                     board[i][j] = null; //casella non utilizzabile
                 }
                 else{
-
                     k++;
-
                     Piece pedina = null; //casella vuota
                     String position = "S"+Integer.toString(k);
                     board[i][j] = new Spot(position, 1, pedina);
