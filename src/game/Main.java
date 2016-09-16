@@ -2,16 +2,8 @@ package game;
 
 import game.model.Board;
 import game.model.Player;
-import game.model.Spot;
-import useless.Capture;
-import useless.Move;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Random;
-import java.util.StringTokenizer;
-
 
 public class Main {
 
@@ -19,47 +11,46 @@ public class Main {
 		startGame();
 	}
 
-	public static void startGame() throws IOException, CloneNotSupportedException {
+	private static void startGame() throws IOException, CloneNotSupportedException {
 		Random ran = new Random();
-		Integer round = 0; //ran.nextInt(2); // who starts?
-		Player p1 = new Player("pc", "p1", "b", 399);
-		Player p2 = new Player("human", "p2", "w");
+		Integer round = ran.nextInt(2); // who starts?
+		Integer roundCounter = 0;
+		Player p1 = new Player("pc", "p1", "b", 3);
+		Player p2 = new Player("pc", "p2", "w", 3);
+		// Player p2 = new Player("human", "p2", "w"); pc or human, last value is the tree depth
 		Board board = new Board(p1,p2);
 		board.printBoard();
-		Boolean end = false;
+		Boolean end;
 		do {
 			if(round == 0){
-				System.out.println("p1 (black) has to move");
+				System.out.println("p1 (black) has to move...");
 				p1.move(board);
 				round = 1;
-				end = endGame(p2);
 			}
 			else {
-				System.out.println("p2 (white) has to move");
+				System.out.println("p2 (white) has to move...");
 				p2.move(board);
 				round = 0;
-				end = endGame(p1);
 			}
+            end = endGame(p1) || endGame(p2);
+			roundCounter++;
 			board.printBoard();
-		}while(!end);
-		endGameMessage(round);
+		}while(!end && roundCounter<200);
+		endGameMessage(p1, roundCounter);
 	}
 
-	public static Boolean endGame(Player loser){
-		if(loser.hasLost()==true)
-		{
-			return true;
-		} //else
-		return false;
-	}
+	private static Boolean endGame(Player loser){ return loser.hasLost(); }
 
-	public static void endGameMessage(Integer round){
-		String winner = "";
-		if(round == 1){
-			winner = "p1 (black) ";
-		}else winner = "p2 (white) ";
-		System.out.println(winner + "won the game!");
-		return;
+	private static void endGameMessage(Player p1, Integer roundCounter){
+		if(roundCounter >= 200){
+			System.out.println("It's a draw!");
+		}else{
+			String winner;
+			if(p1.hasLost()){
+				winner = "p2 (white) ";
+			}else winner = "p1 (black) ";
+            System.out.println(winner + "won the game!");
+		}
 	}
 
 }

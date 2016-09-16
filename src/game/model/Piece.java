@@ -1,22 +1,15 @@
 package game.model;
 
-import java.util.Arrays;
-
-/**
- * Created by enry8 on 30/04/16.
- */
 public class Piece implements Cloneable{
 
     private String name;
-    private Integer value = 0;
     private Integer rowPosition;
     private Integer colPosition;
     private String colour;
 
-    public Piece(String name, String colour, Integer value, Integer rowPosition, Integer colPosition) {
+    public Piece(String name, String colour, Integer rowPosition, Integer colPosition) {
         this.name = name;
         this.colour = colour;
-        this.value = value;
         this.rowPosition = rowPosition;
         this.colPosition = colPosition;
     }
@@ -24,30 +17,22 @@ public class Piece implements Cloneable{
     @Override
     protected Object clone() throws CloneNotSupportedException {
         Piece p = (Piece) super.clone();
-        p.name = new String(this.name);
-        p.value = new Integer(this.value);
-        p.rowPosition = new Integer(this.rowPosition);
-        p.colPosition = new Integer(this.colPosition);
+        p.name = this.name;
+        p.colour = this.colour;
+        p.rowPosition = this.rowPosition;
+        p.colPosition = this.colPosition;
         return p;
-    }
-
-    public Board copy() throws CloneNotSupportedException {
-        return (Board) this.clone();
     }
 
     public String getColour() {
         return colour;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
     public Integer getColPosition() {
         return colPosition;
     }
 
-    public void setColPosition(Integer colPosition) {
+    void setColPosition(Integer colPosition) {
         this.colPosition = colPosition;
     }
 
@@ -55,48 +40,16 @@ public class Piece implements Cloneable{
         return rowPosition;
     }
 
-    public void setRowPosition(Integer rowPosition) {
+    void setRowPosition(Integer rowPosition) {
         this.rowPosition = rowPosition;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Piece)) return false;
-
-        Piece piece = (Piece) o;
-
-        if (name != null ? !name.equals(piece.name) : piece.name != null) return false;
-        return (value != null ? value.equals(piece.value) : piece.value == null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-
-
-    public Integer rowAlter(String direction){
-        Integer alter = 0;
+    Integer rowAlter(String direction){
+        Integer alter;
         if(this.colour.equals("b")){
             alter = 1;
         }else{
@@ -105,7 +58,7 @@ public class Piece implements Cloneable{
         return alter;
     }
 
-    public Integer colAlter(String direction){ // left e right si intendono rispetto alla scacchiera
+    Integer colAlter(String direction){ // left and right are absolute directions in the board: they are the same for each player, they are referred to the board orientation
         Integer alter = 0;
         if(direction.equals("moveLeft") || direction.equals("captureLeft")){
             alter = -1;
@@ -116,13 +69,11 @@ public class Piece implements Cloneable{
     }
 
     public Boolean canMove(Spot[][] board, String direction, Integer eating){
-        Integer newRow = this.rowPosition +  (this.rowAlter(direction)*eating); //spostamento x, 2x se si sta mangiando
-        Integer newCol = this.colPosition + (this.colAlter(direction)*eating); //spostamento y, 2y se si sta mangiando
+        Integer newRow = this.getRowPosition() +  (this.rowAlter(direction)*eating); //move = x, 2x if the piece is moving to eat
+        Integer newCol = this.getColPosition() + (this.colAlter(direction)*eating); //move = y, 2y if the piece is moving to eat
         Boolean can = false;
-        //System.out.println(this.getName() + " d "+ direction + " p " + this.colPosition);
-        if(((direction.equals("moveLeft")) && (this.colPosition <= 0))
-            || ((direction.equals("moveRight")) && (this.colPosition >= 7))){ // bordo sx
-                can = false;
+        if((newCol < 0) || (newCol > 7)){
+            can = false;
         }
         else {
             if (Board.inBounds((newRow), (newCol)) &&
@@ -135,8 +86,8 @@ public class Piece implements Cloneable{
     }
 
     public Spot[][] move(Spot[][] board, String direction){
-        Integer newRow = this.rowPosition +  this.rowAlter(direction); //spostamento x
-        Integer newCol = this.colPosition + this.colAlter(direction); //spostamento y
+        Integer newRow = this.rowPosition +  this.rowAlter(direction); // x movement
+        Integer newCol = this.colPosition + this.colAlter(direction); // y movement
         board[newRow][newCol].setOccupier(board[this.rowPosition][this.colPosition].getOccupier());
         board[this.rowPosition][this.colPosition].setOccupier(null);
         this.rowPosition = newRow;
@@ -147,14 +98,13 @@ public class Piece implements Cloneable{
 
     public Boolean canCapture(Spot[][] board, String direction) {
         Boolean can = false;
-        Integer newRow = this.rowPosition + this.rowAlter(direction );
+        Integer newRow = this.rowPosition + this.rowAlter(direction);
         Integer newCol = this.colPosition + this.colAlter(direction);
-
         boolean victimExists = false;
         if (Board.inBounds(newRow, newCol) && board[newRow][newCol] != null
                 && !(board[newRow][newCol].getOccupier() == null)
-                && !(board[newRow][newCol].getOccupier().getColour().equals(this.colour)) //colore pedina diverso
-                && !this.canMove(board, direction, 1)){
+                && !(board[newRow][newCol].getOccupier().getColour().equals(this.colour)) // piece of different colour
+                && this.canMove(board, direction, 1)){
             victimExists = true;
         }
         Integer beyondRow = newRow + this.rowAlter(direction); // position x beyond the piece that would be eaten
@@ -168,11 +118,8 @@ public class Piece implements Cloneable{
 
 
     public Piece capture(String direction, Spot[][] board) {
-        Integer newRow = this.rowPosition + this.rowAlter(direction); //spostamento x
-        Integer newCol = this.colPosition + this.colAlter(direction); //spostamento y
-
-        // kill victim
-
+        Integer newRow = this.rowPosition +  this.rowAlter(direction); // x movement
+        Integer newCol = this.colPosition + this.colAlter(direction); // y movement
         Piece eatenPiece = board[newRow][newCol].getOccupier();
         board[newRow][newCol].setOccupier(null);
         // change killer position
@@ -184,15 +131,5 @@ public class Piece implements Cloneable{
         this.colPosition = beyondCol;
         return eatenPiece;
     }
-
-    public Boolean canCaptureAgain(Spot[][] board) {
-
-        // se il giocatore ha mangiato, si controlla se deve mangiare ancora
-
-        Boolean anotherMove = false;
-        anotherMove = canCapture(board, "left") || canCapture(board, "right");
-        return anotherMove;
-    }
-
 
 }

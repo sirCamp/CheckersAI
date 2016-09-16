@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class MoveGenerator {
 
-
+/*
     static void getMoves(String who, Spot[][] board, Tree tree, int currentDepth) {
 
 //	 	System.out.println("current depth:"+ currentDepth);
@@ -146,7 +146,6 @@ public class MoveGenerator {
 
     }
 
-
     public static Spot[][] copyBoard(Spot[][] board) {
         Spot[][] newBoard = new Spot[6][6];
         Spot[][] y = board;
@@ -164,7 +163,7 @@ public class MoveGenerator {
 
         return newBoard;
     }
-
+*/
 
 }
 
