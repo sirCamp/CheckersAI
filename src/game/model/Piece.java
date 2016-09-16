@@ -194,5 +194,19 @@ public class Piece implements Cloneable{
         return anotherMove;
     }
 
+    public boolean isKing(){
+
+        return (this instanceof Piece);
+    }
+
+    public boolean isWhite(){
+
+        return  this.colour.equals("w");
+    }
+
+    public boolean isBlack(){
+
+        return  this.colour.equals("b");
+    }
 
 }

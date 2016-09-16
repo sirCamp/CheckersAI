@@ -84,4 +84,8 @@ public class Node{
             piece.capture(move, this.state.getBoard());
         }
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

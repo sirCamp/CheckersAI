@@ -4,6 +4,7 @@ import game.model.*;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by enry8 on 03/05/16.
@@ -15,6 +16,7 @@ public class MiniMaxTree {
     private Integer depth = 1;
     private boolean isCapture;
     private String algorithm;
+    private static Map<Integer, Node> cache = new HashMap<>();
 
     public MiniMaxTree(Board board, Integer depth, String player, String algorithm) throws CloneNotSupportedException {
         this.depth = depth;
@@ -23,6 +25,7 @@ public class MiniMaxTree {
         Player p1 = copyBoard.getPlayerByName(player);
         Player otherPlayer = copyBoard.getOtherPlayer(p1);
         createTree(copyBoard, p1, otherPlayer);
+        MiniMaxTree.cache.clear();
     }
 
     public ArrayList<Node> getTree() {
@@ -81,6 +84,18 @@ public class MiniMaxTree {
         }
     }
 
+
+    private Node memoizedCreateNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws CloneNotSupportedException{
+
+        Integer hash = Objects.hash(piece,move,depth,player,father,board);
+        if(MiniMaxTree.cache.containsKey(hash)){
+            return MiniMaxTree.cache.get(hash);
+        }
+        else{
+            return createNode(piece, move, depth, player, father, board);
+        }
+
+    }
 
     private Node createNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws CloneNotSupportedException {
         Board copyOfBoard = board.copy();

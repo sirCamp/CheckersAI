@@ -248,4 +248,15 @@ public class Player implements Cloneable{
         return become;
     }
 
+
+    public boolean isWhite(){
+
+        return this.colour.equals("w");
+    }
+
+    public boolean isBlack(){
+
+        return this.colour.equals("b");
+    }
+
 }
