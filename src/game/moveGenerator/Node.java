@@ -3,61 +3,45 @@ package game.moveGenerator;
 import game.model.Board;
 import game.model.Piece;
 import game.model.Player;
-import game.model.Spot;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-/**
- * Created by enry8 on 03/05/16.
- */
-
+import java.io.IOException;
 
 public class Node{
     private String move; // ex: "w1 moveLeft"
     private Integer value;
     private Node father = null;
-    private Integer depth = 0; // Max
+    private Integer depth = 0;
     private Board state;
+
     private Player player;
 
-    public Node(String move, Integer value, Node father, Integer depth, Player player, Board state) {
+    public Node(String move, Node father, Integer depth, Player player, Board state) {
         this.move = move;
-        this.value = value;
+        this.value = 0;
         this.father = father;
         this.depth = depth;
         this.state = state;
         this.player = player;
     }
 
+
+    public Player getPlayer() { return player; }
+
     public Integer getDepth() {
         return depth;
-    }
-
-    public void setDepth(Integer depth) {
-        this.depth = depth;
     }
 
     public Board getState() {
         return state;
     }
 
-    public void setState(Board state) {
-        this.state = state;
-    }
-
     public String getMove() {
         return move;
     }
 
-    public void setMove(String move) {
-        this.move = move;
-    }
-
     public Piece getPiece() {
-        return player.getPieceByName(move.substring(0,1));
+        String[] moveArray = move.split(" ");
+        String name = moveArray[0];
+        return player.getPieceByName(name);
     }
 
     public Integer getValue() {
@@ -72,17 +56,19 @@ public class Node{
         return father;
     }
 
-    public void setFather(Node father) {
-        this.father = father;
-    }
-
-    public void performAction(Piece piece, String move) {
+    public void performAction(Piece piece, String move) throws IOException {
         if(move.indexOf("move") > -1){ // more efficient than method String.contains
             piece.move(this.state.getBoard(), move);
         }
         else if(move.indexOf("capture") > -1){
-            piece.capture(move, this.state.getBoard());
+            String[] splittedMove = move.split(" ");
+            if(splittedMove.length > 1){
+                piece.capture(splittedMove[0], this.state.getBoard());
+            }else{
+                piece.capture(move, this.state.getBoard());
+            }
         }
+        this.getPlayer().checkIfBecomeKing(piece, this.getState(), true);
     }
 
     public Player getPlayer() {

@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Evaluation {
 
-
+/*
     static int evaluateBoardValue(String who, Tree tree, String command) {
         int total = 0;
         Spot[][] board = tree.getBoard();
@@ -39,4 +39,5 @@ public class Evaluation {
         }
         return total;
     }
+*/
 }
