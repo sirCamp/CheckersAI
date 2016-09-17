@@ -14,11 +14,8 @@ import java.util.Random;
 
 public class Evaluation {
 
-
     private final static Float KINGS_EVAL = 1.4F;
-
     private Integer choice = 0;
-
 
     /**
      * Balanced: is influenced only by the difference of pieces between the two players and the wieght of the pieces: is not aggressive
@@ -313,8 +310,30 @@ public class Evaluation {
         }
     }
 
-    public static Float getEvaluationValue(Node node){
-        return Evaluation.heuristicThree(node);
+    public static Float getEvaluationValue(Node node, Integer heuristic){
+        switch(heuristic){
+            case 1:{
+                return Evaluation.heuristicOne(node);
+            }
+            case 2:{
+                return Evaluation.heuristicTwo(node);
+            }
+            case 3:{
+                return Evaluation.heuristicThree(node);
+            }
+            case 4:{
+                return Evaluation.heuristicFour(node);
+            }
+            case 5:{
+                return Evaluation.heuristicFive(node);
+            }
+            case 6:{
+                return Evaluation.heuristicSix(node);
+            }
+            default:{
+                return Evaluation.heuristicOne(node);
+            }
+        }
     }
 
 }

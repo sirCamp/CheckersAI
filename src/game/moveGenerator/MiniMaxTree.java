@@ -9,11 +9,15 @@ public class MiniMaxTree {
     private ArrayList<Node> tree = new ArrayList<>();
     private Integer depth = 1;
     private String algorithm;
+    private Integer heuristic;
+    private Boolean pruning = false;
     private static Map<Integer, Node> cache = new HashMap<>();
 
     public MiniMaxTree(Board board, Integer depth, String player, String algorithm) throws IOException, CloneNotSupportedException {
         this.depth = depth;
         this.algorithm = algorithm;
+        heuristic = Character.getNumericValue(algorithm.charAt(0));
+        if(algorithm.indexOf("pruning")>-1){ pruning = true; }
         Board copyBoard = board.copy();
         Player p1 = copyBoard.getPlayerByName(player);
         Player otherPlayer = copyBoard.getOtherPlayer(p1);
@@ -188,7 +192,7 @@ public class MiniMaxTree {
     }
 
     private void setEvaluationFunValue(Node node, Boolean isEven){
-        Integer value = Evaluation.getEvaluationValue(node).intValue();
+        Integer value = Evaluation.getEvaluationValue(node, heuristic).intValue();
         node.setValue(value);
     }
 

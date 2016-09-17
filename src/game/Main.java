@@ -11,13 +11,16 @@ public class Main {
 		startGame();
 	}
 
+	/* NB: Human player =>  Player p2 = new Player("human", "p2", "w"); pc or human, last value is the tree depth
+    * *    IA player => Player p2 = new Player("n-pc-pruning", "p2", "w"); where n = heuristic number, if pruning is present in the name, it will be used.
+    * */
 	private static void startGame() throws IOException, CloneNotSupportedException {
 		Random ran = new Random();
-		Integer round = ran.nextInt(2); // who starts?
+		Integer round = (ran.nextInt(10) % 2); // who starts?
 		Integer roundCounter = 0;
-		Player p1 = new Player("pc", "p1", "b", 3);
-		Player p2 = new Player("pc", "p2", "w", 3);
-		// Player p2 = new Player("human", "p2", "w"); pc or human, last value is the tree depth
+		Player p1 = new Player("1-pc", "p1", "b", 3);
+		Player p2 = new Player("5-pc", "p2", "w", 6);
+
 		Board board = new Board(p1,p2);
 		board.printBoard();
 		Boolean end;
