@@ -24,7 +24,7 @@ public class King extends Piece implements Cloneable{
     }
 
     @Override
-    public Integer colAlter(String direction) {
+    public Integer colAlter(String direction) { // left and right are absolute directions in the board: they are the same for each player, they are referred to the board orientation
         Integer alter = 0;
         if(direction.equals("moveLeft") || direction.equals("captureLeft")
                 || direction.equals("moveDownLeft") || direction.equals("captureDownLeft")){

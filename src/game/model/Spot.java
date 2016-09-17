@@ -27,4 +27,5 @@ public class Spot implements Cloneable{
 	}
 
 	public String getName() { return name; }
+
 }

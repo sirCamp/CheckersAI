@@ -50,7 +50,7 @@ public class Piece implements Cloneable{
 
     Integer rowAlter(String direction){
         Integer alter;
-        if((this.colour.equals("b") && (direction.indexOf("Down")==-1)) || ((this.colour.equals("w")) && (direction.indexOf("Down")>-1))){
+        if(this.colour.equals("b")){
             alter = 1;
         }else{
             alter = -1;

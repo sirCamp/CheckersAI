@@ -27,12 +27,12 @@ public class Main {
 		do {
 			if(round == 0){
 				System.out.println("p1 (black) has to move...");
-				p1.move(board);
+				p1.play(board);
 				round = 1;
 			}
 			else {
 				System.out.println("p2 (white) has to move...");
-				p2.move(board);
+				p2.play(board);
 				round = 0;
 			}
             end = endGame(p1) || endGame(p2);

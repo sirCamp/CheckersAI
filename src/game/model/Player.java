@@ -90,18 +90,50 @@ public class Player implements Cloneable{
     }
 
     public Piece getPieceByName(String name){
-        Integer i=0; Boolean found = false;
-        while(i<pieces.size() && !found){
+        int i=0; Boolean found = false;
+        while(i<pieces.size()){
             if(pieces.get(i).getName().equals(name)){
-                found = true;
+                return pieces.get(i);
             }else{
                 i++;
             }
         }
-        if(!found)
-            return null;
-        return pieces.get(i);
+        return null;
     }
+
+    public void play(Board board) throws CloneNotSupportedException, IOException {
+        String[] move;
+        if (this.algorithm.equals("human")) {
+            playerPlay(board);
+        }else{ // computer
+            computerPlay(board);
+        }
+    }
+
+    private void playerPlay(Board board) throws IOException{
+        String[] move;
+        Piece piece;
+        do {
+            move = this.readMove();
+            piece = getPieceByName(move[0]);
+        } while (!isAValidMove(board.getBoard(), piece, move[1]));
+        // all checks are passed -> action will be now performed
+        if (move[1].indexOf("move") > -1) { // more efficient than method String.contains
+            piece.move(board.getBoard(), move[1]);
+            this.checkIfBecomeKing(piece, board);
+        } else if (move[1].indexOf("capture") > -1) {
+            this.performCapture(board, piece, move[1]);
+            mustEatAgain(board, piece); // in which we control if there's a new king
+        }
+    }
+
+    private void performCapture(Board board, Piece piece, String move){
+        Piece eatenPiece = piece.capture(move, board.getBoard());
+        board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
+        board.getOtherPlayer(this).incrEatenPieces();
+    }
+
+    // DA QUI INIZIANO I GUAI
 
     private void setLost(){
         lost = true;
@@ -115,61 +147,38 @@ public class Player implements Cloneable{
         return false;
     }
 
-    public void move(Board board) throws CloneNotSupportedException, IOException {
+    private void computerPlay(Board board) throws IOException, CloneNotSupportedException {
         String[] move;
-        Boolean can;
-        Piece singlePiece;
-        if (this.algorithm.equals("human")) {
-            do {
-                move = this.readMove();
-                singlePiece = getPieceByName(move[0]);
-                can = isAValidMove(board.getBoard(), singlePiece, move[1], this.getAlgorithm().equals("human"));
-            } while (!can);
-            // all checks are passed -> action is possible
-            if (move[1].indexOf("move") > -1) { // more efficient than method String.contains
-                singlePiece.move(board.getBoard(), move[1]);
-                this.checkIfBecomeKing(singlePiece, board, false);
-            } else if (move[1].indexOf("capture") > -1) {
-                Piece eatenPiece = singlePiece.capture(move[1], board.getBoard());
-                board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
-                board.getOtherPlayer(this).incrEatenPieces();
-                mustEatAgain(board, singlePiece);
-                this.checkIfBecomeKing(singlePiece, board, false);
-            }
-        }else{ // computer
-                MiniMaxTree tree = new MiniMaxTree(board, defaultDepth, this.getName(), this.getAlgorithm());
-                String possibleMove = tree.decideMove();
-                if(possibleMove == null){
-                    System.out.println("No more moves for "+this.getName());
-                    this.setLost();
-                }else{
-                    move = possibleMove.split(" "); // the array contains the piece name and its move-direction
-                    computerMove(move, board);
+        MiniMaxTree tree = new MiniMaxTree(board, this.defaultDepth, this.getName(), this.getAlgorithm());
+        String possibleMove = tree.decideMove();
+        if(possibleMove == null){
+            System.out.println("No more moves for "+this.getName());
+            this.setLost();
+        }else {
+            move = possibleMove.split(" "); // the array contains the piece name and its move-direction
+            Integer size = move.length;
+            int j = size - 1;
+            int i = size - 2;
+            while (i >= 0 && j >= 1) {
+                System.out.println("PC: " + move[i] + " " + move[j]);
+                Piece singlePiece = getPieceByName(move[i]);
+                if (move[j].indexOf("move") > -1) { // more efficient than method String.contains
+                    singlePiece.move(board.getBoard(), move[j]);
+                    this.checkIfBecomeKing(singlePiece, board);
                 }
+                if (move[j].indexOf("capture") > -1) {
+                    Piece eatenPiece = singlePiece.capture(move[j], board.getBoard());
+                    board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
+                    board.getOtherPlayer(this).incrEatenPieces();
+                    this.checkIfBecomeKing(singlePiece, board);
+                }
+                j = j - 2;
+                i = i - 2;
+            }
         }
     }
 
-    private void computerMove(String[] move, Board board) throws IOException {
-        Integer size = move.length;
-        int j = size-1;
-        int i = size-2;
-        while(i>=0 && j >= 1){
-            System.out.println("PC: "+move[i]+" "+move[j]);
-            Piece singlePiece = getPieceByName(move[i]);
-            if(move[j].indexOf("move") > -1){ // more efficient than method String.contains
-                singlePiece.move(board.getBoard(), move[j]);
-                this.checkIfBecomeKing(singlePiece, board, false);
-            }
-            if(move[j].indexOf("capture") > -1){
-                Piece eatenPiece = singlePiece.capture(move[j], board.getBoard());
-                board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
-                board.getOtherPlayer(this).incrEatenPieces();
-                this.checkIfBecomeKing(singlePiece, board, false);
-            }
-            j = j - 2;
-            i = i - 2;
-        }
-    }
+    // FINISCONO QUI I GUAI
 
     /* the following function reads the user input and checks if it is correct*/
     private String[] readMove() throws IOException {
@@ -182,39 +191,29 @@ public class Player implements Cloneable{
             move = br.readLine().split(" ");
             if(move.length>1) { // to avoid wrong command that contain only one word
                 if ((move[1].indexOf("move") > -1) || (move[1].indexOf("capture") > -1))
-                    if ((this.colour.equals("b") && move[0].indexOf("b") > -1) || (this.colour.equals("w") && move[0].indexOf("w") > -1)) // move ordered by the player to his pieces
+                    if(this.getPieceByName(move[0]) != null) // move ordered by the player to his pieces
                         correct = true;
             }
         }while(!correct);
         return move;
     }
 
-    private Boolean isAValidMove(Spot[][] board, Piece piece, String move, Boolean isHuman){
-        Boolean can = false;
-        if((move.indexOf("move") > -1) && (piece.canMove(board, move, 1))
-            || ((move.indexOf("capture") > -1) && (piece.canCapture(board, move)))){
-            can = true;
-        }
+    private Boolean isAValidMove(Spot[][] board, Piece piece, String move){
+        Boolean mustEat = this.mustEat(board, true);
         // it controls if it is possible to eat and consequently mandatory
-        if((move.indexOf("capture") == -1) && this.mustEat(board, isHuman)){
-            System.out.println("Not a valid move. One of these pieces must eat!");
-            can = false;
-        }
-        return can;
+        // if it isn't possibile, it controls if the movement is correct
+        return (((move.indexOf("move") > -1) && (piece.canMove(board, move, 1)) && !mustEat) ||
+                ((move.indexOf("capture") > -1) && (piece.canCapture(board, move))) && mustEat);
     }
 
     public Boolean mustEat(Spot[][] board, Boolean isHuman){
         Boolean must = false;
         for(Piece piece : this.getPieceList()){
-            if(piece.canCapture(board, "captureLeft") ||  piece.canCapture(board, "captureRight")){
+            if((piece.canCapture(board, "captureLeft") || piece.canCapture(board, "captureRight")) ||
+                ((piece instanceof King) && (piece.canCapture(board, "captureDownLeft") ||  piece.canCapture(board, "captureDownRight")))){
                 must = true;
                 if(isHuman)
                     System.out.println(piece.getName() + " can eat.");
-            }
-            if((piece instanceof King) && (piece.canCapture(board, "captureDownLeft") ||  piece.canCapture(board, "captureDownRight"))){
-                if(isHuman)
-                    System.out.println(piece.getName() + " can eat.");
-                must = true;
             }
         }
         return must;
@@ -222,46 +221,46 @@ public class Player implements Cloneable{
 
     private void mustEatAgain(Board board, Piece piece) throws IOException {
         String[] move;
-        while((piece.canCapture(board.getBoard(), "captureLeft") ||  piece.canCapture(board.getBoard(), "captureRight"))
-        || ((piece instanceof King) && (piece.canCapture(board.getBoard(), "captureDownLeft") ||  piece.canCapture(board.getBoard(), "captureDownRight")))){
+        Boolean done = false;
+        if((piece.canCapture(board.getBoard(), "captureLeft") ||  piece.canCapture(board.getBoard(), "captureRight")) ||
+            ((piece instanceof King) && (piece.canCapture(board.getBoard(), "captureDownLeft") || piece.canCapture(board.getBoard(), "captureDownRight")))){
             // repeated while piece can eat (concatenated eating)
             board.printBoard();
-            System.out.println(piece.getName() + " must eat again. Choose your movement.");
-            InputStreamReader isr = new InputStreamReader(System.in);
-            BufferedReader br = new BufferedReader(isr);
-            move = br.readLine().split(" ");
-            if(move[1].indexOf("capture") > -1) {
-                if ((this.colour.equals("b") && move[0].indexOf("b") > -1) ||
-                (this.colour.equals("w") && move[0].indexOf("w") > -1)) {
-                    if((move[1].indexOf("capture") > -1) && (piece.canCapture(board.getBoard(), move[1]))){
-                        Piece eatenPiece = piece.capture(move[1], board.getBoard());
-                        board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
-                        board.getOtherPlayer(this).incrEatenPieces();
-                    }
+            System.out.println(piece.getName() + " must eat again.");
+            do{
+                move = this.readMove();
+                if((move[1].indexOf("capture") > -1) && (this.getPieceByName(move[0]).equals(piece.getName())) && (piece.canCapture(board.getBoard(), move[1]))){
+                    performCapture(board, piece, move[1]);
+                    done = true;
+                }else{
+                    System.out.println(" Some mistakes encountered. Please re-write your movement.");
                 }
-            }
+            }while(!done);
         }
+            King hypotheticKing = this.checkIfBecomeKing(piece, board);
+            if(hypotheticKing != null)
+                mustEatAgain(board, hypotheticKing);
     }
 
-
+// QUA RICOMINCIANO I GUAI
     public Boolean pcMustEatAgain(Board board, Piece piece) {
         return (piece.canCapture(board.getBoard(), "captureLeft") || piece.canCapture(board.getBoard(), "captureRight"))
                 || ((piece instanceof King) && (piece.canCapture(board.getBoard(), "captureDownLeft") || piece.canCapture(board.getBoard(), "captureDownRight")));
     }
 
-    public Boolean checkIfBecomeKing(Piece piece, Board board, Boolean exploring) throws IOException {
-        Boolean become = false;
+    //QUA FINISCONO
+
+    public King checkIfBecomeKing(Piece piece, Board board) throws IOException {
+        King returningKing = null;
         if(!(piece instanceof King) && ((piece.getColour().equals("b") && piece.getRowPosition() == 7) ||
             (piece.getColour().equals("w") && piece.getRowPosition() == 0))){
             King king = new King(piece);
             this.getPieceList().remove(piece);
             this.getPieceList().add(king);
             board.getBoard()[king.getRowPosition()][king.getColPosition()].setOccupier(king);
-            if(!exploring && this.getAlgorithm().equals("human"))
-                mustEatAgain(board, piece);
-            become = true;
+            returningKing = king;
         }
-        return become;
+        return returningKing;
     }
 
     public boolean isWhite(){ return this.colour.equals("w"); }

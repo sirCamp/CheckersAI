@@ -68,7 +68,7 @@ public class Node{
             }
             //eatenpiece TODO: remove piece from pieceList
         }
-        this.getPlayer().checkIfBecomeKing(piece, this.getState(), true);
+        this.getPlayer().checkIfBecomeKing(piece, this.getState());
     }
 
     public Player getPlayer() {
