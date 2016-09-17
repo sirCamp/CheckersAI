@@ -1,5 +1,6 @@
 package game.moveGenerator;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import game.model.*;
 import java.io.IOException;
 import java.util.*;
@@ -75,7 +76,6 @@ public class MiniMaxTree {
         }
     }
 
-
     /*private Node memoizedCreateNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws CloneNotSupportedException, IOException {
 
         Integer hash = Objects.hash(piece,move,depth,player,father,board);
@@ -87,7 +87,6 @@ public class MiniMaxTree {
         }
 
     }*/
-
 
     private void createNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws  IOException {
         Board copyOfBoard = null;
@@ -147,73 +146,9 @@ public class MiniMaxTree {
         }
     }
 
-    private Node exploreTree(){ // backtracking
-        Node result = null;
-        int last = tree.size()-1;
-        Integer currentDepth = tree.get(last).getDepth();
-        int j = last;
-        Boolean isEven = false; //(even row -> max, odd row -> min
-        if(tree.get(last).getDepth()%2 == 0){
-            isEven = true;
-        }
-        while(tree.get(j).getDepth().equals(currentDepth)){
-            setEvaluationFunValue(tree.get(j), isEven);
-            j--;
-        }
-        /* now, base on depth, we must know if it is even or odd,
-        in order to apply findMin or findMax function to update father nodes: */
-        for(int i = last; i>0; i--){
-            if(!tree.get(i).getDepth().equals(currentDepth)){ // if depth is changed while exploring
-                currentDepth = tree.get(i).getDepth();
-                isEven = !isEven;
-            }
-            Node father = tree.get(i).getFather();
-            int k=i;
-            while(i > 0 && father.equals(tree.get(i).getFather())){
-                i--;
-            }
-            i++;
-            if(tree.get(i).getDepth()>0){
-                if(isEven){
-                    tree.get(tree.indexOf(tree.get(i).getFather())).setValue(findMinValue(i, k));
-                } else{ //isOdd
-                    tree.get(tree.indexOf(tree.get(i).getFather())).setValue(findMaxValue(i, k));
-                }
-            }
-
-        }
-        // the tree contains all the values
-        // the following part of the algorithm, will choose the best node
-        Integer index = searchIndexOfMaxNode();
-        if(index != -1){
-            result = tree.get(index);
-        }
-        return result;
-    }
-
     private void setEvaluationFunValue(Node node, Boolean isEven){
         Integer value = Evaluation.getEvaluationValue(node, heuristic).intValue();
         node.setValue(value);
-    }
-
-    private Integer findMinValue(int i, int k){
-        int min = tree.get(i).getValue();
-        for(int j= i; j<=k; j++){
-            if(min>= tree.get(j).getValue()){
-                min = tree.get(j).getValue();
-            }
-        }
-        return min;
-    }
-
-    private Integer findMaxValue(int i, int k){
-        int max = tree.get(i).getValue();
-        for(int j= i; j<=k; j++){
-            if(max<= tree.get(j).getValue()){
-                max = tree.get(j).getValue();
-            }
-        }
-        return max;
     }
 
     private Integer searchIndexOfMaxNode(){
@@ -232,6 +167,155 @@ public class MiniMaxTree {
         } else {
             return -1;
         }
+    }
+
+    private Node exploreTree(){ // backtracking
+        Node result = null;
+        int last = tree.size()-1;
+        Integer currentDepth = tree.get(last).getDepth();
+        int j = last;
+        Boolean isEven = false; //(even row -> max, odd row -> min
+        if(tree.get(last).getDepth()%2 == 0){
+            isEven = true;
+        }
+        while(tree.get(j).getDepth().equals(currentDepth)){
+            setEvaluationFunValue(tree.get(j), isEven);
+            j--;
+        }
+        /* now, base on depth, we must know if it is even or odd,
+        in order to apply findMin or findMax function to update father nodes: */
+        int i = last;
+        while(i>0){
+            if(!tree.get(i).getDepth().equals(currentDepth)){ // if depth is changed while exploring
+                currentDepth = tree.get(i).getDepth();
+                isEven = !isEven;
+            }
+            Node father = tree.get(i).getFather();
+            int lastSon = i;
+            while(i > 0 && father.equals(tree.get(i).getFather())){
+                i--;
+            }
+            int firstSon = i+1;
+            if(tree.get(firstSon).getDepth()>0){
+                if(isEven){
+                    tree.get(tree.indexOf(tree.get(firstSon).getFather())).setValue(findMinValue(firstSon, lastSon));
+                } else{ //isOdd
+                    tree.get(tree.indexOf(tree.get(firstSon).getFather())).setValue(findMaxValue(firstSon, lastSon));
+                }
+            }
+        }
+        /* the tree contains all the values the following part of the algorithm, will choose the best node */
+        Integer index = searchIndexOfMaxNode();
+        if(index != -1){
+            result = tree.get(index);
+        }
+        return result;
+    }
+
+    private Integer findMinValue(int firstSon, int lastSon){
+        int min = tree.get(firstSon).getValue();
+        for(int j = firstSon; j<=lastSon; j++){
+            if(min > tree.get(j).getValue()){
+                min = tree.get(j).getValue();
+            }
+        }
+        return min;
+    }
+
+    private Integer findMaxValue(int firstSon, int lastSon){
+        int max = tree.get(firstSon).getValue();
+        for(int j= firstSon; j<=lastSon; j++){
+            if(max < tree.get(j).getValue()){
+                max = tree.get(j).getValue();
+            }
+        }
+        return max;
+    }
+
+    /* Pruning */
+    private Node exploreTreePruning(){ // backtracking
+        Node result = null;
+        int last = tree.size()-1;
+        Integer currentDepth = tree.get(last).getDepth();
+        int j = last;
+        Boolean isEven = false; //(even row -> max, odd row -> min
+        if(tree.get(last).getDepth()%2 == 0){
+            isEven = true;
+        }
+        while(tree.get(j).getDepth().equals(currentDepth)){
+            setEvaluationFunValue(tree.get(j), isEven);
+            j--;
+        }
+        /* now, base on depth, we must know if it is even or odd,
+        in order to apply findMin or findMax function to update father nodes: */
+        int i = last;
+        int pruningValue = 0;
+        while(i>0){
+            if(!tree.get(i).getDepth().equals(currentDepth)){ // if depth is changed while exploring
+                currentDepth = tree.get(i).getDepth();
+                isEven = !isEven;
+                if(isEven){
+                    pruningValue = Integer.MIN_VALUE;
+                }else{
+                    pruningValue = Integer.MAX_VALUE;
+                }
+            }
+            Node father = tree.get(i).getFather();
+            int lastSon = i;
+            while(i > 0 && father.equals(tree.get(i).getFather())){
+                i--;
+            }
+            int firstSon = i+1;
+            if(tree.get(firstSon).getDepth()>0){
+                if(isEven){
+                    tree.get(tree.indexOf(tree.get(firstSon).getFather())).setValue(findMinValuePruning(firstSon, lastSon, pruningValue));
+                } else{ //isOdd
+                    tree.get(tree.indexOf(tree.get(firstSon).getFather())).setValue(findMaxValuePruning(firstSon, lastSon, pruningValue));
+                }
+            }
+            pruningValue = updatePruningValue(isEven, tree.get(firstSon).getFather().getValue(), pruningValue);
+        }
+        /* the tree contains all the values the following part of the algorithm, will choose the best node */
+        Integer index = searchIndexOfMaxNode();
+        if(index != -1){
+            result = tree.get(index);
+        }
+        return result;
+    }
+
+    private int updatePruningValue(Boolean isEven, Integer value, int exPruningValue) {
+        if(isEven && exPruningValue<value){
+            return value;
+        }else if(isEven && exPruningValue >= value){
+            return exPruningValue;
+        }else if(!isEven && exPruningValue > value){
+            return value;
+        }else{
+            return exPruningValue;
+        }
+    }
+
+    private Integer findMinValuePruning(int firstSon, int lastSon, int pruningValue){
+        int min = tree.get(firstSon).getValue();
+        int j = firstSon;
+        while(j <= lastSon && min >= pruningValue){
+            if(min > tree.get(j).getValue()){
+                min = tree.get(j).getValue();
+            }
+            j++;
+        }
+        return min;
+    }
+
+    private Integer findMaxValuePruning(int firstSon, int lastSon, int pruningValue){
+        int max = tree.get(firstSon).getValue();
+        int j = firstSon;
+        while(j <= lastSon && max <= pruningValue){
+            if(max < tree.get(j).getValue()){
+                max = tree.get(j).getValue();
+            }
+        }
+        return max;
     }
 
 }
