@@ -25,10 +25,10 @@ public class Evaluation {
     /**
      * Balanced: is influenced only by the difference of pieces between the two players and the wieght of the pieces: is not aggressive
      * @param node
-     * @param choice
+
      * @return
      */
-    private static Float heuristicOne(Node node, Integer choice){
+    private static Float heuristicOne(Node node){
         Spot[][] board = node.getState().getBoard();
 
         float black = 0;
@@ -42,9 +42,10 @@ public class Evaluation {
 
             for(int j = 0; j < 8; j++){
 
-                Piece piece = board[i][j].getOccupier();
-                if( piece != null){
 
+                if( board[i][j] != null && board[i][j].getOccupier() != null){
+
+                    Piece piece = board[i][j].getOccupier();
                     if(piece.isKing()){
 
                         if(piece.isWhite()){
@@ -80,10 +81,10 @@ public class Evaluation {
     /**
      * Randomized: Radomize the value of the current state
      * @param node
-     * @param choice
+
      * @return
      */
-    private static Float heuristicTwo(Node node, Integer choice){
+    private static Float heuristicTwo(Node node){
 
 
         Random rand = new Random();
@@ -96,14 +97,14 @@ public class Evaluation {
     /**
      * Centrality: Influece the checkers to move into the middle of board
      * @param node
-     * @param choice
+
      * @return
      */
-    private static Float heuristicThree(Node node, Integer choice){
+    private static Float heuristicThree(Node node){
 
         Spot [][] board = node.getState().getBoard();
 
-        Float partial = Evaluation.heuristicOne(node, choice);
+        Float partial = Evaluation.heuristicOne(node);
 
         Float result = 0f;
 
@@ -113,8 +114,9 @@ public class Evaluation {
 
             for(int j = 0; j < 8; j ++){
 
-                Piece piece = board[i][j].getOccupier();
-                if( piece != null){
+                if( board[i][j] != null && board[i][j].getOccupier() != null){
+
+                    Piece piece = board[i][j].getOccupier();
 
                     /*Setto valori per mosse*/
                     float negative = 0.5f;
@@ -159,14 +161,13 @@ public class Evaluation {
      * Backrow: encourage some player to stay behind and keep covered the border
      *
      * @param node
-     * @param choice
      * @return
      */
-    private static Float heuristicFour(Node node, Integer choice){
+    private static Float heuristicFour(Node node){
 
         Spot [][] board = node.getState().getBoard();
 
-        Float partial = Evaluation.heuristicOne(node, choice);
+        Float partial = Evaluation.heuristicOne(node);
 
         Float result = 0f;
 
@@ -176,8 +177,9 @@ public class Evaluation {
 
             for(int j = 0; j < 8; j++){
 
-                Piece piece = board[i][j].getOccupier();
-                if( piece != null){
+                if( board[i][j] != null && board[i][j].getOccupier() != null){
+
+                    Piece piece = board[i][j].getOccupier();
 
                     /*Setto valori per mosse*/
                     float negative = 0.5f;
@@ -227,12 +229,12 @@ public class Evaluation {
      * -3 for squares near to kings
      *
      * @param node
-     * @param choice
+
      * @return
      */
-    private static Float heuristicFive(Node node, Integer choice){
+    private static Float heuristicFive(Node node){
 
-        Float partial = Evaluation.heuristicOne(node,choice);
+        Float partial = Evaluation.heuristicOne(node);
 
         Spot [][] board = node.getState().getBoard();
 
@@ -244,8 +246,9 @@ public class Evaluation {
 
             for (int j = 0; j < 8; j++) {
 
-                Piece piece = board[i][j].getOccupier();
-                if(piece != null) {
+                if( board[i][j] != null && board[i][j].getOccupier() != null){
+
+                    Piece piece = board[i][j].getOccupier();
 
 
                     /*Setto valori per mosse*/
@@ -259,15 +262,15 @@ public class Evaluation {
                     //center
                     if (Utils.isInCenter(i, j)) {
 
-                        positive =5;
-                        negative = -1;
+                        positive =6;
+                        negative = 1;
                     }
 
                     //
                     if (Utils.isInEdge(j)) {
 
                         positive = 2;
-                        negative = -0.5f;
+                        negative = 1f;
                     }
 
                     if(Utils.isNearKing(i, j, board, piece)){
@@ -314,10 +317,9 @@ public class Evaluation {
      *
      *
      * @param node
-     * @param choice
      * @return
      */
-    private static Float heuristicSix(Node node, Integer choice){
+    private static Float heuristicSix(Node node){
 
         Spot[][] board = node.getState().getBoard();
 
@@ -332,8 +334,9 @@ public class Evaluation {
 
             for(int j = 0; j < 8; j++){
 
-                Piece piece = board[i][j].getOccupier();
-                if( piece != null){
+                if( board[i][j] != null && board[i][j].getOccupier() != null){
+
+                    Piece piece = board[i][j].getOccupier();
 
                     if(piece.isKing()){
 
@@ -384,10 +387,10 @@ public class Evaluation {
 
 
 
-    public static Float getEvaluationValue(Node node, Integer choice){
+    public static Float getEvaluationValue(Node node){
 
 
-        return Evaluation.heuristicOne(node,choice);
+        return Evaluation.heuristicThree(node);
 
     }
 

@@ -73,7 +73,7 @@ public class MiniMaxTree {
     }
 
 
-    private Node memoizedCreateNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws CloneNotSupportedException{
+    /*private Node memoizedCreateNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws CloneNotSupportedException, IOException {
 
         Integer hash = Objects.hash(piece,move,depth,player,father,board);
         if(MiniMaxTree.cache.containsKey(hash)){
@@ -83,7 +83,7 @@ public class MiniMaxTree {
             return createNode(piece, move, depth, player, father, board);
         }
 
-    }
+    }*/
 
 
     private void createNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws  IOException {
@@ -94,7 +94,17 @@ public class MiniMaxTree {
 
         Player copyOfPlayer = copyOfBoard.getPlayerByName(player.getName());
         Piece copyOfPiece = copyOfPlayer.getPieceByName(piece.getName());
-        Node tmp = new Node(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
+
+        Node tmp = null;
+
+        Integer hash = Objects.hash(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
+        if(MiniMaxTree.cache.containsKey(hash)){
+            tmp =  MiniMaxTree.cache.get(hash);
+        }
+        else{
+            tmp = new Node(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
+        }
+
         tmp.performAction(copyOfPiece, move);
         if(move.indexOf("capture")>-1 && copyOfPlayer.pcMustEatAgain(copyOfBoard, copyOfPiece)){
             continueCapture(tmp, depth);
@@ -180,13 +190,14 @@ public class MiniMaxTree {
 
     private void setEvaluationFunValue(Node node, Boolean isEven){
         Random ran = new Random();
-        Integer value = ran.nextInt(10);
+        //Integer value = ran.nextInt(10);
+        Integer value = Evaluation.getEvaluationValue(node).intValue();
         node.setValue(value);
         if(node.getMove().indexOf("capture")>-1) { // capture has priority
-            if (isEven)
-                node.setValue(value - 100);
-            else // isOdd
-                node.setValue(value + 100);
+           // if (isEven)
+                //node.setValue(value - 100);
+            //else // isOdd
+                //node.setValue(value + 100);
         }
     }
 

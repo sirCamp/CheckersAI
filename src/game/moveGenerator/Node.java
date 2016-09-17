@@ -24,8 +24,6 @@ public class Node{
     }
 
 
-    public Player getPlayer() { return player; }
-
     public Integer getDepth() {
         return depth;
     }
