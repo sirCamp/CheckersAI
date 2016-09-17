@@ -18,7 +18,6 @@ public class MiniMaxTree {
         Player p1 = copyBoard.getPlayerByName(player);
         Player otherPlayer = copyBoard.getOtherPlayer(p1);
         createTree(copyBoard, p1, otherPlayer);
-        MiniMaxTree.cache.clear();
     }
 
     private void createTree(Board board, Player player, Player otherP) throws IOException {
@@ -189,16 +188,8 @@ public class MiniMaxTree {
     }
 
     private void setEvaluationFunValue(Node node, Boolean isEven){
-        Random ran = new Random();
-        //Integer value = ran.nextInt(10);
         Integer value = Evaluation.getEvaluationValue(node).intValue();
         node.setValue(value);
-        if(node.getMove().indexOf("capture")>-1) { // capture has priority
-           // if (isEven)
-                //node.setValue(value - 100);
-            //else // isOdd
-                //node.setValue(value + 100);
-        }
     }
 
     private Integer findMinValue(int i, int k){

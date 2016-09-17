@@ -121,5 +121,6 @@ public class Board implements Cloneable{
         else p = p2;
         return p;
     }
+
 }                                                                                                                               
                                                                                                                                 

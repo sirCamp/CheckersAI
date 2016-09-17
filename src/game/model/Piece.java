@@ -95,7 +95,6 @@ public class Piece implements Cloneable{
         return board;
     }
 
-
     public Boolean canCapture(Spot[][] board, String direction) {
         Boolean can = false;
         Integer newRow = this.rowPosition + this.rowAlter(direction);
@@ -116,7 +115,6 @@ public class Piece implements Cloneable{
         return can;
     }
 
-
     public Piece capture(String direction, Spot[][] board) {
         Integer newRow = this.rowPosition +  this.rowAlter(direction); // x movement
         Integer newCol = this.colPosition + this.colAlter(direction); // y movement
@@ -132,19 +130,10 @@ public class Piece implements Cloneable{
         return eatenPiece;
     }
 
-    public boolean isKing(){
+    public boolean isKing(){ return (this instanceof Piece); }
 
-        return (this instanceof Piece);
-    }
+    public boolean isWhite(){ return  this.colour.equals("w"); }
 
-    public boolean isWhite(){
-
-        return  this.colour.equals("w");
-    }
-
-    public boolean isBlack(){
-
-        return  this.colour.equals("b");
-    }
+    public boolean isBlack(){ return  this.colour.equals("b"); }
 
 }
