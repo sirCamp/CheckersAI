@@ -85,7 +85,7 @@ public class Player implements Cloneable{
         return eatenPieces;
     }
 
-    private void incrEatenPieces() {
+    public void incrEatenPieces() {
         this.eatenPieces++;
     }
 

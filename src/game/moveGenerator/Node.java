@@ -60,11 +60,13 @@ public class Node{
         }
         else if(move.indexOf("capture") > -1){
             String[] splittedMove = move.split(" ");
+            Piece eatenPiece;
             if(splittedMove.length > 1){
-                piece.capture(splittedMove[0], this.state.getBoard());
+                eatenPiece = piece.capture(splittedMove[0], this.state.getBoard());
             }else{
-                piece.capture(move, this.state.getBoard());
+                eatenPiece = piece.capture(move, this.state.getBoard());
             }
+            //eatenpiece TODO: remove piece from pieceList
         }
         this.getPlayer().checkIfBecomeKing(piece, this.getState(), true);
     }

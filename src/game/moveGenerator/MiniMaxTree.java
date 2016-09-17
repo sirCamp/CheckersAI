@@ -1,5 +1,6 @@
 package game.moveGenerator;
 
+import com.sun.org.apache.xml.internal.serializer.utils.SystemIDResolver;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import game.model.*;
 import java.io.IOException;
@@ -36,11 +37,11 @@ public class MiniMaxTree {
             for (int j = 0; j < tree.size(); j++) {
                 Node node = tree.get(j);
                 if(tree.get(j).getDepth()==i-1){ //foreach node inserted on previous iteration (depth = depth -1 ->
-                    if(currentPlayer.mustEat(node.getState().getBoard(), false)){
+/*                    if(currentPlayer.mustEat(node.getState().getBoard(), false)){
                         mustEat = true;
-                    }
+                    }*/
                     for (Piece piece : currentPlayer.getPieceList()) { // node that have tree.get(j) as father
-                        if(!mustEat){
+                        if(!currentPlayer.mustEat(node.getState().getBoard(), false)){
                             if (establishPossibleMovement(node.getState(), piece, "moveLeft")) {
                                 this.createNode(piece, "moveLeft", i, currentPlayer, node, node.getState());
                             }
@@ -55,7 +56,7 @@ public class MiniMaxTree {
                             this.createNode(piece, "captureRight", i, currentPlayer, node, node.getState());
                         }
                         if(piece instanceof King){
-                            if(!mustEat){
+                            if(!currentPlayer.mustEat(node.getState().getBoard(), false)){
                                 if (establishPossibleMovement(node.getState(), piece, "moveDownLeft")) {
                                     this.createNode(piece, "moveDownLeft", i, currentPlayer, node, node.getState());
                                 }
@@ -193,6 +194,9 @@ public class MiniMaxTree {
             Node father = tree.get(i).getFather();
             int lastSon = i;
             while(i > 0 && father.equals(tree.get(i).getFather())){
+                if(tree.get(i).getFather() != null) System.out.print(tree.get(i).getFather().getMove()+" > ");
+                System.out.println(tree.get(i).getMove());
+                //tree.get(i).getState().printBoard();
                 i--;
             }
             int firstSon = i+1;

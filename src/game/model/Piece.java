@@ -50,7 +50,7 @@ public class Piece implements Cloneable{
 
     Integer rowAlter(String direction){
         Integer alter;
-        if(this.colour.equals("b")){
+        if((this.colour.equals("b") && (direction.indexOf("Down")==-1)) || ((this.colour.equals("w")) && (direction.indexOf("Down")>-1))){
             alter = 1;
         }else{
             alter = -1;
@@ -103,7 +103,7 @@ public class Piece implements Cloneable{
         if (Board.inBounds(newRow, newCol) && board[newRow][newCol] != null
                 && !(board[newRow][newCol].getOccupier() == null)
                 && !(board[newRow][newCol].getOccupier().getColour().equals(this.colour)) // piece of different colour
-                && this.canMove(board, direction, 1)){
+                && !this.canMove(board, direction, 1)){
             victimExists = true;
         }
         Integer beyondRow = newRow + this.rowAlter(direction); // position x beyond the piece that would be eaten
