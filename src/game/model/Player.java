@@ -126,13 +126,21 @@ public class Player implements Cloneable{
             this.checkIfBecomeKing(piece, board);
         } else if (move[1].indexOf("capture") > -1) {
             this.performCapture(board, piece, move[1]);
-            mustEatAgain(board, piece); // in which we control if there's a new king
+            Boolean checkAgain = true; // if it's possible to eat again
+            do {
+                King king = this.checkIfBecomeKing(piece, board);
+                if (king != null) {
+                    checkAgain = mustEatAgain(board, king);
+                } else {
+                    checkAgain = mustEatAgain(board, piece); // in which we control if there's a new king
+                }
+            }while(checkAgain);
         }
     }
 
     public void performCapture(Board board, Piece piece, String move){
-        Piece eatenPiece = piece.capture(move, board.getBoard());
-        board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
+        String eatenPiece = piece.capture(move, board.getBoard());
+        board.getOtherPlayer(this).getPieceList().remove(board.getOtherPlayer(this).getPieceByName(eatenPiece));
         board.getOtherPlayer(this).incrEatenPieces();
     }
 
@@ -211,9 +219,10 @@ public class Player implements Cloneable{
         return must;
     }
 
-    private void mustEatAgain(Board board, Piece piece) throws IOException {
+    private Boolean mustEatAgain(Board board, Piece piece) throws IOException {
         String[] move;
         Boolean done = false;
+        Boolean checkAgain = true;
         if((piece.canCapture(board.getBoard(), "captureLeft") ||  piece.canCapture(board.getBoard(), "captureRight")) ||
             ((piece instanceof King) && (piece.canCapture(board.getBoard(), "captureDownLeft") || piece.canCapture(board.getBoard(), "captureDownRight")))){
             // repeated while piece can eat (concatenated eating)
@@ -221,17 +230,17 @@ public class Player implements Cloneable{
             System.out.println(piece.getName() + " must eat again.");
             do{
                 move = this.readMove();
-                if((move[1].indexOf("capture") > -1) && (this.getPieceByName(move[0]).equals(piece.getName())) && (piece.canCapture(board.getBoard(), move[1]))){
+                if((move[1].indexOf("capture") > -1) && ((move[0]).equals(piece.getName())) && (piece.canCapture(board.getBoard(), move[1]))){
                     performCapture(board, piece, move[1]);
                     done = true;
                 }else{
-                    System.out.println(" Some mistakes encountered. Please re-write your movement.");
+                    System.out.println("Some mistakes encountered. Please re-write your movement.");
                 }
             }while(!done);
+        }else{
+            checkAgain = false;
         }
-            King hypotheticKing = this.checkIfBecomeKing(piece, board);
-            if(hypotheticKing != null)
-                mustEatAgain(board, hypotheticKing);
+        return checkAgain;
     }
 
     public King checkIfBecomeKing(Piece piece, Board board) throws IOException {

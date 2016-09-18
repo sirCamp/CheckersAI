@@ -15,7 +15,6 @@ public class MiniMaxTree {
     private Boolean pruning = false;
     private static Map<Integer, Node> cache = new HashMap<>();
 
-    // GUAI
     public MiniMaxTree(Board board, Integer depth, Player player, String algorithm) throws IOException, CloneNotSupportedException {
         this.depth = depth;
         this.algorithm = algorithm;
@@ -26,7 +25,6 @@ public class MiniMaxTree {
         Player otherPlayer = copyBoard.getOtherPlayer(p1);
         createTree(copyBoard, p1, otherPlayer);
     }
-    //FINE GUAI
 
     private void createTree(Board board, Player player, Player otherP) throws IOException, CloneNotSupportedException {
         tree.add(new Node(null, null, 0, otherP, board)); // current state
@@ -170,7 +168,6 @@ public class MiniMaxTree {
         }
     }
 
-    // QUA RICOMINCIANO I GUAI
     private Node exploreTree(){ // backtracking
         Node result = null;
         int last = tree.size()-1;
@@ -235,16 +232,16 @@ public class MiniMaxTree {
     }
 
     /* Pruning */
-    private Node exploreTreePruning(){ // backtracking
+    private Node exploreTreePruning() { // backtracking
         Node result = null;
-        int last = tree.size()-1;
+        int last = tree.size() - 1;
         Integer currentDepth = tree.get(last).getDepth();
         int j = last;
         Boolean isEven = false; //(even row -> max, odd row -> min
-        if(tree.get(last).getDepth()%2 == 0){
+        if (tree.get(last).getDepth() % 2 == 0) {
             isEven = true;
         }
-        while(tree.get(j).getDepth().equals(currentDepth)){
+        while (tree.get(j).getDepth().equals(currentDepth)) {
             setEvaluationFunValue(tree.get(j));
             j--;
         }
@@ -252,26 +249,26 @@ public class MiniMaxTree {
         in order to apply findMin or findMax function to update father nodes: */
         int i = last;
         int pruningValue = 0;
-        while(i>0){
-            if(!tree.get(i).getDepth().equals(currentDepth)){ // if depth is changed while exploring
+        while (i > 0) {
+            if (!tree.get(i).getDepth().equals(currentDepth)) { // if depth is changed while exploring
                 currentDepth = tree.get(i).getDepth();
                 isEven = !isEven;
-                if(isEven){
+                if (isEven) {
                     pruningValue = Integer.MIN_VALUE;
-                }else{
+                } else {
                     pruningValue = Integer.MAX_VALUE;
                 }
             }
             Node father = tree.get(i).getFather();
             int lastSon = i;
-            while(i > 0 && father.equals(tree.get(i).getFather())){
+            while (i > 0 && father.equals(tree.get(i).getFather())) {
                 i--;
             }
-            int firstSon = i+1;
-            if(tree.get(firstSon).getDepth()>0){
-                if(isEven){
+            int firstSon = i + 1;
+            if (tree.get(firstSon).getDepth() > 0) {
+                if (isEven) {
                     tree.get(tree.indexOf(tree.get(firstSon).getFather())).setValue(findMinValuePruning(firstSon, lastSon, pruningValue));
-                } else{ //isOdd
+                } else { //isOdd
                     tree.get(tree.indexOf(tree.get(firstSon).getFather())).setValue(findMaxValuePruning(firstSon, lastSon, pruningValue));
                 }
             }
@@ -279,7 +276,7 @@ public class MiniMaxTree {
         }
         /* the tree contains all the values the following part of the algorithm, will choose the best node */
         Integer index = searchIndexOfMaxNode();
-        if(index != -1){
+        if (index != -1) {
             result = tree.get(index);
         }
         return result;
@@ -316,6 +313,7 @@ public class MiniMaxTree {
             if(max < tree.get(j).getValue()){
                 max = tree.get(j).getValue();
             }
+            j++;
         }
         return max;
     }

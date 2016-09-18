@@ -91,11 +91,11 @@ public class King extends Piece implements Cloneable{
     }
 
     @Override
-    public Piece capture(String direction, Spot[][] board) {
+    public String capture(String direction, Spot[][] board) {
         Integer newRow = this.getRowPosition() + this.rowAlter(direction); // x movement
         Integer newCol = this.getColPosition() + this.colAlter(direction); // y movement
         // kill victim
-        Piece eatenPiece = board[newRow][newCol].getOccupier();
+        String eatenPiece = board[newRow][newCol].getOccupier().getName();
         board[newRow][newCol].setOccupier(null);
         // change killer position
         Integer beyondRow = newRow + this.rowAlter(direction); // position x beyond the piece that would be eaten

@@ -115,10 +115,10 @@ public class Piece implements Cloneable{
         return can;
     }
 
-    public Piece capture(String direction, Spot[][] board) {
+    public String capture(String direction, Spot[][] board) {
         Integer newRow = this.rowPosition +  this.rowAlter(direction); // x movement
         Integer newCol = this.colPosition + this.colAlter(direction); // y movement
-        Piece eatenPiece = board[newRow][newCol].getOccupier();
+        String eatenPiece = board[newRow][newCol].getOccupier().getName();
         board[newRow][newCol].setOccupier(null);
         // change killer position
         Integer beyondRow = newRow + this.rowAlter(direction); // position x beyond the piece that would be eaten
