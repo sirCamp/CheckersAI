@@ -106,19 +106,19 @@ public class Board implements Cloneable{
         System.out.println("\n___________________________________________");
     }
 
-    public Player getOtherPlayer(Player p){
+    public Player getOtherPlayer(Player player){
         Player otherP;
-        if(p.getName().equals(this.p1.getName()))
+        if(this.p1.getName().equals(player.getName()))
             otherP = this.p2;
         else otherP = this.p1;
         return otherP;
     }
 
-    public Player getPlayerByName(String name){
+    public Player getPlayerByName(Player player){
         Player p;
-        if(p1.getName().equals(name))
-            p = p1;
-        else p = p2;
+        if(this.p1.getName().equals(player.getName()))
+            p = this.p1;
+        else p = this.p2;
         return p;
     }
 

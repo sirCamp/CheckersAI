@@ -1,5 +1,6 @@
 package game.model;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import game.moveGenerator.MiniMaxTree;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +15,6 @@ public class Player implements Cloneable{
     private String colour;
     private Integer eatenPieces = 0;
     private Integer defaultDepth;
-    private Boolean lost = false;
 
     public Player(String algorithm, String name, String colour){
         this(algorithm, name, colour, 3);
@@ -61,7 +61,6 @@ public class Player implements Cloneable{
         p.name = this.name;
         p.colour = this.colour;
         p.defaultDepth = this.defaultDepth;
-        p.lost = this.lost;
         p.pieces = new ArrayList<>(this.pieces.size());
         for (Piece piece: this.pieces) p.pieces.add((Piece) piece.clone());
         return p;
@@ -113,10 +112,11 @@ public class Player implements Cloneable{
     private void playerPlay(Board board) throws IOException{
         String[] move;
         Piece piece;
+        Boolean mustEat = this.mustEat(board.getBoard(), true);
         do {
             move = this.readMove();
             piece = getPieceByName(move[0]);
-        } while (!isAValidMove(board.getBoard(), piece, move[1]));
+        } while (!isAValidMove(board.getBoard(), piece, move[1], mustEat));
         // all checks are passed -> action will be now performed
         if (move[1].indexOf("move") > -1) { // more efficient than method String.contains
             piece.move(board.getBoard(), move[1]);
@@ -127,58 +127,48 @@ public class Player implements Cloneable{
         }
     }
 
-    private void performCapture(Board board, Piece piece, String move){
+    public void performCapture(Board board, Piece piece, String move){
         Piece eatenPiece = piece.capture(move, board.getBoard());
         board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
         board.getOtherPlayer(this).incrEatenPieces();
     }
 
-    // DA QUI INIZIANO I GUAI
-
-    private void setLost(){
-        lost = true;
-    }
-
     public Boolean hasLost(){
-        if(this.eatenPieces == 12 || this.lost){
-            lost = true;
+        if(this.eatenPieces == 12 ){
             return true;
         } //else
         return false;
     }
 
     private void computerPlay(Board board) throws IOException, CloneNotSupportedException {
-        String[] move;
-        MiniMaxTree tree = new MiniMaxTree(board, this.defaultDepth, this.getName(), this.getAlgorithm());
+        MiniMaxTree tree = new MiniMaxTree(board, this.defaultDepth, this, this.getAlgorithm());
         String possibleMove = tree.decideMove();
-        if(possibleMove == null){
-            System.out.println("No more moves for "+this.getName());
-            this.setLost();
-        }else {
-            move = possibleMove.split(" "); // the array contains the piece name and its move-direction
+        if(possibleMove != null) {
+            String[] move = tree.decideMove().split(" "); // the array contains the piece name and its move-direction
             Integer size = move.length;
             int j = size - 1;
             int i = size - 2;
             while (i >= 0 && j >= 1) {
                 System.out.println("PC: " + move[i] + " " + move[j]);
-                Piece singlePiece = getPieceByName(move[i]);
+                Piece piece = getPieceByName(move[i]);
                 if (move[j].indexOf("move") > -1) { // more efficient than method String.contains
-                    singlePiece.move(board.getBoard(), move[j]);
-                    this.checkIfBecomeKing(singlePiece, board);
+                    piece.move(board.getBoard(), move[j]);
+                } else if (move[j].indexOf("capture") > -1) {
+                    performCapture(board, piece, move[j]);
                 }
-                if (move[j].indexOf("capture") > -1) {
-                    Piece eatenPiece = singlePiece.capture(move[j], board.getBoard());
-                    board.getOtherPlayer(this).getPieceList().remove(eatenPiece);
-                    board.getOtherPlayer(this).incrEatenPieces();
-                    this.checkIfBecomeKing(singlePiece, board);
-                }
+                this.checkIfBecomeKing(piece, board);
                 j = j - 2;
                 i = i - 2;
             }
+        }else{
+            this.eatenPieces = 12;
         }
     }
 
-    // FINISCONO QUI I GUAI
+    public Boolean pcMustEatAgain(Board board, Piece piece) {
+        return (piece.canCapture(board.getBoard(), "captureLeft") || piece.canCapture(board.getBoard(), "captureRight"))
+                || ((piece instanceof King) && (piece.canCapture(board.getBoard(), "captureDownLeft") || piece.canCapture(board.getBoard(), "captureDownRight")));
+    }
 
     /* the following function reads the user input and checks if it is correct*/
     private String[] readMove() throws IOException {
@@ -198,8 +188,7 @@ public class Player implements Cloneable{
         return move;
     }
 
-    private Boolean isAValidMove(Spot[][] board, Piece piece, String move){
-        Boolean mustEat = this.mustEat(board, true);
+    private Boolean isAValidMove(Spot[][] board, Piece piece, String move, Boolean mustEat){
         // it controls if it is possible to eat and consequently mandatory
         // if it isn't possibile, it controls if the movement is correct
         return (((move.indexOf("move") > -1) && (piece.canMove(board, move, 1)) && !mustEat) ||
@@ -241,14 +230,6 @@ public class Player implements Cloneable{
             if(hypotheticKing != null)
                 mustEatAgain(board, hypotheticKing);
     }
-
-// QUA RICOMINCIANO I GUAI
-    public Boolean pcMustEatAgain(Board board, Piece piece) {
-        return (piece.canCapture(board.getBoard(), "captureLeft") || piece.canCapture(board.getBoard(), "captureRight"))
-                || ((piece instanceof King) && (piece.canCapture(board.getBoard(), "captureDownLeft") || piece.canCapture(board.getBoard(), "captureDownRight")));
-    }
-
-    //QUA FINISCONO
 
     public King checkIfBecomeKing(Piece piece, Board board) throws IOException {
         King returningKing = null;

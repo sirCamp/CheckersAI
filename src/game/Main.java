@@ -18,8 +18,8 @@ public class Main {
 		Random ran = new Random();
 		Integer round = (ran.nextInt(10) % 2); // who starts?
 		Integer roundCounter = 0;
-		Player p1 = new Player("3-pc", "p1 (black)", "b", 3);
-		Player p2 = new Player("human", "p2 (white)", "w", 3);
+		Player p1 = new Player("5-pc", "p1 (black)", "b", 5);
+		Player p2 = new Player("1-pc", "p2 (white)", "w", 5);
 
 		Board board = new Board(p1,p2);
 		board.printBoard();

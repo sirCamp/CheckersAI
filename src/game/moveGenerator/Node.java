@@ -1,6 +1,7 @@
 package game.moveGenerator;
 
 import game.model.Board;
+import game.model.King;
 import game.model.Piece;
 import game.model.Player;
 import java.io.IOException;
@@ -23,7 +24,6 @@ public class Node{
         this.player = player;
     }
 
-
     public Integer getDepth() {
         return depth;
     }
@@ -32,15 +32,9 @@ public class Node{
         return state;
     }
 
-    public String getMove() {
-        return move;
-    }
+    public String getMove() { return move; }
 
-    public Piece getPiece() {
-        String[] moveArray = move.split(" ");
-        String name = moveArray[0];
-        return player.getPieceByName(name);
-    }
+    public Piece getPiece() { return player.getPieceByName(move.split(" ")[0]); }
 
     public Integer getValue() {
         return value;
@@ -54,24 +48,22 @@ public class Node{
         return father;
     }
 
-    public void performAction(Piece piece, String move) throws IOException {
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Piece performAction(Piece piece, String move) throws IOException {
         if(move.indexOf("move") > -1){ // more efficient than method String.contains
             piece.move(this.state.getBoard(), move);
         }
         else if(move.indexOf("capture") > -1){
             String[] splittedMove = move.split(" ");
-            Piece eatenPiece;
-            if(splittedMove.length > 1){
-                eatenPiece = piece.capture(splittedMove[0], this.state.getBoard());
-            }else{
-                eatenPiece = piece.capture(move, this.state.getBoard());
-            }
-            //eatenpiece TODO: remove piece from pieceList
+            this.player.performCapture(this.getState(), piece, splittedMove[0]);
         }
-        this.getPlayer().checkIfBecomeKing(piece, this.getState());
+        King hypotheticKing = this.getPlayer().checkIfBecomeKing(piece, this.getState());
+        if(hypotheticKing != null)
+            return hypotheticKing;
+        return piece;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 }

@@ -15,7 +15,8 @@ public class MiniMaxTree {
     private Boolean pruning = false;
     private static Map<Integer, Node> cache = new HashMap<>();
 
-    public MiniMaxTree(Board board, Integer depth, String player, String algorithm) throws IOException, CloneNotSupportedException {
+    // GUAI
+    public MiniMaxTree(Board board, Integer depth, Player player, String algorithm) throws IOException, CloneNotSupportedException {
         this.depth = depth;
         this.algorithm = algorithm;
         heuristic = Character.getNumericValue(algorithm.charAt(0));
@@ -25,50 +26,48 @@ public class MiniMaxTree {
         Player otherPlayer = copyBoard.getOtherPlayer(p1);
         createTree(copyBoard, p1, otherPlayer);
     }
+    //FINE GUAI
 
-    private void createTree(Board board, Player player, Player otherP) throws IOException {
+    private void createTree(Board board, Player player, Player otherP) throws IOException, CloneNotSupportedException {
         tree.add(new Node(null, null, 0, otherP, board)); // current state
         Player currentPlayer;
-        Boolean mustEat = false;
         for (int i = 1; i < depth; i++) { // foreach depth
-            if(i % 2 == 1) // to understand if it is min or max
+            if(i % 2 == 1) // to understand if it is min or max, so to decide which player must play
                 currentPlayer = player;
             else currentPlayer = otherP;
             for (int j = 0; j < tree.size(); j++) {
                 Node node = tree.get(j);
-                if(tree.get(j).getDepth()==i-1){ //foreach node inserted on previous iteration (depth = depth -1 ->
-/*                    if(currentPlayer.mustEat(node.getState().getBoard(), false)){
-                        mustEat = true;
-                    }*/
-                    for (Piece piece : currentPlayer.getPieceList()) { // node that have tree.get(j) as father
-                        if(!currentPlayer.mustEat(node.getState().getBoard(), false)){
+                Player actualPlayer = node.getState().getPlayerByName(currentPlayer); // the correct copy of player
+                if((node.getDepth()==i-1) && (!actualPlayer.hasLost())){ //foreach node inserted on previous iteration (depth = depth -1
+                    for (Piece piece : actualPlayer.getPieceList()) { // node that have tree.get(j) as father
+                        if(!actualPlayer.mustEat(node.getState().getBoard(), false)){
                             if (establishPossibleMovement(node.getState(), piece, "moveLeft")) {
-                                this.createNode(piece, "moveLeft", i, currentPlayer, node, node.getState());
+                                this.createNode(piece, "moveLeft", i, actualPlayer, node, node.getState());
                             }
                             if (establishPossibleMovement(node.getState(), piece, "moveRight")) {
-                                this.createNode(piece, "moveRight", i, currentPlayer, node, node.getState());
+                                this.createNode(piece, "moveRight", i, actualPlayer, node, node.getState());
                             }
                         }
                         if (establishPossibleCapture(node.getState(), piece, "captureLeft")) {
-                            this.createNode(piece, "captureLeft", i, currentPlayer, node, node.getState());
+                            this.createNode(piece, "captureLeft", i, actualPlayer, node, node.getState());
                         }
                         if (establishPossibleCapture(node.getState(), piece, "captureRight")) {
-                            this.createNode(piece, "captureRight", i, currentPlayer, node, node.getState());
+                            this.createNode(piece, "captureRight", i, actualPlayer, node, node.getState());
                         }
                         if(piece instanceof King){
-                            if(!currentPlayer.mustEat(node.getState().getBoard(), false)){
+                            if(!actualPlayer.mustEat(node.getState().getBoard(), false)){
                                 if (establishPossibleMovement(node.getState(), piece, "moveDownLeft")) {
-                                    this.createNode(piece, "moveDownLeft", i, currentPlayer, node, node.getState());
+                                    this.createNode(piece, "moveDownLeft", i, actualPlayer, node, node.getState());
                                 }
                                 if (establishPossibleMovement(node.getState(), piece, "moveDownRight")) {
-                                    this.createNode(piece, "moveDownRight", i, currentPlayer, node, node.getState());
+                                    this.createNode(piece, "moveDownRight", i, actualPlayer, node, node.getState());
                                 }
                             }
                             if (establishPossibleCapture(node.getState(), piece, "captureDownLeft")) {
-                                this.createNode(piece, "captureDownLeft", i, currentPlayer, node, node.getState());
+                                this.createNode(piece, "captureDownLeft", i, actualPlayer, node, node.getState());
                             }
                             if (establishPossibleCapture(node.getState(), piece, "captureDownRight")) {
-                                this.createNode(piece, "captureDownRight", i, currentPlayer, node, node.getState());
+                                this.createNode(piece, "captureDownRight", i, actualPlayer, node, node.getState());
                             }
                         }
                     }
@@ -89,47 +88,41 @@ public class MiniMaxTree {
 
     }*/
 
-    private void createNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws  IOException {
-        Board copyOfBoard = null;
-        try {
-            copyOfBoard = board.copy();
-        } catch (CloneNotSupportedException e) {}
-
-        Player copyOfPlayer = copyOfBoard.getPlayerByName(player.getName());
+    private void createNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws IOException, CloneNotSupportedException {
+        Board copyOfBoard = board.copy();
+        Player copyOfPlayer = copyOfBoard.getPlayerByName(player);
         Piece copyOfPiece = copyOfPlayer.getPieceByName(piece.getName());
 
         Node tmp = null;
-
         Integer hash = Objects.hash(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
         if(MiniMaxTree.cache.containsKey(hash)){
             tmp =  MiniMaxTree.cache.get(hash);
-        }
-        else{
+        }else{
             tmp = new Node(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
         }
 
-        tmp.performAction(copyOfPiece, move);
-        if(move.indexOf("capture")>-1 && copyOfPlayer.pcMustEatAgain(copyOfBoard, copyOfPiece)){
-            continueCapture(tmp, depth);
+        Piece updatedCopyOfPiece = tmp.performAction(copyOfPiece, move); // updatedCopyOfPiece -> could be a king
+        if(move.indexOf("capture")>-1 && copyOfPlayer.pcMustEatAgain(copyOfBoard, updatedCopyOfPiece)){
+            continueCapture(tmp, depth, updatedCopyOfPiece);
         }else{
             tree.add(tmp);
         }
     }
 
-    private void continueCapture(Node node, Integer depth) throws IOException {
-        String move = " " +node.getMove();
-        if (establishPossibleCapture(node.getState(), node.getPiece(), "captureLeft")) {
-            this.createNode(node.getPiece(), "captureLeft"+ move, depth, node.getPlayer(), node.getFather(), node.getState());
+    private void continueCapture(Node node, Integer depth, Piece piece) throws IOException, CloneNotSupportedException {
+        String previousMove = " " + node.getMove();
+        if (establishPossibleCapture(node.getState(), piece, "captureLeft")) {
+            this.createNode(piece, "captureLeft" + previousMove, depth, node.getPlayer(), node.getFather(), node.getState());
         }
-        if (establishPossibleCapture(node.getState(), node.getPiece(), "captureRight")) {
-            this.createNode(node.getPiece(), "captureRight"+ move, depth, node.getPlayer(), node.getFather(), node.getState());
+        if (establishPossibleCapture(node.getState(), piece, "captureRight")) {
+            this.createNode(piece, "captureRight" + previousMove, depth, node.getPlayer(), node.getFather(), node.getState());
         }
-        if(node.getPiece() instanceof King){
-            if (establishPossibleCapture(node.getState(), node.getPiece(), "captureDownLeft")) {
-                this.createNode(node.getPiece(), "captureDownLeft"+ move, depth, node.getPlayer(), node.getFather(), node.getState());
+        if(piece instanceof King){
+            if (establishPossibleCapture(node.getState(), piece, "captureDownLeft")) {
+                this.createNode(piece, "captureDownLeft" + previousMove, depth, node.getPlayer(), node.getFather(), node.getState());
             }
-            if (establishPossibleCapture(node.getState(), node.getPiece(), "captureDownRight")) {
-                this.createNode(node.getPiece(), "captureDownRight"+ move, depth, node.getPlayer(), node.getFather(), node.getState());
+            if (establishPossibleCapture(node.getState(), piece, "captureDownRight")) {
+                this.createNode(piece, "captureDownRight" + previousMove, depth, node.getPlayer(), node.getFather(), node.getState());
             }
         }
     }
@@ -139,15 +132,19 @@ public class MiniMaxTree {
     private Boolean establishPossibleCapture(Board b, Piece piece, String direction){ return piece.canCapture(b.getBoard(), direction); }
 
     public String decideMove() {
-        if (this.tree.size() <= 1) {
-            return null;
-        } else {
-            Node choice = this.exploreTree();
+        if (this.tree.size() > 1) {
+            Node choice;
+            if(pruning){
+                choice = this.exploreTreePruning();
+            }else{
+                choice = this.exploreTree();
+            }
             return choice.getMove();
-        }
+        }else
+            return null; // lost
     }
 
-    private void setEvaluationFunValue(Node node, Boolean isEven){
+    private void setEvaluationFunValue(Node node){
         Integer value = Evaluation.getEvaluationValue(node, heuristic).intValue();
         node.setValue(value);
     }
@@ -170,6 +167,7 @@ public class MiniMaxTree {
         }
     }
 
+    // QUA RICOMINCIANO I GUAI
     private Node exploreTree(){ // backtracking
         Node result = null;
         int last = tree.size()-1;
@@ -180,7 +178,7 @@ public class MiniMaxTree {
             isEven = true;
         }
         while(tree.get(j).getDepth().equals(currentDepth)){
-            setEvaluationFunValue(tree.get(j), isEven);
+            setEvaluationFunValue(tree.get(j));
             j--;
         }
         /* now, base on depth, we must know if it is even or odd,
@@ -194,9 +192,6 @@ public class MiniMaxTree {
             Node father = tree.get(i).getFather();
             int lastSon = i;
             while(i > 0 && father.equals(tree.get(i).getFather())){
-                if(tree.get(i).getFather() != null) System.out.print(tree.get(i).getFather().getMove()+" > ");
-                System.out.println(tree.get(i).getMove());
-                //tree.get(i).getState().printBoard();
                 i--;
             }
             int firstSon = i+1;
@@ -247,7 +242,7 @@ public class MiniMaxTree {
             isEven = true;
         }
         while(tree.get(j).getDepth().equals(currentDepth)){
-            setEvaluationFunValue(tree.get(j), isEven);
+            setEvaluationFunValue(tree.get(j));
             j--;
         }
         /* now, base on depth, we must know if it is even or odd,
