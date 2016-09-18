@@ -74,18 +74,6 @@ public class MiniMaxTree {
         }
     }
 
-    /*private Node memoizedCreateNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws CloneNotSupportedException, IOException {
-
-        Integer hash = Objects.hash(piece,move,depth,player,father,board);
-        if(MiniMaxTree.cache.containsKey(hash)){
-            return MiniMaxTree.cache.get(hash);
-        }
-        else{
-            return createNode(piece, move, depth, player, father, board);
-        }
-
-    }*/
-
     private void createNode(Piece piece, String move, Integer depth, Player player, Node father, Board board) throws IOException, CloneNotSupportedException {
         Board copyOfBoard = board.copy();
         Player copyOfPlayer = copyOfBoard.getPlayerByName(player);
