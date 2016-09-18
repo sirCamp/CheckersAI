@@ -330,6 +330,9 @@ public class Evaluation {
             case 6:{
                 return Evaluation.heuristicSix(node);
             }
+            case 7:{
+                return Evaluation.heuristicSix(node);
+            }
             default:{
                 return Evaluation.heuristicOne(node);
             }

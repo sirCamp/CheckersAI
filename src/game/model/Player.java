@@ -100,12 +100,15 @@ public class Player implements Cloneable{
         return null;
     }
 
-    public void play(Board board) throws CloneNotSupportedException, IOException {
+    public void play(Board board, Integer roundCounter) throws CloneNotSupportedException, IOException {
         String[] move;
         if (this.algorithm.equals("human")) {
             playerPlay(board);
         }else{ // computer
-            computerPlay(board);
+            Long start = System.currentTimeMillis();
+            computerPlay(board, roundCounter);
+            Long total = System.currentTimeMillis() - start;
+            System.out.println("Spent Time: "+ total.toString());
         }
     }
 
@@ -140,11 +143,11 @@ public class Player implements Cloneable{
         return false;
     }
 
-    private void computerPlay(Board board) throws IOException, CloneNotSupportedException {
+    private void computerPlay(Board board, Integer roundCounter) throws IOException, CloneNotSupportedException {
         MiniMaxTree tree = new MiniMaxTree(board, this.defaultDepth, this, this.getAlgorithm());
-        String possibleMove = tree.decideMove();
+        String possibleMove = tree.decideMove(roundCounter);
         if(possibleMove != null) {
-            String[] move = tree.decideMove().split(" "); // the array contains the piece name and its move-direction
+            String[] move = possibleMove.split(" "); // the array contains the piece name and its move-direction
             Integer size = move.length;
             int j = size - 1;
             int i = size - 2;

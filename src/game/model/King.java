@@ -48,7 +48,7 @@ public class King extends Piece implements Cloneable{
             else {
                 if (Board.inBounds((newRow), (newCol)) &&
                         board[newRow][newCol] != null &&
-                        board[newRow][newCol].getOccupier() == (null)) {
+                        board[newRow][newCol].getOccupier() == null) {
                     can = true;
                 }
             }

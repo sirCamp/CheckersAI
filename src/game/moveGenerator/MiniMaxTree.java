@@ -131,7 +131,10 @@ public class MiniMaxTree {
 
     private Boolean establishPossibleCapture(Board b, Piece piece, String direction){ return piece.canCapture(b.getBoard(), direction); }
 
-    public String decideMove() {
+    public String decideMove(Integer roundCounter) {
+/*        if(roundCounter > 70){
+            heuristic = 7;
+        }*/
         if (this.tree.size() > 1) {
             Node choice;
             if(pruning){
@@ -141,7 +144,7 @@ public class MiniMaxTree {
             }
             return choice.getMove();
         }else
-            return null; // lost
+            return null; // no more moves := lost
     }
 
     private void setEvaluationFunValue(Node node){
