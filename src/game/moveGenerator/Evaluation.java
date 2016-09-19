@@ -433,6 +433,11 @@ public class Evaluation {
     }
 
 
+    /**
+     * Kings Forcing: this heuristic force a battle between king and encourge to move forward and to eat the opponent pieces, is used in the final steps
+     * @param node
+     * @return
+     */
     public static Float heuristicEight(Node node){
 
 
