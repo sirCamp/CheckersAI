@@ -132,6 +132,58 @@
 		<h4>
 			2.3 Euristiche 
 		</h4>
+		<p>
+			Le funzioni euristiche, sono funzioni che servono ad attribuire un <i>valore di utilit&agrave;</i> ai nodi che verranno scelti dall'algoritmo intelligente.<br>
+			Nello sviluppo del progetto si &egrave; deciso di usare diverse euristiche, in modo da poter eseguire un maggior numero di sperimentazioni e test.<br><br>
+			Prima di procedere con la spiegazione, &egrave; necessario specificare che le euristiche utilizzate, derivano da specifiche tencinche di gioco per la Dama, ciascuna delle quali prediligie un determinato aspetto (es: attacco, difesa...).<br><br>
+			Tutte le funzioni sviluppate, hanno una base comune che serve a generare un valore di base per ogni nodo, il quale poi viene raffinato tramite applicazione di euristiche che corrispondono alle tecniche di gioco diverse, come citato in precedenza.
+
+			<h5>Funzione 1</h5>
+			Questa eurisitca corrisponde alla funzione di base utilizzata da tutte le altre.<br>
+			In questa funzione ogni pedina normale conta come 1, mentra ogni damone (King) ha un peso maggiore, che corrisponde ad un valore compreso tra  1.4 e 3, dipende se si gioca a <i>Dama Spagnola</i> o alla variante Italian ed Inglese.
+		    Il fatto di dare un maggior peso ai damoni, serve ad incentivarne la genrazione e allo stesso tempo preservarne l'esistenza.<br><br>
+			L'idea di base, è quella di considerare il numero di pezzi propri, meno il numero dei pezzi avversari, ritornando poi il valore della sottrazione come valore del nodo.
+		    Questo approcio permette avere un intelligenza abbastaza bilanciata tra difesa ed attacco con dei discreti risultati.<br>
+			Vediamo ora un esempio:<br><br>
+
+
+		<pre style='color:#000000;background:#ffffff;'><code>
+			if(player.isWhite())<span style='color:#800080; '>{</span>
+            			<span style='color:#800000; font-weight:bold; '>return</span> <span style='color:#808030; '>(</span>white<span style='color:#808030; '>-</span>black <span style='color:#808030; '>+</span> Evaluation<span style='color:#808030; '>.</span>KINGS_EVAL<span style='color:#808030; '>*</span><span style='color:#808030; '>(</span>whiteKings<span style='color:#808030; '>-</span>blackKings<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+        		<span style='color:#800080; '>}</span>
+        		else<span style='color:#800080; '>{</span>
+            			<span style='color:#800000; font-weight:bold; '>return</span> <span style='color:#808030; '>(</span>black <span style='color:#808030; '>-</span> white <span style='color:#808030; '>+</span> Evaluation<span style='color:#808030; '>.</span>KINGS_EVAL<span style='color:#808030; '>*</span><span style='color:#808030; '>(</span>blackKings<span style='color:#808030; '>-</span>whiteKings<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+        		<span style='color:#800080; '>}</span>
+
+			</code></pre>
+
+			Come si può vedere se il giocatore &egrave; bianco, la funzione ritorna la differenza tra bianchi e neri sommata alla differenza tra damoni bianchi e neri.<br>
+
+			Questa euristica, come detto in precedenza, è molto bilanciata e pu&ograve; essere ritenuta accettabile.<br>
+			Questa funzione pu&ograve; essere utilizzata da sola, senza la necessit&agrave; di essere raffinata.
+
+			<h5>Funzione 2</h5>
+			Questa eurisitca corrisponde ad un euristica <i>stupida</i>, questo perch&egrave; assegna valori casuali ai vari nodi<br>
+			Questa funzione, risulta essere l'unica che non sfrutta la 1 come funzione di base da raffinare.
+
+			Per assegnare pi&ugrave; valori casuali possibili si è scelto di ritornare valori tra 1 e 20:<br>
+		<pre style='color:#000000;background:#ffffff;'>
+			<code>
+		Random rand = new Random()<span style='color:#808030; '>;</span>
+
+        	Integer randomNum = rand.nextInt((20 - 1) + 1) + 1<span style='color:#808030; '>;</span>
+
+        	return randomNum.floatValue()<span style='color:#808030; '>;</span>
+</code></pre>
+
+			L'utilizzo di tale euristica ha portato ad interessanti osservazioni: In acluni casi si è osservato che tale euristica &egrave; riuscita a vincere il 20% delle partite.
+
+		<h5>Funzione 3</h5>
+
+		Questa euristica, chiamata anche <i>Centrality</i> ha come obbiettivo principale quello di spingere i propri pezzi a dominare il centro della scacchiera.
+		Ogni mossa al centro della scacchiera è incentivata
+
+		</p>
 		<h4>
 			2.4 Ottimizzazione 
 		</h4>
