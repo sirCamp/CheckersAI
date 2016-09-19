@@ -1,0 +1,605 @@
+<html lang="it">
+<head> 
+	<meta charset="UTF-8" />
+	<meta name="description" content="Relazione riguardo al progetto per il corso di Intelligenza artificiale, AI checkers: Advanced Italo checkers" />
+	<meta name="keywords" content="checkers, ai, ia, intelligenza artificiale, dama"/>  
+	<meta name="author" content="Enrico Savoca, Stefano Campese" />
+	<meta name="robot" content="index, follow" />
+	<meta name="base" content="/" /> 
+	<link rel="stylesheet" type="text/css" href="css/mainStyle.css">   
+	<title> AI Checkers: Advanced Italo Checkers</title> 
+</head>
+	<body>
+		<div class="title">
+			<h1>
+				Progetto di intelligenza artificiale
+			</h1>
+			<h2> 
+				AI checkers : Advanced Italo checkers 
+			</h2> 
+		</div>
+		<nav id="menu">
+			<h3>
+			 	Indice: 
+			 </h3>  
+			 <ul>
+			 	<li>
+			 		<a href="#dama">
+			 			1. La dama
+			 		</a>
+			 	</li>
+			 	<li>
+			 		<a href="#progetto">
+			 			2. Il progetto
+			 		</a>
+			 	</li>
+			 	<li>
+			 		<a href="#consuntivo">
+			 			3. Consuntivo orario
+			 		</a>
+			 	</li>
+			 	<li>
+			 		<a href="#test">
+			 			4. Test
+			 		</a>
+			 	</li>
+			 	<li>
+			 		<a href="#conclusioni">
+			 			5. Conclusioni finali
+			 		</a>
+			 	</li>
+			 </ul>
+		</nav>
+	</header> 
+	<section id="dama">
+		<h3>
+			1. La dama
+		</h3>
+		<p>
+			La dama è un gioco da tavolo tradizionale per due giocatori. I due giocatori, disposti ai lati opposti della scacchiera, muovono a turno i propri pezzi. Un giocatore ha i pezzi bianchi, l'altro quelli neri. I pezzi possono essere mossi solo di una casella in avanti, in diagonale: si muovono sulle caselle nere. Una pedina può mangiarne una dell'avversario scavalcandola diagonalmente; la pedina scavalcata ("mangiata"), viene rimossa dalla damiera. Quando una pedina raggiunge la riga più distante nella sua direzione di marcia, diventa dama. La dama si muove come una qualsiasi altra pedina, ma in qualsiasi direzione, sempre sulla diagonale. Esistono determinate varianti nazionali del gioco. La variante scelta per il progetto è quella inglese in cui ogni pedina, anche se dama, può essere catturata da ogni altra pedina. Tutte le pedine, comprese le dame, si muovono di una casella ad ogni turno. Se una pedina può essere mangiata in un turno, essa deve essere mangiata, inoltre è possibile concatenare le catture: se una pedina ha mangiato un'altra pedina nel suo turno e può ancora mangiare, allora deve farlo. Un giocatore perde quando non ha più pedine, perchè sono state tutte prese, o quando non può muoverne nessuna di quelle rimaste.
+		</p>
+		<a href="#menu">
+			Torna all'indice
+		</a>
+	</section> 
+	<section id="progetto">
+		<h3>
+			2. Il progetto e i suoi scopi
+		</h3>
+		<p>
+
+
+			<a href="https://github.com/khaledalissa/simple-checkers">
+				Esempio considerato (link)
+			</a>
+		</p>
+		<h4>
+			2.1 Compilazione ed esecuzione del programma programma
+		</h4>
+		<h4>
+			2.2 Istruzioni per giocare
+		</h4> 
+		<p>
+			Una volta avviata la partita si dovranno scegliere le caratteristiche dei due giocatori. Prima di tutto si chiederà se il giocatore che si sta creando è umano o
+			se invece è comandato dalla CPU. Nel secondo caso, si dovrà specificare quindi quale tipo di euristica utilizzerà per compiere le sue scelte, che profondità avrà l'albero Minimax che utilizzerà e se userà il Pruning sull'albero. Creati i giocatori, il programma sceglierà casualmente quale giocatore dovrà iniziare il gioco (nella realtà, nella dama inglese inizierebbe sempre il nero).
+			Ogni volta che verrà eseguita una mossa, essa verrà stampata e sarà seguita dalla stampa della scacchiera o damiera aggiornata.
+			Le mosse accettate avranno una forma uguale alla seguente: "pedina mossa", dove pedina dovrà avere come valore il nome della pedina scelta dal giocatore, mentre mossa conterrà una delle seguenti stringhe:
+			<ul>
+				<li>
+					moveRight : muovi a destra in avanti la pedina 
+				</li>
+				<li>
+					moveLeft : muovi a sinistra in avanti la pedina
+				</li>
+				<li>
+					moveDownRight : muovi a destra indietro la pedina (mossa consentita solo alle dame)
+				</li>
+				<li>
+					moveDownLeft : muovi a sinistra indietro la pedina (mossa consentita solo alle dame)
+				</li>
+				<li>
+					captureRight : la pedina cattura la pedina avversaria alla sua destra, in avanti
+				</li>
+				<li>
+					captureLeft : la pedina cattura la pedina avversaria alla sua sinistra, in avanti
+				</li>
+				<li>
+					captureDownRight la pedina cattura la pedina avversaria alla sua destra, indietro (mossa consentita solo alle dame)
+				</li>
+				<li>
+					captureDownLeft la pedina cattura la pedina avversaria alla sua sinistra, indietro (mossa consentita solo alle dame)
+				</li>
+			</ul>
+			Destra e sinistra, nelle mosse, sono assolute, relative alla scacchiera e non al suo orientamento rispetto al giocatore. Più semplicemente, una mossa a destra corrisponde ad un movimento verso la parte destra dello schermo. Lo stesso vale per la sinistra.
+			Il gioco avrà fine quando uno dei giocatori non potrà effettuare più alcuna mossa o avrà finito le pedine. Si nominerà vincitore l'altro giocatore.  
+		</p>
+		<h4>
+			2.3 Euristiche 
+		</h4>
+		<h4>
+			2.4 Ottimizzazione 
+		</h4>
+		<p>
+			Assenza di quiescenza, ma cache
+		</p>
+		<a href="#menu">
+			Torna all'indice
+		</a>
+	</section> 
+	<section id="consuntivo">
+		<h3>
+			3. Consuntivo orario
+		</h3>
+		<p>
+			Nella seguente tabella sono riportate le ore di lavoro necessarie per la realizzazione delle componenti dell'intero progetto e per il raggiungimento degli obiettivi di progetto. Le ore comprendono quindi, non soltanto le ore utilizzate per l'implementazione di funzionalità nel programma sviluppato, ma anche quelle ore utilizzate per ricerca e per l'effettuazione dei test.
+		</p>
+			<table>  
+				<caption>
+					Consuntivo orario (in ore)
+				</caption> 
+				<tr>
+					<th>
+						Lavoro svolto
+					</th>
+					<th>
+						Autore
+					</th>
+					<th>
+						Impegno orario
+					</th>
+					<th>
+						Tipo di lavoro
+					</th> 
+				</tr>
+				<tr>
+					<td>
+						Progettazione, sviluppo componenti di base
+					</td> 
+					<td>
+						Enrico Savoca
+					</td>
+					<td>
+						1+9
+					</td> 
+					<td>
+						Progettazione algoritmi, Implementazione funzionalità di base della dama (classi: Piece, Player, Spot, Board)
+					</td> 
+				</tr> 
+				<tr>
+					<td>
+						Progettazione, sviluppo componenti di base
+					</td> 
+					<td>
+						Stefano Campese
+					</td>
+					<td>
+						1+5
+					</td> 
+					<td>
+						Progettazione algoritmi, Implementazione funzionalità di base della dama (classi: King, Main)
+					</td> 				
+				</tr>
+				<tr>
+					<td>
+						Sviluppo Minimax
+					</td> 
+					<td>
+						Enrico Savoca
+					</td>
+					<td>
+						12
+					</td> 
+					<td>
+						Implementazione algoritmi Minimax (classi: MinimaxTree, Node)
+					</td> 
+				</tr> 				
+				<tr>
+					<td>
+						Pruning
+					</td> 
+					<td>
+						Enrico Savoca
+					</td>
+					<td>
+						3
+					</td> 
+					<td>
+						Implementazione algoritmi di pruning (classi: MinimaxTree)
+					</td> 
+				</tr>  
+				<tr>
+					<td>
+						Evaluation functions
+					</td> 
+					<td>
+						Stefano Campese
+					</td>
+					<td>
+						14
+					</td> 
+					<td>
+						Ricerca e Implementazione algoritmi Evaluation Functions (classi: Evaluation)
+					</td> 
+				</tr> 
+				<tr>
+					<td>
+						Ottimizzazione
+					</td> 
+					<td>
+						Stefano Campese
+					</td>
+					<td>
+						2
+					</td> 
+					<td>
+						Implementazione Cache per i nodi del Minimax Tree (classi: MinimaxTree)
+					</td> 
+				</tr> 
+				<tr>
+					<td>
+						Test
+					</td> 
+					<td>
+						Enrico Savoca
+					</td>
+					<td>
+						2
+					</td> 
+					<td>
+						Esecuzione Test di analisi delle performance delle euristiche e dei diversi algoritmi
+					</td> 
+				</tr> 
+				<tr>
+					<td>
+						Test
+					</td> 
+					<td>
+						Stefano Campese
+					</td>
+					<td>
+						3
+					</td> 
+					<td>
+						Esecuzione Test di analisi delle performance delle euristiche e dei diversi algoritmi e raccolta dati
+					</td> 
+				</tr> 
+				<tr>
+					<td>
+						Relazione, Presentazione 
+					</td> 
+					<td>
+						Enrico Savoca
+					</td>
+					<td>
+						3
+					</td> 
+					<td>
+						Stesura Relazione (sezioni: Dama, Progetto), Realizzazione Presentazione
+					</td> 
+				</tr> 
+				<tr>
+					<td>
+						Relazione, Presentazione 
+					</td> 
+					<td>
+						Stefano Campese
+					</td>
+					<td>
+						5
+					</td> 
+					<td>
+						Stesura Relazione (sezioni: Consuntivo orario, Test, Conclusioni finali), Realizzazione Presentazione
+					</td> 
+				</tr> 
+			</table>  
+		<a href="#menu">
+			Torna all'indice
+		</a>
+	</section> 
+	<section id="test">
+		<h3>
+			4. Test
+		</h3>
+		<p>
+			Sono stati eseguiti due tipi di test. Il primo tipo di test consisteva nella misurazione e raccolta dei tempi medi necesari per eseguire una mossa, in una partita, tramite l'uso di un albero di decisione Minimax con pruning e senza. Il secondo tipo di test ha richiesto l'esecuzione di un grande numero di partite in cui si sono confrontati diversi tipi di giocatori: comandati dalla CPU (con euristiche più o meno buone) e persone. 
+		</p>
+		<h4>
+			4.1 Tempi medi di esecuzione
+		</h4>
+		<p>
+			L'esecuzione...
+			Misurati con profondità x = 
+		</p>
+		<table>
+			<caption>
+				Tempi medi per mossa in millisecondi
+			</caption>
+			<tr>
+				<th>
+					Euristica
+				</th>
+				<th>
+					con Pruning
+				</th>
+				<th>
+					senza Pruning
+				</th>
+			<tr>
+				<td>
+					(1), Standard
+				</td> 
+				<td>
+					1
+				</td>
+				<td>
+					10
+				</td>  
+			</tr> 
+		</table>  
+		<h4>
+			4.2 Partite tra giocatori di diversi livelli
+		</h4>
+		<p>
+			Le partite...
+			Nella tabella sottostante è riportata la percentuale di vittorie del giocatore in colonna contro quello in riga. Ogni giocatore comandato dalla CPU ha utilizzato l'algoritmo Minimax con pruning, con una profondità di 
+		</p>
+		<table>
+			<caption>
+				Partite disputate, % vittorie
+			</caption>
+			<tr>
+				<th>
+					VS (Vincente \ perdente)
+				</th>
+				<th>
+					(1), Standard
+				</th>
+				<th>
+					(2)
+				</th>				
+				<th>
+					(3)
+				</th>
+				<th>
+					(4)
+				</th>
+				<th>
+					(5)
+				</th>				
+				<th>
+					(6)
+				</th>
+				<th>
+					(7)
+				</th>
+				<th>
+					Giocatore umano
+				</th>
+				<th>
+					Media vittorie
+				</th>
+			<tr>
+				<td>
+					(1)
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				<td>
+				</td>  
+			</tr> 
+			<tr>
+				<td>
+					(2)
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				<td>
+				</td>  
+			</tr> 
+			<tr>
+				<td>
+					(3)
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				<td>
+				</td>  
+			</tr> 
+			<tr>
+				<td>
+					(4)
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				<td>
+				</td>  
+			</tr> 
+			<tr>
+				<td>
+					(5)
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				<td>
+				</td>  
+			</tr> 
+			<tr>
+				<td>
+					(6)
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				<td>
+				</td>  
+			</tr> 
+			<tr>
+				<td>
+					(7)
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				<td>
+				</td>   
+			</tr> 
+			<tr>
+				<td>
+					Giocatore umano
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td>  
+				</td> 
+				<td>					
+				</td>
+				<td>
+				</td> 
+				<td>
+				</td>   
+			</tr> 
+		</table> 
+		<a href="#menu">
+			Torna all'indice
+		</a>
+	</section> 	
+	<section id="conclusioni">
+		<h3>
+			5. Conclusioni finali
+		</h3>
+		<p>
+		</p>
+		<a href="#menu">
+			Torna all'indice
+		</a>
+	</section> 
+	</body>
+</html>
