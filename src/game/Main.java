@@ -22,8 +22,8 @@ public class Main {
 		Integer round = (ran.nextInt(10) % 2); // who starts?
 		Integer roundCounter = 0;
 		System.out.println("Players creation...");
-		Player p1 = new Player("5-pc-pruning", "p1", "b", 7); //createPlayer(true);
-		Player p2 = new Player("human", "p2", "w", 7); //createPlayer(false);
+		Player p1 = new Player("7-pc", "p1", "b", 5); //createPlayer(true);
+		Player p2 = new Player("4-pc", "p2", "w", 5); //createPlayer(false);
 		System.out.println("["+p1.getName()+", "+p1.getAlgorithm()+"] VS ["+p2.getName()+", "+p2.getAlgorithm()+"]");
 		if(round == 0){
 			System.out.println("p1 (black) starts the game!");
