@@ -103,7 +103,7 @@ public class Player implements Cloneable{
     public void play(Board board, Integer roundCounter) throws CloneNotSupportedException, IOException {
         String[] move;
         if (this.algorithm.equals("human")) {
-            playerPlay(board);
+            playerPlay(board, roundCounter);
         }else{ // computer
             Long start = System.currentTimeMillis();
             computerPlay(board, roundCounter);
@@ -112,29 +112,35 @@ public class Player implements Cloneable{
         }
     }
 
-    private void playerPlay(Board board) throws IOException{
+    private void playerPlay(Board board, Integer roundCounter) throws IOException, CloneNotSupportedException {
         String[] move;
         Piece piece;
-        Boolean mustEat = this.mustEat(board.getBoard(), true);
-        do {
-            move = this.readMove();
-            piece = getPieceByName(move[0]);
-        } while (!isAValidMove(board.getBoard(), piece, move[1], mustEat));
-        // all checks are passed -> action will be now performed
-        if (move[1].indexOf("move") > -1) { // more efficient than method String.contains
-            piece.move(board.getBoard(), move[1]);
-            this.checkIfBecomeKing(piece, board);
-        } else if (move[1].indexOf("capture") > -1) {
-            this.performCapture(board, piece, move[1]);
-            Boolean checkAgain = true; // if it's possible to eat again
+        MiniMaxTree tree = new MiniMaxTree(board, 2, this, "1-pc-pruning");
+        String possibleMove = tree.decideMove(roundCounter);
+        if(possibleMove != null) {
+            Boolean mustEat = this.mustEat(board.getBoard(), true);
             do {
-                King king = this.checkIfBecomeKing(piece, board);
-                if (king != null) {
-                    checkAgain = mustEatAgain(board, king);
-                } else {
-                    checkAgain = mustEatAgain(board, piece); // in which we control if there's a new king
-                }
-            }while(checkAgain);
+                move = this.readMove();
+                piece = getPieceByName(move[0]);
+            } while (!isAValidMove(board.getBoard(), piece, move[1], mustEat));
+            // all checks are passed -> action will be now performed
+            if (move[1].indexOf("move") > -1) { // more efficient than method String.contains
+                piece.move(board.getBoard(), move[1]);
+                this.checkIfBecomeKing(piece, board);
+            } else if (move[1].indexOf("capture") > -1) {
+                this.performCapture(board, piece, move[1]);
+                Boolean checkAgain = true; // if it's possible to eat again
+                do {
+                    King king = this.checkIfBecomeKing(piece, board);
+                    if (king != null) {
+                        checkAgain = mustEatAgain(board, king);
+                    } else {
+                        checkAgain = mustEatAgain(board, piece); // in which we control if there's a new king
+                    }
+                } while (checkAgain);
+            }
+        }else{
+            this.eatenPieces = 12;
         }
     }
 
