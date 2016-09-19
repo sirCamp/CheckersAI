@@ -2,6 +2,8 @@ package game.model;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import game.moveGenerator.MiniMaxTree;
+import game.utils.CSVExporter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -108,6 +110,7 @@ public class Player implements Cloneable{
             Long start = System.currentTimeMillis();
             computerPlay(board, roundCounter);
             Long total = System.currentTimeMillis() - start;
+            CSVExporter.CONTAINER+=";"+total.toString()+"\n";
             System.out.println("Spent Time: "+ total.toString());
         }
     }
@@ -165,7 +168,9 @@ public class Player implements Cloneable{
             Integer size = move.length;
             int j = size - 1;
             int i = size - 2;
+            String temp = "";
             while (i >= 0 && j >= 1) {
+                temp += "PC: " + move[i] + " " + move[j]+",";
                 System.out.println("PC: " + move[i] + " " + move[j]);
                 Piece piece = getPieceByName(move[i]);
                 if (move[j].indexOf("move") > -1) { // more efficient than method String.contains
@@ -177,6 +182,8 @@ public class Player implements Cloneable{
                 j = j - 2;
                 i = i - 2;
             }
+
+            CSVExporter.CONTAINER+=temp.substring(0,temp.lastIndexOf(",")-1);
         }else{
             this.eatenPieces = 12;
         }

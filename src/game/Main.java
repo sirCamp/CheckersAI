@@ -2,6 +2,7 @@ package game;
 
 import game.model.Board;
 import game.model.Player;
+import game.utils.CSVExporter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class Main {
 			board.printBoard();
 		}while(!end && roundCounter<200);
 		endGameMessage(p1, roundCounter);
+		CSVExporter.printCSV();
 	}
 
 	private static Boolean endGame(Player loser){ return loser.hasLost(); }
