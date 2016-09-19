@@ -1,11 +1,8 @@
 package game.moveGenerator;
 
-import com.sun.org.apache.xml.internal.serializer.utils.SystemIDResolver;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import game.model.*;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class MiniMaxTree {
     private ArrayList<Node> tree = new ArrayList<>();
@@ -119,7 +116,7 @@ public class MiniMaxTree {
 
     public String decideMove(Integer roundCounter) {
 /*        if(roundCounter > 70){
-            heuristic = 7;
+            heuristic = 8;
         }*/
         if (this.tree.size() > 1) {
             Node choice;
