@@ -21,8 +21,8 @@ public class Main {
 		Integer roundCounter = 0;
 		System.out.println("Players creation...");
 
-		Player p1 = new Player("5-pc", "p1", "b", 8); //createPlayer(true);
-		Player p2 = new Player("6-pc", "p2", "w", 3); //createPlayer(false);
+		Player p1 = new Player("5-pc-pruning", "p1", "b", 8); //createPlayer(true);
+		Player p2 = new Player("4-pc", "p2", "w", 3); //createPlayer(false);
 
 		System.out.println("["+p1.getName()+", "+p1.getAlgorithm()+"] VS ["+p2.getName()+", "+p2.getAlgorithm()+"]");
 		if(round == 0){
@@ -47,6 +47,7 @@ public class Main {
             end = endGame(p1) || endGame(p2);
 			roundCounter++;
 			board.printBoard();
+			System.gc();
 		}while(!end && roundCounter<200);
 		endGameMessage(p1, roundCounter);
 		CSVExporter.printCSV();
