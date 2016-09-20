@@ -8,10 +8,10 @@
 	<meta name="base" content="/" /> 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="css/styles/default.css">
+    <link rel="stylesheet" type="text/css" href="css/other.css">
 	<script src="js/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
-	<title> AI Checkers: Advanced Italo Checkers</title> 
+	<title> Checkers AI : Checkers Automaton Italo </title>
 </head>
 	<body>
 	<header>
@@ -46,21 +46,65 @@
 				 			1. La dama
 				 		</a>
 				 	</li>
+					 <li>
+						 <a href="#consuntivo">
+							 2. Consuntivo orario
+						 </a>
+					 </li>
 				 	<li>
 				 		<a href="#progetto">
-				 			2. Il progetto
+				 			3. Il progetto
 				 		</a>
+                        <ul>
+                            <li>
+                                <a href="#compilazEsecuz">
+                                    3.1 Compilazione ed esecuzione del programma
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#istruzioni">
+                                    3.2 Istruzioni per giocare
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#euristiche">
+                                    3.3 Euristiche
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#considerazioniEuristiche">
+                                    3.4 Considerazioni sulle euristiche
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#ottimizzazione">
+                                    3.5 Ottimizzazione
+                                </a>
+                            </li>
+                        </ul>
 				 	</li>
-				 	<li>
-				 		<a href="#consuntivo">
-				 			3. Consuntivo orario
-				 		</a>
-				 	</li>
-				 	<li>
-				 		<a href="#test">
-				 			4. Test
-				 		</a>
-				 	</li>
+                     <li>
+                         <a href="#test">
+                             4. Test
+                         </a>
+                         <ul>
+                             <li>
+                                 <a href="#tempi">
+                                     4.1 Tempi medi di esecuzione
+                                 </a>
+                             </li>
+                             <li>
+                                 <a href="#partite">
+                                     4.2 Partite tra giocatori di diversi livelli
+                                 </a>
+                             </li>
+                             <li>
+                                 <a href="#human">
+                                     4.3 Partite tra giocatori umani e IA
+                                 </a>
+                             </li>
+                         </ul>
+                    </li>
 				 	<li>
 				 		<a href="#conclusioni">
 				 			5. Conclusioni finali
@@ -82,21 +126,191 @@
 			Torna all'indice
 		</a>
 		<hr>
-	</section> 
+	</section> <section id="consuntivo">
+		<h3>
+			2. Consuntivo orario
+		</h3>
+		<p>
+			Nella seguente tabella sono riportate le ore di lavoro necessarie per la realizzazione delle componenti dell'intero progetto e per il raggiungimento degli obiettivi di progetto. Le ore comprendono quindi, non soltanto le ore utilizzate per l'implementazione di funzionalità nel programma sviluppato, ma anche quelle ore utilizzate per ricerca e per l'effettuazione dei test.
+		</p>
+		<table class="table">
+			<caption>
+				Consuntivo orario (in ore)
+			</caption>
+			<tr>
+				<th>
+					Lavoro svolto
+				</th>
+				<th>
+					Autore
+				</th>
+				<th>
+					Impegno orario
+				</th>
+				<th>
+					Tipo di lavoro
+				</th>
+			</tr>
+			<tr>
+				<td>
+					Progettazione, sviluppo componenti di base
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					1+9
+				</td>
+				<td>
+					Progettazione algoritmi, Implementazione funzionalità di base della dama (classi: Piece, Player, Spot, Board)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Progettazione, sviluppo componenti di base
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					1+5
+				</td>
+				<td>
+					Progettazione algoritmi, Implementazione funzionalità di base della dama (classi: King, Main)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Sviluppo Minimax
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					12
+				</td>
+				<td>
+					Implementazione algoritmi Minimax (classi: MinimaxTree, Node)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Pruning
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					3
+				</td>
+				<td>
+					Implementazione algoritmi di pruning (classi: MinimaxTree)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Evaluation functions
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					14
+				</td>
+				<td>
+					Ricerca e Implementazione algoritmi Evaluation Functions (classi: Evaluation)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Ottimizzazione
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					2
+				</td>
+				<td>
+					Implementazione Cache per i nodi del Minimax Tree (classi: MinimaxTree)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Test
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					2
+				</td>
+				<td>
+					Esecuzione Test di analisi delle performance delle euristiche e dei diversi algoritmi
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Test
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					3
+				</td>
+				<td>
+					Esecuzione Test di analisi delle performance delle euristiche e dei diversi algoritmi e raccolta dati
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Relazione, Presentazione
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					3
+				</td>
+				<td>
+					Stesura Relazione (sezioni: Dama, Progetto), Realizzazione Presentazione
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Relazione, Presentazione
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					5
+				</td>
+				<td>
+					Stesura Relazione (sezioni: Consuntivo orario, Test, Conclusioni finali), Realizzazione Presentazione
+				</td>
+			</tr>
+		</table>
+		<a href="#menu">
+			Torna all'indice
+		</a>
+		<hr>
+	</section>
 	<section id="progetto">
 		<h3>
-			2. Il progetto e i suoi scopi
+			3. Il progetto e i suoi scopi
 		</h3>
 		<p>
 			<a href="https://github.com/khaledalissa/simple-checkers">
 				Esempio considerato (link)
 			</a>
 		</p>
-		<h4>
-			2.1 Compilazione ed esecuzione del programma programma
+		<h4 id="compilazEsecuz">
+			3.1 Compilazione ed esecuzione del programma programma
 		</h4>
-		<h4>
-			2.2 Istruzioni per giocare
+		<h4 id="istruzioni">
+			3.2 Istruzioni per giocare
 		</h4> 
 		<p>
 			Una volta avviata la partita si dovranno scegliere le caratteristiche dei due giocatori. Prima di tutto si chiederà se il giocatore che si sta creando è umano o
@@ -132,9 +346,8 @@
 			Destra e sinistra, nelle mosse, sono assolute, relative alla scacchiera e non al suo orientamento rispetto al giocatore. Più semplicemente, una mossa a destra corrisponde ad un movimento verso la parte destra dello schermo. Lo stesso vale per la sinistra.
 			Il gioco avrà fine quando uno dei giocatori non potrà effettuare più alcuna mossa o avrà finito le pedine. Si nominerà vincitore l'altro giocatore.  
 		</p>
-
-		<h4>
-			2.3 Euristiche 
+		<h4 id="euristiche">
+			3.3 Euristiche
 		</h4>
 		<p>
 			Le funzioni euristiche, sono funzioni che servono ad attribuire un <i>valore di utilit&agrave;</i> ai nodi che verranno scelti dall'algoritmo intelligente.<br>
@@ -142,7 +355,7 @@
 			Prima di procedere con la spiegazione, &egrave; necessario specificare che le euristiche utilizzate, derivano da specifiche tencinche di gioco per la Dama, ciascuna delle quali prediligie un determinato aspetto (es: attacco, difesa...).<br><br>
 			Tutte le funzioni sviluppate, hanno una base comune che serve a generare un valore di base per ogni nodo, il quale poi viene raffinato tramite applicazione di euristiche che corrispondono alle tecniche di gioco diverse, come citato in precedenza.
 
-			<h5 style="font-weight: bold">Funzione 1</h5>
+			<h5>Funzione 1: <i>Standard</i></h5>
 			Questa eurisitca corrisponde alla funzione di base utilizzata da tutte le altre.<br>
 			In questa funzione ogni pedina normale conta come 1, mentra ogni damone (King) ha un peso maggiore, che corrisponde ad un valore compreso tra  1.4 e 3, dipende se si gioca a <i>Dama Spagnola</i> o alla variante Italian ed Inglese.
 		    Il fatto di dare un maggior peso ai damoni, serve ad incentivarne la genrazione e allo stesso tempo preservarne l'esistenza.<br><br>
@@ -193,8 +406,8 @@
 			Questa euristica, come detto in precedenza, è molto bilanciata e pu&ograve; essere ritenuta accettabile.<br>
 			Questa funzione pu&ograve; essere utilizzata da sola, senza la necessit&agrave; di essere raffinata.
 
-			<h5 style="font-weight: bold">Funzione 2</h5>
-			Questa eurisitca corrisponde ad un euristica <i>stupida</i>, questo perch&egrave; assegna valori casuali ai vari nodi<br>
+			<h5>Funzione 2: <i>Random</i></h5>
+			Questa eurisitca corrisponde ad un'euristica <i>stupida</i>, questo perch&egrave; assegna valori casuali ai vari nodi<br>
 			Questa funzione, risulta essere l'unica che non sfrutta la 1 come funzione di base da raffinare.
 
 			Per assegnare pi&ugrave; valori casuali possibili si è scelto di ritornare valori tra 1 e 20:<br>
@@ -208,7 +421,7 @@
 
 			L'utilizzo di tale euristica ha portato ad interessanti osservazioni: In acluni casi si è osservato che tale euristica &egrave; riuscita a vincere il 20% delle partite.
 
-		<h5 style="font-weight: bold">Funzione 3</h5>
+		<h5>Funzione 3: <i>Centrality</i></h5>
 
 		Questa euristica, chiamata anche <i>Centrality</i> ha come obbiettivo principale quello di spingere i propri pezzi a dominare il centro della scacchiera.
 		Ogni mossa al centro della scacchiera è promossa ed incentivata.<br><br>
@@ -253,7 +466,7 @@
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come riportato nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
 
 
-		<h5 style="font-weight: bold">Funzione 4</h5>
+		<h5>Funzione 4: <i>Backrows</i></h5>
 		Questa euristica, chiamata anche <i>Backrows</i>, ha come obbiettivo principale quello di spingere i propri pezzi a stare nell righe di testa e di fondo della scacchiera
 		Ogni mossa al nel fondo i nella testa &egrave; incentivata, pi&ugrave; si &egrave; agli estremi, maggiore sar&agrave; sar&agrave; l'incentivo.<br><br>
 		Nello specifico, viene assegnato un valore maggiore a tutti quelli stati la cui mossa, prevede, uno spostamento verso la propria linea di difesa o verso quella avversaria a dscapito delle pedine avversarie.
@@ -298,7 +511,7 @@
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come riportato nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
 
 
-		<h5 style="font-weight: bold">Funzione 5</h5>
+		<h5>Funzione 5: <i>Complete</i></h5>
 		Questa euristica, chiamata anche <i>Complete</i>, ha come obbiettivo principale quello valutare diversi fattori in modo da fare la scelta pi&ugrave; accurata.<br>
 		Ogni mossa valuta se la pedina sta eseguendo una delle seguenti azioni:
 		<ul>
@@ -350,7 +563,7 @@
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come ad esempio nella tesi: <a href="http://tigerprints.clemson.edu/cgi/viewcontent.cgi?article=1074&context=all_theses">Soar Checkers - An Intelligent Checkers Playing - Jithu Menon - Clemson University</a>, perch&egrave; risulta essere molto buona e completa.
 
 
-		<h5 style="font-weight: bold"> Funzione 6 </h5>
+		<h5> Funzione 6: <i>Offensive</i> </h5>
 		Questa euristica, chiamata anche <i>Offensive</i>, ha come obbiettivo principale di attaccare indipendentemente dal resto.<br>
 		Ogni mossa valuta se la pedina si sta spostando nelle zone d'attacco della scacchiere e/o sta per mangiare una pedina avversaria.
 		Nello specifico, pi&ugrave; in attacco si sta spostando la pedina, maggiore sarà il valore dello stato.
@@ -397,7 +610,7 @@
 		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
 		Dai test eseguiti questa euristica risulta essere valida contro euristiche basilari e/o bilanciate, mentre, contro euristiche pi&ugrave; difensive, risulta piuttosto inefficace.
 
-		<h5 style="font-weight: bold"> Funzione 7 </h5>
+		<h5> Funzione 7: <i>Defensive</i> </h5>
 		Questa euristica, chiamata anche <i>Defensive</i>, ha come obbiettivo principale di difendersi indipendentemente dal resto.<br>
 		Ogni mossa valuta se la pedina si sta spostando in una zona protetta e difesa o se si sta spostando in una zona neutra o non protetta.
 		Nello specifico, pi&ugrave; protetta sar&agrave; la pedina, maggiore sarà il valore dello stato.<br>
@@ -450,7 +663,7 @@
 		</code></pre>
 		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
 
-		<h5 style="font-weight: bold">Funzione 8</h5>
+		<h5>Funzione 8: <i>Kings Forcing</i></h5>
 		Questa euristica, chiamata anche <i>Kings Forcing</i>, ha come obbiettivo principale quello di muovere i damoni spostandoli verso il centro per attaccare.<br>
 		Ogni mossa valuta se la damona si sta spostando in una zona centrale della scacchiera, se si sta per attaccare se ci si sta spostando verso un damone e se ci si sta allontanando dagli angoli o i bordi della scacchiera.<br>
 		Nello specifico, pi&ugrave; il damone si sposter&agrave; verso il centro o tenter&agrave; di attaccare, maggiore sarà il valore dello stato.<br>Se invece lo stato prevede che il damone venga spostato in pozioni defilate, come bordi o angoli allora verr&agrave; penalizzato.
@@ -514,25 +727,25 @@
 
 
 		</p>
-		<h4>
-			2.4 Considerazioni sulle euristiche
+		<h4 id="considerazioniEuristiche">
+			3.4 Considerazioni sulle euristiche
 		</h4>
 		<p>Queste euristiche sono tutte derivate da tecniche di gioco del mondo reale, e spesso sono tecniche studiate appostitamente per creare Intelligenze Artificiali pi&ugrave; performanti</p>
-		<h4>
-			2.4 Ottimizzazione 
+		<h4 id="ottimizzazione">
+			3.5 Ottimizzazione
 		</h4>
 		<p>
 			Durante lo sviluppo del progetto ci siamo trovati in difficolt&agrave; a causa dell'utilizzo massiccio di memoria degli algoritmi.<br>
 			In generale l'algoritmo MinMax soffre dello stesso problema delle ricerche in profondit&agrave; e ampiezza: l'utilizzo di memoria.<br><br>
 			Per far fronte a tale problema esistono diverse tecniche come ad esempio:
 			<ul>
-				<li>Rierca di Quiescenza</li>
+				<li>Ricerca di Quiescenza</li>
 				<li>Memoization</li>
 			</ul>
 
 		La ricerace di quiescenza, &egrave; una tecninca che permette all'algoritmo di <i>tagliare</i> la ricerca quando, la funzione di valutazione, per una serie di nodi non cambia di molto, ovvero quando il valore di un set di nodi oscilla in un certo range deciso a priori.
 		Questa tecnica &egrave; molto utilizzata e permette di risparmiare memoria che pu&ograve; essere utilizzata nei passi succcessivi per scoprire nodi pi&ugrave; promettenti.
-		Tuttavia la nostra scelta non &egrave; ricaduta su questa tencnica.<br><br>
+		Tuttavia la nostra scelta non &egrave; ricaduta su questa tecnnica, perchè...<br><br>
 
 		La memoization, &egrave; una tecninca che permette all'algoritmo di risparmiare memoria andando a creare un <i>hashtable</i> in cui salvare i nodi generati, in modo tale da riutilizzare uno stesso nodo invece di crearne uno di nuovo.
 		Nello specifico, ogni qualvolta viene costruito l'albero di ricerca, si va a controllare se il nodo che sta per essere creato esiste gi&agrave; o se invece deve essere creato da zero. Nel caso in cui questo esista gi&agrave; allora viene utilizzato, evitando di crearne uno nuovo e quindi risparmiando memoria.
@@ -543,8 +756,8 @@
 			<li>Mossa</li>
 			<li>Padre</li>
 			<li>Profondit&agrave;</li>
-			<li>Giocatore</li>
-			<li>Scacchiera</li>
+			<li>Giocatore che esegue la mossa</li>
+			<li>Stato della scacchiera</li>
 		</ul>
 
 		L'unione di questi campi crea una chiave univoca che corrisponde solo ad un possibile nodo perchè dipende dallo  anche dallo stato e dalla scacchiera.<br>
@@ -567,190 +780,19 @@
 		</a>
 		<hr>
 	</section> 
-	<section id="consuntivo">
-		<h3>
-			3. Consuntivo orario
-		</h3>
-		<p>
-			Nella seguente tabella sono riportate le ore di lavoro necessarie per la realizzazione delle componenti dell'intero progetto e per il raggiungimento degli obiettivi di progetto. Le ore comprendono quindi, non soltanto le ore utilizzate per l'implementazione di funzionalità nel programma sviluppato, ma anche quelle ore utilizzate per ricerca e per l'effettuazione dei test.
-		</p>
-			<table class="table">
-				<caption>
-					Consuntivo orario (in ore)
-				</caption> 
-				<tr>
-					<th>
-						Lavoro svolto
-					</th>
-					<th>
-						Autore
-					</th>
-					<th>
-						Impegno orario
-					</th>
-					<th>
-						Tipo di lavoro
-					</th> 
-				</tr>
-				<tr>
-					<td>
-						Progettazione, sviluppo componenti di base
-					</td> 
-					<td>
-						Enrico Savoca
-					</td>
-					<td>
-						1+9
-					</td> 
-					<td>
-						Progettazione algoritmi, Implementazione funzionalità di base della dama (classi: Piece, Player, Spot, Board)
-					</td> 
-				</tr> 
-				<tr>
-					<td>
-						Progettazione, sviluppo componenti di base
-					</td> 
-					<td>
-						Stefano Campese
-					</td>
-					<td>
-						1+5
-					</td> 
-					<td>
-						Progettazione algoritmi, Implementazione funzionalità di base della dama (classi: King, Main)
-					</td> 				
-				</tr>
-				<tr>
-					<td>
-						Sviluppo Minimax
-					</td> 
-					<td>
-						Enrico Savoca
-					</td>
-					<td>
-						12
-					</td> 
-					<td>
-						Implementazione algoritmi Minimax (classi: MinimaxTree, Node)
-					</td> 
-				</tr> 				
-				<tr>
-					<td>
-						Pruning
-					</td> 
-					<td>
-						Enrico Savoca
-					</td>
-					<td>
-						3
-					</td> 
-					<td>
-						Implementazione algoritmi di pruning (classi: MinimaxTree)
-					</td> 
-				</tr>  
-				<tr>
-					<td>
-						Evaluation functions
-					</td> 
-					<td>
-						Stefano Campese
-					</td>
-					<td>
-						14
-					</td> 
-					<td>
-						Ricerca e Implementazione algoritmi Evaluation Functions (classi: Evaluation)
-					</td> 
-				</tr> 
-				<tr>
-					<td>
-						Ottimizzazione
-					</td> 
-					<td>
-						Stefano Campese
-					</td>
-					<td>
-						2
-					</td> 
-					<td>
-						Implementazione Cache per i nodi del Minimax Tree (classi: MinimaxTree)
-					</td> 
-				</tr> 
-				<tr>
-					<td>
-						Test
-					</td> 
-					<td>
-						Enrico Savoca
-					</td>
-					<td>
-						2
-					</td> 
-					<td>
-						Esecuzione Test di analisi delle performance delle euristiche e dei diversi algoritmi
-					</td> 
-				</tr> 
-				<tr>
-					<td>
-						Test
-					</td> 
-					<td>
-						Stefano Campese
-					</td>
-					<td>
-						3
-					</td> 
-					<td>
-						Esecuzione Test di analisi delle performance delle euristiche e dei diversi algoritmi e raccolta dati
-					</td> 
-				</tr> 
-				<tr>
-					<td>
-						Relazione, Presentazione 
-					</td> 
-					<td>
-						Enrico Savoca
-					</td>
-					<td>
-						3
-					</td> 
-					<td>
-						Stesura Relazione (sezioni: Dama, Progetto), Realizzazione Presentazione
-					</td> 
-				</tr> 
-				<tr>
-					<td>
-						Relazione, Presentazione 
-					</td> 
-					<td>
-						Stefano Campese
-					</td>
-					<td>
-						5
-					</td> 
-					<td>
-						Stesura Relazione (sezioni: Consuntivo orario, Test, Conclusioni finali), Realizzazione Presentazione
-					</td> 
-				</tr> 
-			</table>  
-		<a href="#menu">
-			Torna all'indice
-		</a>
-		<hr>
-	</section> 
 	<section id="test">
 		<h3>
 			4. Test
 		</h3>
 		<p>
-			Sono stati eseguiti due tipi di test. Il primo tipo di test consisteva nella misurazione e raccolta dei tempi medi necesari per eseguire una mossa, in una partita, tramite l'uso di un albero di decisione Minimax con pruning e senza. Il secondo tipo di test ha richiesto l'esecuzione di un grande numero di partite in cui si sono confrontati diversi tipi di giocatori: comandati dalla CPU (con euristiche più o meno buone) e persone. 
+			Sono stati eseguiti due tipi di test. Il primo tipo di test consisteva nella misurazione e raccolta dei tempi medi necesari per eseguire una mossa, in una partita, tramite l'uso di un albero di decisione Minimax con pruning e senza. Il secondo tipo di test ha richiesto l'esecuzione di un grande numero di partite in cui si sono confrontati diversi tipi di giocatori: comandati dalla CPU (con euristiche più o meno buone) e persone.
 		</p>
-		<h4>
+		<h4 id="tempi">
 			4.1 Tempi medi di esecuzione
 		</h4>
 		<p>
 			L'esecuzione...
-			Misurati con profondità x = 
+			Misurati con profondità x =
 		</p>
 		<table class="table">
 			<caption>
@@ -758,27 +800,116 @@
 			</caption>
 			<tr>
 				<th>
-					Euristica
+					Profondità
 				</th>
 				<th>
-					con Pruning
+					con Pruning (ms)
 				</th>
 				<th>
-					senza Pruning
+					senza Pruning (ms)
 				</th>
+            </tr>
 			<tr>
 				<td>
-					(1), Standard
-				</td> 
-				<td>
-					1
+					2
 				</td>
 				<td>
+					1,11
+				</td>
+				<td>
+					1,52
+				</td>
+			</tr>
+			<tr>
+				<td>
+					3
+				</td>
+				<td>
+					11,34
+				</td>
+				<td>
+					11,83
+				</td>
+			</tr>
+			<tr>
+				<td>
+					4
+				</td>
+				<td>
+					35,32
+				</td>
+				<td>
+					28,85
+				</td>
+			</tr>
+			<tr>
+				<td>
+					5
+				</td>
+				<td>
+					152,56
+				</td>
+				<td>
+					120,66
+				</td>
+			</tr>
+			<tr>
+				<td>
+					6
+				</td>
+				<td>
+					-
+				</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>
+					7
+				</td>
+				<td>
+					-
+				</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>
+					8
+				</td>
+				<td>
+					-
+				</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>
+					9
+				</td>
+				<td>
+					-
+				</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>
 					10
-				</td>  
-			</tr> 
+				</td>
+				<td>
+					-
+				</td>
+				<td>
+					-
+				</td>
+			</tr>
 		</table>  
-		<h4>
+		<h4 id="partite">
 			4.2 Partite tra giocatori di diversi livelli
 		</h4>
 		<p>
@@ -791,7 +922,7 @@
 			</caption>
 			<tr>
 				<th>
-					VS (Vincente \ perdente)
+					VS (num. Vittorie / num. Partite)
 				</th>
 				<th>
 					(1), Standard
@@ -813,9 +944,6 @@
 				</th>
 				<th>
 					(7)
-				</th>
-				<th>
-					Giocatore umano
 				</th>
 				<th>
 					Media vittorie
@@ -842,15 +970,11 @@
 				<td>					
 				</td>
 				<td>
-				</td>  
-				<td>
-				</td>  
+				</td>
 			</tr> 
 			<tr>
 				<td>
 					(2)
-				</td> 
-				<td>					
 				</td>
 				<td>
 				</td> 
@@ -875,8 +999,6 @@
 			<tr>
 				<td>
 					(3)
-				</td> 
-				<td>					
 				</td>
 				<td>
 				</td> 
@@ -901,8 +1023,6 @@
 			<tr>
 				<td>
 					(4)
-				</td> 
-				<td>					
 				</td>
 				<td>
 				</td> 
@@ -927,8 +1047,6 @@
 			<tr>
 				<td>
 					(5)
-				</td> 
-				<td>					
 				</td>
 				<td>
 				</td> 
@@ -953,8 +1071,6 @@
 			<tr>
 				<td>
 					(6)
-				</td> 
-				<td>					
 				</td>
 				<td>
 				</td> 
@@ -979,8 +1095,6 @@
 			<tr>
 				<td>
 					(7)
-				</td> 
-				<td>					
 				</td>
 				<td>
 				</td> 
@@ -1001,34 +1115,92 @@
 				</td>  
 				<td>
 				</td>   
-			</tr> 
-			<tr>
-				<td>
-					Giocatore umano
-				</td> 
-				<td>					
-				</td>
-				<td>
-				</td> 
-				</td> 
-				<td>					
-				</td>
-				<td>
-				</td>  
-				</td> 
-				<td>					
-				</td>
-				<td>
-				</td>  
-				</td> 
-				<td>					
-				</td>
-				<td>
-				</td> 
-				<td>
-				</td>   
-			</tr> 
-		</table> 
+			</tr>
+		</table>
+        <h4 id="human">
+            4.3 Partite tra giocatori umani e IA
+        </h4>
+        <table class="table">
+            <caption>
+                Percentuale vittorie nelle partite tra giocatori umani e IA
+            </caption>
+            <tr>
+                <th>
+                    Euristiche:
+                </th>
+                <th>
+                    1
+                </th>
+                <th>
+                    2
+                </th>
+                <th>
+                    3
+                </th>
+                <th>
+                    4
+                </th>
+                <th>
+                    5
+                </th>
+                <th>
+                    6
+                </th>
+                <th>
+                    7
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    Percentuale vittorie del giocatore umano
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Numero medio di turni (durata delle partite)
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
 		<a href="#menu">
 			Torna all'indice
 		</a>
