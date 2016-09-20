@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="css/other.css">
+    <link rel="stylesheet" type="text/css" href="css/styles/darcula.css">
 	<script src="js/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
 	<title> Checkers AI : Checkers Automaton Italo </title>
@@ -360,7 +361,7 @@
 			In questa funzione ogni pedina normale conta come 1, mentra ogni damone (King) ha un peso maggiore, che corrisponde ad un valore compreso tra  1.4 e 3, dipende se si gioca a <i>Dama Spagnola</i> o alla variante Italian ed Inglese.
 		    Il fatto di dare un maggior peso ai damoni, serve ad incentivarne la genrazione e allo stesso tempo preservarne l'esistenza.<br><br>
 			L'idea di base, è quella di considerare il numero di pezzi propri, meno il numero dei pezzi avversari, ritornando poi il valore della sottrazione come valore del nodo.
-		    Questo approcio permette avere un intelligenza abbastaza bilanciata tra difesa ed attacco con dei discreti risultati.<br>
+		    Questo approcio permette avere un intelligenza abbastaza bilanciata tra difesa ed attacco con degli ottimi risultati.<br>
 			Vediamo ora un esempio:<br><br>
 
 
@@ -403,7 +404,7 @@
 
 			Come si può vedere se il giocatore &egrave; bianco, la funzione ritorna la differenza tra bianchi e neri sommata alla differenza tra damoni bianchi e neri.<br>
 
-			Questa euristica, come detto in precedenza, è molto bilanciata e pu&ograve; essere ritenuta accettabile.<br>
+			Questa euristica, come detto in precedenza, è molto bilanciata e riesce a battere euristiche sbilanciate con un media 48/70 partite vinte.<br>
 			Questa funzione pu&ograve; essere utilizzata da sola, senza la necessit&agrave; di essere raffinata.
 
 			<h5>Funzione 2: <i>Random</i></h5>
@@ -419,7 +420,8 @@
 		</code></pre>
 
 
-			L'utilizzo di tale euristica ha portato ad interessanti osservazioni: In acluni casi si è osservato che tale euristica &egrave; riuscita a vincere il 20% delle partite.
+			L'utilizzo di tale euristica ha portato ad interessanti osservazioni: In acluni casi si è osservato che tale euristica &egrave; riuscita a vincere il 20% delle partite con una media di 14 partite vinte su 70 giocate.
+			Contro se stessa l'euristica arriva ad avere un 40% di vittorie.
 
 		<h5>Funzione 3: <i>Centrality</i></h5>
 
@@ -463,6 +465,7 @@
 		</code></pre>
 
 		Come si pu&ograve; notare l'euristica spinge molto sul controllo del centro scacchiera, che risulta essere una mossa molto buona, perch&egrave; spinge l'avversario verso il fondo, intrappolandolo.
+		Putroppo questa euristica privilegia la parit&agrave; alla vittora, vincendo solo 21 partite su 70 giocate. Risulta essere discreta con euristiche offensive.
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come riportato nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
 
 
@@ -508,6 +511,7 @@
 		</code></pre>
 
 		Come si pu&ograve; notare, l'euristica spinge molto sul fondo: pi&ugrave; si &egrave; vicini alle righe 0 o 7 maggiore sar&agrave; il valore.
+		La funzione risulta essere la migliore di quelle studiate, perch&egrave; essendo sia molto difensiva che molto offensiva e riuscita a vincere un totale di 53 partite su 70.
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come riportato nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
 
 
@@ -560,6 +564,7 @@
                     }
 		</code></pre>
 
+		La funzione risulta essere tra le migliori di quelle studiate, perch&egrave; essendo molto completa riesce a vincere un totale di 35 partite su 70.
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come ad esempio nella tesi: <a href="http://tigerprints.clemson.edu/cgi/viewcontent.cgi?article=1074&context=all_theses">Soar Checkers - An Intelligent Checkers Playing - Jithu Menon - Clemson University</a>, perch&egrave; risulta essere molto buona e completa.
 
 
@@ -607,6 +612,8 @@
                         }
                     }
 		</code></pre>
+
+		La funzione risulta essere buona e discreta in attacco, tuttavia "attacando con il paraocchi" non tiene conto della difesa e quindi riesce a vincere solo un totale di  24 partite su 70.
 		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
 		Dai test eseguiti questa euristica risulta essere valida contro euristiche basilari e/o bilanciate, mentre, contro euristiche pi&ugrave; difensive, risulta piuttosto inefficace.
 
@@ -661,6 +668,7 @@
 
                     }
 		</code></pre>
+		La funzione risulta essere buona e molto forte in difesa, nonostante sia una tecnica difensiva riesce a vincere il totale di 37 partite su 70.
 		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
 
 		<h5>Funzione 8: <i>Kings Forcing</i></h5>
