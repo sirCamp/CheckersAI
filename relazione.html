@@ -132,6 +132,7 @@
 			Destra e sinistra, nelle mosse, sono assolute, relative alla scacchiera e non al suo orientamento rispetto al giocatore. Più semplicemente, una mossa a destra corrisponde ad un movimento verso la parte destra dello schermo. Lo stesso vale per la sinistra.
 			Il gioco avrà fine quando uno dei giocatori non potrà effettuare più alcuna mossa o avrà finito le pedine. Si nominerà vincitore l'altro giocatore.  
 		</p>
+
 		<h4>
 			2.3 Euristiche 
 		</h4>
@@ -141,7 +142,7 @@
 			Prima di procedere con la spiegazione, &egrave; necessario specificare che le euristiche utilizzate, derivano da specifiche tencinche di gioco per la Dama, ciascuna delle quali prediligie un determinato aspetto (es: attacco, difesa...).<br><br>
 			Tutte le funzioni sviluppate, hanno una base comune che serve a generare un valore di base per ogni nodo, il quale poi viene raffinato tramite applicazione di euristiche che corrispondono alle tecniche di gioco diverse, come citato in precedenza.
 
-			<h5>Funzione 1</h5>
+			<h5 style="font-weight: bold">Funzione 1</h5>
 			Questa eurisitca corrisponde alla funzione di base utilizzata da tutte le altre.<br>
 			In questa funzione ogni pedina normale conta come 1, mentra ogni damone (King) ha un peso maggiore, che corrisponde ad un valore compreso tra  1.4 e 3, dipende se si gioca a <i>Dama Spagnola</i> o alla variante Italian ed Inglese.
 		    Il fatto di dare un maggior peso ai damoni, serve ad incentivarne la genrazione e allo stesso tempo preservarne l'esistenza.<br><br>
@@ -151,12 +152,39 @@
 
 
 		<pre><code class="java">
-			if(player.isWhite()){
-            			return(white-black + Evaluation.KINGS_EVAL*(whiteKings-blackKings));
-        		}
-        		else{
-            			return (black - white + Evaluation.KINGS_EVAL*(blackKings-whiteKings));
-        		}
+	for(int i = 0; i <8; i++){
+            for(int j = 0; j < 8; j++){
+                if( board[i][j] != null && board[i][j].getOccupier() != null){
+
+                    Piece piece = board[i][j].getOccupier();
+                    if(piece.isKing()){
+
+                        if(piece.isWhite()){
+                            whiteKings += 1;
+                        }
+                        else{
+                            blackKings += 1;
+                        }
+                    }
+                    else{
+                        if(piece.isWhite()){
+                            white += 1;
+                        }
+                        else{
+                            black += 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(player.isWhite()){
+            return (white-black + Evaluation.KINGS_EVAL*(whiteKings-blackKings));
+        }
+        else{
+            //if black
+            return (black - white + Evaluation.KINGS_EVAL*(blackKings-whiteKings));
+        }
 
 		</code></pre>
 
@@ -165,7 +193,7 @@
 			Questa euristica, come detto in precedenza, è molto bilanciata e pu&ograve; essere ritenuta accettabile.<br>
 			Questa funzione pu&ograve; essere utilizzata da sola, senza la necessit&agrave; di essere raffinata.
 
-			<h5>Funzione 2</h5>
+			<h5 style="font-weight: bold">Funzione 2</h5>
 			Questa eurisitca corrisponde ad un euristica <i>stupida</i>, questo perch&egrave; assegna valori casuali ai vari nodi<br>
 			Questa funzione, risulta essere l'unica che non sfrutta la 1 come funzione di base da raffinare.
 
@@ -180,7 +208,7 @@
 
 			L'utilizzo di tale euristica ha portato ad interessanti osservazioni: In acluni casi si è osservato che tale euristica &egrave; riuscita a vincere il 20% delle partite.
 
-		<h5>Funzione 3</h5>
+		<h5 style="font-weight: bold">Funzione 3</h5>
 
 		Questa euristica, chiamata anche <i>Centrality</i> ha come obbiettivo principale quello di spingere i propri pezzi a dominare il centro della scacchiera.
 		Ogni mossa al centro della scacchiera è promossa ed incentivata.<br><br>
@@ -225,7 +253,7 @@
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come riportato nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
 
 
-		<h5>Funzione 4</h5>
+		<h5 style="font-weight: bold">Funzione 4</h5>
 		Questa euristica, chiamata anche <i>Backrows</i>, ha come obbiettivo principale quello di spingere i propri pezzi a stare nell righe di testa e di fondo della scacchiera
 		Ogni mossa al nel fondo i nella testa &egrave; incentivata, pi&ugrave; si &egrave; agli estremi, maggiore sar&agrave; sar&agrave; l'incentivo.<br><br>
 		Nello specifico, viene assegnato un valore maggiore a tutti quelli stati la cui mossa, prevede, uno spostamento verso la propria linea di difesa o verso quella avversaria a dscapito delle pedine avversarie.
@@ -270,7 +298,7 @@
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come riportato nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
 
 
-		<h5>Funzione 5</h5>
+		<h5 style="font-weight: bold">Funzione 5</h5>
 		Questa euristica, chiamata anche <i>Complete</i>, ha come obbiettivo principale quello valutare diversi fattori in modo da fare la scelta pi&ugrave; accurata.<br>
 		Ogni mossa valuta se la pedina sta eseguendo una delle seguenti azioni:
 		<ul>
@@ -322,7 +350,7 @@
 		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come ad esempio nella tesi: <a href="http://tigerprints.clemson.edu/cgi/viewcontent.cgi?article=1074&context=all_theses">Soar Checkers - An Intelligent Checkers Playing - Jithu Menon - Clemson University</a>, perch&egrave; risulta essere molto buona e completa.
 
 
-		<h5> Funzione 6 </h5>
+		<h5 style="font-weight: bold"> Funzione 6 </h5>
 		Questa euristica, chiamata anche <i>Offensive</i>, ha come obbiettivo principale di attaccare indipendentemente dal resto.<br>
 		Ogni mossa valuta se la pedina si sta spostando nelle zone d'attacco della scacchiere e/o sta per mangiare una pedina avversaria.
 		Nello specifico, pi&ugrave; in attacco si sta spostando la pedina, maggiore sarà il valore dello stato.
@@ -369,7 +397,7 @@
 		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
 		Dai test eseguiti questa euristica risulta essere valida contro euristiche basilari e/o bilanciate, mentre, contro euristiche pi&ugrave; difensive, risulta piuttosto inefficace.
 
-		<h5> Funzione 7 </h5>
+		<h5 style="font-weight: bold"> Funzione 7 </h5>
 		Questa euristica, chiamata anche <i>Defensive</i>, ha come obbiettivo principale di difendersi indipendentemente dal resto.<br>
 		Ogni mossa valuta se la pedina si sta spostando in una zona protetta e difesa o se si sta spostando in una zona neutra o non protetta.
 		Nello specifico, pi&ugrave; protetta sar&agrave; la pedina, maggiore sarà il valore dello stato.<br>
@@ -422,7 +450,7 @@
 		</code></pre>
 		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
 
-		<h5>Funzione 8</h5>
+		<h5 style="font-weight: bold">Funzione 8</h5>
 		Questa euristica, chiamata anche <i>Kings Forcing</i>, ha come obbiettivo principale quello di muovere i damoni spostandoli verso il centro per attaccare.<br>
 		Ogni mossa valuta se la damona si sta spostando in una zona centrale della scacchiera, se si sta per attaccare se ci si sta spostando verso un damone e se ci si sta allontanando dagli angoli o i bordi della scacchiera.<br>
 		Nello specifico, pi&ugrave; il damone si sposter&agrave; verso il centro o tenter&agrave; di attaccare, maggiore sarà il valore dello stato.<br>Se invece lo stato prevede che il damone venga spostato in pozioni defilate, come bordi o angoli allora verr&agrave; penalizzato.
@@ -477,7 +505,7 @@
                     }
 		</code></pre>
 
-		Come sin pu&ograve; notare questa euristica spinge molto sul movimento dei damoni e predilige, in genere l'attacco.
+		Come sin pu&ograve; notare questa euristica spinge molto sul movimento dei damoni e predilige, in genere, l'attacco; oltre a ci&ograve; questa euristica da un peso maggiore ai damoni, e quindi ne incentiva la creazione.
 		Questa euristica &egrave; stata creata tramite un attento studio della situazione, prendendo il considerazione il fatto che, durante le fasi finali di una partita, il numero di damoni &egrave; maggiore e quindi &egrave; necessario agire su di essi per riforzare le euristiche normali.
 
 
