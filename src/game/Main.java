@@ -20,7 +20,7 @@ public class Main {
 		Integer round = (ran.nextInt(10) % 2); // who starts?
 		Integer roundCounter = 0;
 		System.out.println("Players creation...");
-		Player p1 = new Player("6-pc", "p1", "b", 6); //createPlayer(true);
+		Player p1 = new Player("2-pc", "p1", "b", 6); //createPlayer(true);
 		Player p2 = new Player("human", "p2", "w", 6); //createPlayer(false);
 		System.out.println("["+p1.getName()+", "+p1.getAlgorithm()+"] VS ["+p2.getName()+", "+p2.getAlgorithm()+"]");
 		if(round == 0){

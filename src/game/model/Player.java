@@ -260,7 +260,14 @@ public class Player implements Cloneable{
         if(!(piece instanceof King) && ((piece.getColour().equals("b") && piece.getRowPosition() == 7) ||
             (piece.getColour().equals("w") && piece.getRowPosition() == 0))){
             King king = new King(piece);
+            board.getBoard()[piece.getRowPosition()][piece.getColPosition()].setOccupier(null);
+            ArrayList<Piece> newList = new ArrayList<>(this.pieces.size()-1);
+            for (Piece oldPiece: this.getPieceList()){ // it creates a new list, removing the old piece: Garbage collector is too much slow
+                if(!oldPiece.getName().equals(piece))
+                    newList.add(oldPiece);
+            }
             this.getPieceList().remove(piece);
+            this.pieces = newList;
             this.getPieceList().add(king);
             board.getBoard()[king.getRowPosition()][king.getColPosition()].setOccupier(king);
             aragorn = king;
