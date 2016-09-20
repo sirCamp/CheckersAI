@@ -1,6 +1,5 @@
 package game.model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import game.moveGenerator.MiniMaxTree;
 import game.utils.CSVExporter;
 
@@ -110,8 +109,8 @@ public class Player implements Cloneable{
             Long start = System.currentTimeMillis();
             computerPlay(board, roundCounter);
             Long total = System.currentTimeMillis() - start;
-            CSVExporter.CONTAINER+=";"+total.toString()+"\n";
-            System.out.println("Spent Time: "+ total.toString());
+            CSVExporter.CONTAINER+=","+total.toString()+";\n";
+            //System.out.println("Spent Time: "+ total.toString());
         }
     }
 
@@ -170,7 +169,7 @@ public class Player implements Cloneable{
             int i = size - 2;
             String temp = "";
             while (i >= 0 && j >= 1) {
-                temp += "PC: " + move[i] + " " + move[j]+",";
+                temp += move[i] + " " + move[j]+" ";
                 System.out.println("PC: " + move[i] + " " + move[j]);
                 Piece piece = getPieceByName(move[i]);
                 if (move[j].indexOf("move") > -1) { // more efficient than method String.contains
@@ -183,7 +182,7 @@ public class Player implements Cloneable{
                 i = i - 2;
             }
 
-            CSVExporter.CONTAINER+=temp.substring(0,temp.lastIndexOf(",")-1);
+            CSVExporter.CONTAINER+=temp;
         }else{
             this.eatenPieces = 12;
         }
@@ -257,16 +256,16 @@ public class Player implements Cloneable{
     }
 
     public King checkIfBecomeKing(Piece piece, Board board) throws IOException {
-        King returningKing = null;
+        King aragorn = null;
         if(!(piece instanceof King) && ((piece.getColour().equals("b") && piece.getRowPosition() == 7) ||
             (piece.getColour().equals("w") && piece.getRowPosition() == 0))){
             King king = new King(piece);
             this.getPieceList().remove(piece);
             this.getPieceList().add(king);
             board.getBoard()[king.getRowPosition()][king.getColPosition()].setOccupier(king);
-            returningKing = king;
+            aragorn = king;
         }
-        return returningKing;
+        return aragorn;
     }
 
     public boolean isWhite(){ return this.colour.equals("w"); }
