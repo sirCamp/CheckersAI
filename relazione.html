@@ -420,13 +420,119 @@
 
                     }
 		</code></pre>
+		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
+
+		<h5>Funzione 8</h5>
+		Questa euristica, chiamata anche <i>Kings Forcing</i>, ha come obbiettivo principale quello di muovere i damoni spostandoli verso il centro per attaccare.<br>
+		Ogni mossa valuta se la damona si sta spostando in una zona centrale della scacchiera, se si sta per attaccare se ci si sta spostando verso un damone e se ci si sta allontanando dagli angoli o i bordi della scacchiera.<br>
+		Nello specifico, pi&ugrave; il damone si sposter&agrave; verso il centro o tenter&agrave; di attaccare, maggiore sarà il valore dello stato.<br>Se invece lo stato prevede che il damone venga spostato in pozioni defilate, come bordi o angoli allora verr&agrave; penalizzato.
+
+		Questa euristica viene usata come <i>rinforzo</i> poich&egrave;, spesso, nelle partite si rischia di arrivare a delle situazioni di stallo che possono essere risolte tramite la forzatura ad attaccare.<br>
+		Il core di questa funzione &egrave; :
+
+		<pre class="java"><code>
+		      if(piece.isKing()) {
+
+
+                        if (Utils.isNearMoreThanOneOpponent(i,j,board,piece)) {
+
+                            result += 5;
+                        }
+
+                        if (Utils.isNearOneOpponent(i,j,board,piece)) {
+
+                            result += 7;
+                        }
+
+                        if (Utils.isInCenter(i, j)) {
+
+                            result += 7;
+                        }
+
+                        if(node.getMove().contains("capture")){
+
+                            result += 15;
+                        }
+
+                        if (Utils.isInEdge(j)) {
+
+                            result -= 4;
+                        }
+
+                        if (Utils.isInBackrowByColor(i, piece)) {
+
+                            result -= 7;
+                        }
+
+                        if (Utils.isInAngle(i, j)) {
+
+                            result -= 10;
+                        }
+                    }
+                    else{
+                        if(node.getMove().contains("capture")){
+
+                            result += 10;
+                        }
+                    }
+		</code></pre>
+
+		Come sin pu&ograve; notare questa euristica spinge molto sul movimento dei damoni e predilige, in genere l'attacco.
+		Questa euristica &egrave; stata creata tramite un attento studio della situazione, prendendo il considerazione il fatto che, durante le fasi finali di una partita, il numero di damoni &egrave; maggiore e quindi &egrave; necessario agire su di essi per riforzare le euristiche normali.
+
+
+
+
+
 
 		</p>
+		<h4>
+			2.4 Considerazioni sulle euristiche
+		</h4>
+		<p>Queste euristiche sono tutte derivate da tecniche di gioco del mondo reale, e spesso sono tecniche studiate appostitamente per creare Intelligenze Artificiali pi&ugrave; performanti</p>
 		<h4>
 			2.4 Ottimizzazione 
 		</h4>
 		<p>
-			Assenza di quiescenza, ma cache
+			Durante lo sviluppo del progetto ci siamo trovati in difficolt&agrave; a causa dell'utilizzo massiccio di memoria degli algoritmi.<br>
+			In generale l'algoritmo MinMax soffre dello stesso problema delle ricerche in profondit&agrave; e ampiezza: l'utilizzo di memoria.<br><br>
+			Per far fronte a tale problema esistono diverse tecniche come ad esempio:
+			<ul>
+				<li>Rierca di Quiescenza</li>
+				<li>Memoization</li>
+			</ul>
+
+		La ricerace di quiescenza, &egrave; una tecninca che permette all'algoritmo di <i>tagliare</i> la ricerca quando, la funzione di valutazione, per una serie di nodi non cambia di molto, ovvero quando il valore di un set di nodi oscilla in un certo range deciso a priori.
+		Questa tecnica &egrave; molto utilizzata e permette di risparmiare memoria che pu&ograve; essere utilizzata nei passi succcessivi per scoprire nodi pi&ugrave; promettenti.
+		Tuttavia la nostra scelta non &egrave; ricaduta su questa tencnica.<br><br>
+
+		La memoization, &egrave; una tecninca che permette all'algoritmo di risparmiare memoria andando a creare un <i>hashtable</i> in cui salvare i nodi generati, in modo tale da riutilizzare uno stesso nodo invece di crearne uno di nuovo.
+		Nello specifico, ogni qualvolta viene costruito l'albero di ricerca, si va a controllare se il nodo che sta per essere creato esiste gi&agrave; o se invece deve essere creato da zero. Nel caso in cui questo esista gi&agrave; allora viene utilizzato, evitando di crearne uno nuovo e quindi risparmiando memoria.
+
+		Nel progetto, per attuare questa tecnica abbiamo deciso di creare, come gi&agrave; detto, una <i>hashtable</i> la cui chiave, per poter essere univoca per ongi nodo generato, &egrave; data dall'hasing di diversi parametri:
+		<ul>
+			<li>Nome del pezzo</li>
+			<li>Mossa</li>
+			<li>Padre</li>
+			<li>Profondit&agrave;</li>
+			<li>Giocatore</li>
+			<li>Scacchiera</li>
+		</ul>
+
+		L'unione di questi campi crea una chiave univoca che corrisponde solo ad un possibile nodo perchè dipende dallo  anche dallo stato e dalla scacchiera.<br>
+		Nello specifico il codice che questo &egrave;:<br>
+
+		<pre class="java"><code>
+	Integer hash = Objects.hash(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
+        if(MiniMaxTree.cache.containsKey(hash)){
+            tmp =  MiniMaxTree.cache.get(hash);
+        }else{
+            tmp = new Node(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
+        }
+		</code></pre>
+
+		Questa ottimizzazione risulta essere vantaggiosa. Se avessimo usato una cache persistente, come ad esempio una cache Redis o Memcache, le prestazioni sarebbero ulteriormente incrementate, poiech&egrave; sarebbe come avere un database con tutte le possibili mosse.
+		L'intenzione comunque e quella di rilasciare, in futuro, ulteriori versioni del progetto, che possano usare diverse ottimizzazioni.
 		</p>
 		<a href="#menu">
 			Torna all'indice
