@@ -20,9 +20,15 @@ public class Utils {
 
     public static boolean isInCenter(int x, int y){ return ( x > 2 && x < 6) && ( y > 2 && y < 6); }
 
+    public static boolean isInCenterRows(int x){ return ( x > 2 && x < 6); }
+
+    public static boolean isInCenterColumns(int y){ return ( y > 2 && y < 6); }
+
     public static boolean isInEdge(int y){ return (y < 1 || y >= 7); }
 
-    public static boolean isInBackrow(int x){ return ( x < 3 && x > 5); }
+    public static boolean isInBackrow(int x){ return ( x < 2 || x > 5); }
+
+    public static boolean isInMiddleBackrow(int x){ return ( (x > 1 && x < 4) || (x < 7 && x > 4)); }
 
     public static boolean isInBackrowByColor(int x, Piece piece){
 

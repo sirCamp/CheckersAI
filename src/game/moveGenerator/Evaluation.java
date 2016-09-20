@@ -104,12 +104,21 @@ public class Evaluation {
                 if( board[i][j] != null && board[i][j].getOccupier() != null){
                     Piece piece = board[i][j].getOccupier();
                     /* setting values for each move */
-                    float negative = 0.5f;
-                    float positive = 1f;
+                    float negative = 0;
+                    float positive = 0;
                     if( Utils.isInCenter(i,j) ) {
-                        negative = 1;
-                        positive = 2;
+                        negative = 10;
+                        positive = 8;
                     }
+                    else if(Utils.isInCenterRows(i)){
+                        negative = 8;
+                        positive = 6;
+                    }
+                    else if(Utils.isInCenterColumns(j)){
+                        negative = 6;
+                        positive = 4;
+                    }
+
                     /* if piece is white and I want white */
                     if (piece.isWhite() && player.isWhite()) {
                         result += positive;
@@ -149,11 +158,16 @@ public class Evaluation {
                 if( board[i][j] != null && board[i][j].getOccupier() != null){
                     Piece piece = board[i][j].getOccupier();
                     /* setting values for each move */
-                    float negative = 0.5f;
-                    float positive = 1f;
+                    float negative = 0;
+                    float positive = 0;
                     if( Utils.isInBackrow(i)) {
-                        negative = 1;
-                        positive = 2;
+                        negative = 10;
+                        positive = 8;
+                    }
+
+                    else if (Utils.isInMiddleBackrow(i)){
+                        negative = 8;
+                        positive = 6;
                     }
                     /* if piece is white and I want white */
                     if (piece.isWhite() && player.isWhite()) {
@@ -247,7 +261,7 @@ public class Evaluation {
 
 
     /**
-     * Aggressive: this heuristic prefers to attack and eat the pieces of opponent
+     * Offensive: this heuristic prefers to attack and eat the pieces of opponent
      *
      *
      * @param node
