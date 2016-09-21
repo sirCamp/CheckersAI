@@ -47,7 +47,6 @@ public class Main {
             end = endGame(p1) || endGame(p2);
 			roundCounter++;
 			board.printBoard();
-			//System.gc();
 		}while(!end && roundCounter<200);
 		endGameMessage(p1, roundCounter);
 		CSVExporter.printCSV();
