@@ -36,13 +36,18 @@
 						Dedicato ad un damista che non c'è più
 					</h5>
 				</div>
-			</div>	
+			</div>
 		</div>
 		
 	</header>
 	<main class="container"> 
 	<section id="menu">
-		<div class="row"> 
+		<div class="row">
+            <div class="col-sx-12">
+                <h3>
+                    Autori: <span class="authors">Enrico Savoca e Stefano Campese - Universit&agrave; degli Studi di Padova</span>
+                </h3>
+            </div>
 			<div class="col-sx-12">
 				<h3>
 					 	Indice: 
@@ -356,11 +361,11 @@
 		<p>
 		Il programma della dama è stato realizzato tramite il linguaggio di programmazione Java e può essere eseguito a seguito della sua compilazione. Per effettuarla è necessario aprire una finestra di terminale e spostarsi all'interno della cartella "src".
 		Per generare i file contenenti il bytecode (.class) che possono essere eseguiti sulla Java Virtual Machine, si invocherà quindi il comando
-		<pre class="java"><code>
+		<pre class="bash"><code>
 		make
 		</code></pre>
 		Alla fine del processo, se non sono stati sollevati errori, sarà possibile avviare il programma attraverso il seguente input:
-		<pre class="java"><code>
+		<pre class="bash"><code>
 		java game.Main
 		</code></pre>
 		</p>
@@ -1439,7 +1444,7 @@
 	</p>
 	<p>
 		Il secondo tipo di test ci offre una serie di risultati interessanti. Le funzioni di valutazione che risultano più performanti, garantenodosi un maggior numero di vittorie, sono la numero 4 (backrows)
-		e la 1. Entrambe queste funzioni non prevalentemente sull'attacco o sulla difesa, ma basano la loro strategie su scelte diverse, che si rivelano buone anche tra i giocatori umani. Una di queste,
+		e la 1. Entrambe queste funzioni non sono orientate prevalentemente all'attacco o alla difesa, ma basano la loro strategie su scelte diverse, che si rivelano buone anche tra i giocatori umani. Una di queste,
 		scelta dalla funzione 4, è quella di mantenere occupate le righe di fondo, dove l'avversario può fare dama. Questo offre come garanzia quella di mangiare almeno 4 pedine avversarie al costo massimo
 		di 4 e blocca la formazione di dame, che si traduce in una minore vulnerabilità. La funzione 1 invece assegna punteggi sulla base delle pedine mangiate, quindi cerca di evitare grandi perdite;
 		questa euristica di certo è una di quelle che funziona meglio. I test tra le funzioni sono stati eseguiti sia con alberi a profondità 6, che a profondità 7 (queste ultime riportate nella relazione).

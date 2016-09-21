@@ -10,3 +10,7 @@ img#logo{
     display: block;
     margin: auto;
 }
+
+.authors{
+    font-size: 15px;
+}
