@@ -77,7 +77,7 @@
                             </li>
                             <li>
                                 <a href="#euristiche">
-                                    3.3 Euristiche
+                                    3.3 Funzioni di valutazione
                                 </a>
                             </li>
                             <li>
@@ -116,7 +116,12 @@
 						 <ul>
 							 <li>
 								 <a href="#considerazioniEuristiche">
-									 5.1 Considerazioni sulle euristiche
+									 5.1 Considerazioni sulle funzioni di valutazione
+								 </a>
+							 </li>
+							 <li>
+								 <a href="#conlusioniTest">
+									 5.2 Risultati dei test
 								 </a>
 							 </li>
 						 </ul>
@@ -148,6 +153,7 @@
 		</h3>
 		<p>
 			Nella seguente tabella sono riportate le ore di lavoro necessarie per la realizzazione delle componenti dell'intero progetto e per il raggiungimento degli obiettivi di progetto. Le ore comprendono quindi, non soltanto le ore utilizzate per l'implementazione di funzionalità nel programma sviluppato, ma anche quelle ore utilizzate per ricerca e per l'effettuazione dei test.
+			In totale sono state necessarie 60 ore, ripartite in maniera equa tra i due membri del gruppo.
 		</p>
 		<table class="table">
 			<caption>
@@ -319,7 +325,7 @@
 		</h3>
 		<p>
 			Il progetto <span lang="en">Checkers AI</span> ha avuto come scopi principali la realizzazione di un'intelligenza artificiale che sapesse giocare in maniera discreta a dama e la sua analisi.
-			Per l'implementazione del programma si è scelto Java e sono stati presi in considerazione una serie di programmi già realizzati, che implementavano il gioco della dama
+			Per l'implementazione del programma si è scelto il linguaggio di programmazione Java e sono stati presi in considerazione una serie di programmi già realizzati, che implementavano il gioco della dama
 			e in alcuni casi un'intelligenza artificiale. L'esempio di partenza scelto
 			<a href="https://github.com/khaledalissa/simple-checkers">
 		 	(link)
@@ -330,15 +336,15 @@
 			l'aggiornamento della damiera visualizzata. Alla fine di ciò era possibile disputare partite tra due giocatori umani, che per giocare dovevano inserire a turno, come input, la mossa da far
 			compiere alle proprie pedine. E' stato quindi sviluppato l'algoritmo di Minimax che poi è stato ottimizzato e completato con l'aggiunta di diverse funzioni di valutazione e di funzionalità come
 			per esempio la possibilità di utilizzare il <span lang="en">pruning</span> su di esso. L'algoritmo genera un albero i cui nodi sono gli stati della damiera in seguito all'esecuzione di una
-			mossa. La profondità dell'albero viene decisa dall'utente. Una volta generato l'albero si assegnano i valori tramite backtracking sulla struttura dati. I valori assegnati ai nodi sono
+			mossa. La profondità dell'albero (numero di ply) viene decisa dall'utente. Una volta generato l'albero si assegnano i valori tramite backtracking sulla struttura dati. I valori assegnati ai nodi sono
 			generati tramite una funzione di valutazione associata allo specifico albero e decisa anch'essa dall'utente, all'inizio della partita. Nel caso in cui si scelga di utilizzare il <span lang="en">pruning</span>,
 			alcuni nodi non verranno considerati: questo produrrà un beneficio dal punto di vista della complessità computazionale.
 		</p>
 		<p>
 			Dopo questa prima fase, prevalentemente di implementazione, si è passati all'analisi della bontà dell'algoritmo di intelligenza artificiale e delle funzioni di valutazione utilizzate.
-			Sono state effettuate un grande nunmero di partite per verificare vari aspetti del programma. Prima di tutto la qualità dell'azione del <span lang="en">pruning</span>: per fare questo, si è scelto di usare
-			un IA che faceva uso della funzione di valutazione 5 e che in alcune partite utilizzasse il <span lang="en">pruning</span> e in altre no. Più precisamente, per ogni profondità dell'albero,
-			sono state disputate 10 partite con il suo utilizzo e 10 senza. Questo per verificare che impatto avesse l'utilizzo del <span lang="en">pruning</span> al crescere della dimensione
+			Sono state effettuate un grande numero di partite per verificare vari aspetti del programma. Prima di tutto la qualità dell'azione del <span lang="en">pruning</span>: per fare questo, si è scelto di usare
+			un IA che facesse uso della funzione di valutazione 5 e che in alcune partite utilizzasse il <span lang="en">pruning</span> e in altre no. Più precisamente, per ogni profondità dell'albero,
+			sono state disputate 10 partite con il suo utilizzo e 10 senza. Questo per verificare che impatto avesse avuto l'utilizzo del <span lang="en">pruning</span> al crescere della dimensione
 			dell'albero.
 			In secondo luogo, sono state eseguite delle partite tra intelligenze artificiali che facevano uso di funzioni di valutazione diverse per verificare quale fosse la migliore.
 			Infine sono state disputate delle partite in cui si confrontavano giocatori umani contro intelligenze artificiali che facevano uso delle diverse funzioni di valutazione.
@@ -397,21 +403,23 @@
 			Il gioco avrà fine quando uno dei giocatori non potrà effettuare più alcuna mossa o avrà finito le pedine. Si nominerà vincitore l'altro giocatore.  
 		</p>
 		<h4 id="euristiche">
-			3.3 Euristiche
+			3.3 Funzioni di valutazione
 		</h4>
 		<p>
-			Le funzioni euristiche, sono funzioni che servono ad attribuire un <i>valore di utilit&agrave;</i> ai nodi che verranno scelti dall'algoritmo intelligente.<br>
-			Nello sviluppo del progetto si &egrave; deciso di usare diverse euristiche, in modo da poter eseguire un maggior numero di sperimentazioni e test.<br><br>
-			Prima di procedere con la spiegazione, &egrave; necessario specificare che le euristiche utilizzate, derivano da specifiche tencinche di gioco per la Dama, ciascuna delle quali prediligie un determinato aspetto (es: attacco, difesa...).<br><br>
-			Tutte le funzioni sviluppate, hanno una base comune che serve a generare un valore di base per ogni nodo, il quale poi viene raffinato tramite l'applicazione di tecniche di gioco diverse, come citato in precedenza.
-
+			Le funzioni di valutazione hanno lo scopo di attribuire un <i>valore di utilit&agrave;</i> ai nodi dell'albero considerato dall'algoritmo intelligente.<br>
+			Nello sviluppo del progetto si &egrave; deciso di usare diverse euristiche, in modo da poter eseguire un maggior numero di sperimentazioni e test.<br>
+			Prima di procedere con la spiegazione, &egrave; necessario specificare che le euristiche utilizzate derivano da specifiche tecninche di gioco per la Dama,
+			ciascuna delle quali predilige un determinato aspetto (es: attacco, difesa...).<br>
+			Tutte le funzioni sviluppate hanno una base comune che serve a generare un valore di base per ogni nodo; questo valore viene poi raffinato tramite
+			l'applicazione di tecniche di gioco diverse, come citato in precedenza.
 			<h5>Funzione 1: <i>Standard</i></h5>
 			Questa eurisitca corrisponde alla funzione di base utilizzata da tutte le altre.<br>
 
-			In questa funzione ogni pedina normale conta come 1, mentra ogni damone (King) ha un peso maggiore, che corrisponde ad un valore compreso tra  1.4 e 3. Il peso &egrave; scelto in base alla tipologia di Dama giocata: se si gioca a <i>Dama Spagnola</i> o alla variante Italiana ed Inglese.<br>
-		    Il principio di dare un maggior peso ai damoni, serve ad incentivarne la genrazione e allo stesso tempo preservarne l'esistenza.<br><br>
-			L'idea di base, è quella di considerare il numero di pezzi propri, meno il numero dei pezzi avversari, ritornando poi il valore della sottrazione come valore del nodo.
-		    Questo approcio permette avere un intelligenza abbastaza bilanciata tra difesa ed attacco con degli ottimi risultati.<br>
+			In questa funzione ogni pedina normale conta come 1, mentra ogni dama (King) ha un peso maggiore, che corrisponde ad un valore compreso tra  1.4 e 3.
+			Il peso &egrave; scelto in base alla tipologia di Dama giocata: se si gioca a <i>Dama Spagnola</i> o alla variante Italiana ed Inglese.<br>
+		    Il principio di dare un maggior peso ai damoni, serve ad incentivarne la generazione e allo stesso tempo preservarne l'esistenza.<br><br>
+			L'idea di base è quella di considerare il numero di pezzi propri meno il numero dei pezzi avversari, ritornando poi il valore della sottrazione come valore del nodo.
+		    Questo approcio permette di avere un'intelligenza abbastanza bilanciata tra difesa ed attacco con degli ottimi risultati.<br>
 			Il core dell'euristica &egrave;:<br><br>
 
 
@@ -452,16 +460,18 @@
 
 		</code></pre>
 
-			Come si può vedere se il giocatore &egrave; bianco, la funzione ritorna la differenza tra bianchi e neri sommata alla differenza tra damoni bianchi e neri. Se il giocatore &egrave; ritorna la differenza invertita<br>
-
-			Questa euristica, come detto in precedenza, è molto bilanciata e riesce a battere euristiche sbilanciate in attacco o difesa con un media 48/70 partite vinte.<br>
+			Come si può vedere se il giocatore &egrave; bianco, la funzione ritorna la differenza tra bianchi e neri sommata alla differenza tra damoni bianchi e neri.
+			Se il giocatore &egrave; nero, ritorna la differenza invertita
+		<br>
+			Questa euristica, come detto in precedenza, è molto bilanciata e riesce a battere euristiche sbilanciate in attacco o difesa con un media di 48/70 (partite vinte/partite effettuate).<br>
 			Questa funzione pu&ograve; essere utilizzata da sola, senza la necessit&agrave; di essere raffinata.
-
+		</p>
+		<p>
 			<h5>Funzione 2: <i>Random</i></h5>
-			Questa eurisitca corrisponde ad un'euristica <i>stupida</i>, questo perch&egrave; assegna valori casuali ai vari nodi<br>
-			La funzione in questione, risulta essere l'unica che non sfrutta la 1 come funzione di base da raffinare.
+			Questa funzione di valutazione corrisponde ad un'euristica <i>stupida</i>: essa infatti assegna valori casuali ai nodi dell'albero Minimax.<br>
+			La funzione in questione, risulta essere l'unica che non sfrutta la funzione standard (1) come funzione di base da raffinare.
 
-			Per assegnare pi&ugrave; valori casuali possibili si è scelto di ritornare valori compresi tra 1 e 20:<br>
+			Per assegnare pi&ugrave; un numero elevato di valori casuali si è scelto di ritornare valori compresi tra 1 e 20:<br>
 			Il core della fuzione &egrave; :<br><br>
 
 		<pre><code class="java">
@@ -471,15 +481,18 @@
 		</code></pre>
 
 
-			L'utilizzo di tale euristica ha portato ad interessanti osservazioni: In acluni casi si è osservato che tale euristica &egrave; riuscita a vincere il 20% delle partite con una media di 14 partite vinte su 70 giocate.
+			L'utilizzo di tale euristica ha portato ad interessanti osservazioni: in alcuni casi si è osservato che tale euristica &egrave;
+		riuscita a vincere il 20% delle partite con una media di 14 partite vinte su 70 giocate.
 			Contro se stessa l'euristica arriva ad avere un 40% di vittorie.
-
+		</p>
+		<p>
 		<h5>Funzione 3: <i>Centrality</i></h5>
 
 		Questa euristica, chiamata anche <i>Centrality</i> ha come obbiettivo principale quello di spingere i propri pezzi a dominare il centro della scacchiera.
 		Ogni mossa al centro della scacchiera è promossa ed incentivata.<br><br>
-		Nello specifico, viene assegnato un valore maggiore a tutti quelli stati la cui mossa, prevede, uno spostamento verso il centro della scacchiera delle proprie pedine a discapito delle pedine avversarie.
-		Allo stesso tempo, la funzione, penalizza le mosse che porterebbero l'avversario ad avere un numero maggiore di pedine nel centro.
+		Nello specifico, viene assegnato un valore maggiore a tutti quegli stati la cui mossa prevede uno spostamento verso il centro della scacchiera:
+		in questo modo si bloccano i movimenti delle pedine avversarie.
+		Allo stesso tempo, la funzione penalizza le mosse che porterebbero l'avversario ad avere un numero maggiore di pedine nel centro.
 
 		Il core della funzione &egrave;: <br><br>
 		<pre class="java"><code>
@@ -515,16 +528,20 @@
                     }
 		</code></pre>
 
-		Come si pu&ograve; notare l'euristica spinge molto sul controllo del centro scacchiera, che risulta essere una mossa molto buona, perch&egrave; spinge l'avversario verso il fondo, intrappolandolo.
-		Putroppo questa euristica privilegia la parit&agrave; alla vittora, vincendo solo 21 partite su 70 giocate. Risulta essere discreta con euristiche offensive.
-		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come ad esempio nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
-
+		Come si pu&ograve; notare l'euristica spinge molto sul controllo del centro scacchiera, che risulta essere una mossa molto buona, perch&egrave; spinge l'avversario verso il fondo,
+		intrappolandolo. Putroppo questa euristica privilegia la parit&agrave; alla vittora, vincendo solo 21 partite su 70 giocate. Risulta essere discreta con euristiche offensive.
+		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come ad esempio nel
+		paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">
+		Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
 
 		<h5>Funzione 4: <i>Backrows</i></h5>
-		Questa euristica, chiamata anche <i>Backrows</i>, ha come obbiettivo principale quello di spingere i propri pezzi a stare nell righe di testa e di fondo della scacchiera
-		Ogni mossa verso il fondo o verso la testa &egrave; incentivata, pi&ugrave; si &egrave; agli estremi della scacchiera, maggiore sar&agrave; il punteggio e quindi l'incentivo.<br><br>
-		Nello specifico, viene assegnato un valore maggiore a tutti quelli stati la cui mossa, prevede, uno spostamento verso la propria linea di difesa o verso quella avversaria, risultando essere sia molto difensiva che molto offensiva.<br><br>
-		Al contrario di 3, in questa funzione non si da peso alla centralit&agrave; perch&egrave; l'obbiettivo &egrave; quello di difendersi e di arrivare <i>dall'altra parte</i>.<br>
+		Questa euristica, chiamata anche <i>Backrows</i>, ha come obbiettivo principale quello di spingere i propri pezzi a stare nelle righe di testa e di fondo della scacchiera.
+		Ogni mossa verso il fondo o verso la testa della damiera &egrave; incentivata: pi&ugrave; si &egrave; vicini agli estremi della scacchiera,
+		maggiore &egrave; il punteggio e quindi l'incentivo.<br>
+		Nello specifico, viene assegnato un valore maggiore a tutti quegli stati la cui mossa prevede uno spostamento verso la propria linea di difesa o verso quella avversaria,
+		risultando essere sia molto difensiva che molto offensiva.<br>
+		Al contrario della funzione di valutazione 3, in questa funzione non si dà peso alla centralit&agrave; perch&egrave; l'obiettivo &egrave;
+		quello di difendersi in primo luogo e in secondo luogo di arrivare <i>dall'altra parte</i> della damiera.<br>
 		Anche in questo caso, si penalizzano le mosse in cui sia l'avversario a prendere possesso di tali posizioni.<br>
 		Il core dell'euristica &egrave; :<br><br>
 
@@ -561,25 +578,26 @@
                     }
 		</code></pre>
 
-		Come si pu&ograve; notare, l'euristica spinge molto sul fondo: pi&ugrave; le pedine sono vicine alle righe 0 - 7 maggiore punteggio avranno, e di conseguenza un maggior peso.
-		Alla fine, pi&ugrave; pedine risulterrano in queste posizioni maggiore sar&agrave; il valore del nodo.<br><br>
-
+		Come si pu&ograve; notare, l'euristica spinge molto sul fondo: pi&ugrave; le pedine sono vicine alle righe 0 - 7 maggiore è il punteggio.
+		I nodi con che avranno un valore maggiore saranno quelli in cui un maggior numero di pedine si trova in queste posizioni.
 		La funzione risulta essere la migliore di quelle studiate, perch&egrave; essendo sia molto difensiva che molto offensiva &egrave; riuscita a vincere un totale di 53 partite su 70.
-		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come ad esempio nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, perch&egrave; risulta essere molto buona.
-
+		Questa euristica. grazie alla sua bontà, &egrave; stata usata in diversi test di Intelligenza Artificiale,
+		come ad esempio nel paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers -
+		Department of Computing Science Of Alberta Univerisity</a>.
 
 		<h5>Funzione 5: <i>Complete</i></h5>
-		Questa euristica, chiamata anche <i>Complete</i>, ha come obbiettivo principale quello valutare diversi fattori in modo da fare la scelta pi&ugrave; accurata.<br>
+		Questa euristica, chiamata anche <i>Complete</i>, ha come obiettivo principale quello di valutare diversi fattori in modo da fare la scelta pi&ugrave; accurata.<br>
 		Ogni mossa valuta se la pedina sta eseguendo una delle seguenti azioni:
 		<ul>
 			<li>Movimento verso il centro</li>
 			<li>Movimento sui bordi</li>
-			<li>Movimento verso un Damone</li>
+			<li>Movimento verso una dama</li>
 		</ul>
-		Il movimento verso il centro &egrave; molto incentivato, perchè come detto in 3, il posseso del centro della scacchiera tende a intrappolare l'avversario.<br>
-		L'euristica incentiva anche il movimento verso i bordi, questo perch&egrave; rende le pedine pi&ugrave; sicure e difficilmente catturabili.<br>
-		Ovvimante essendo un euristica completa tiene in consiederazione anche la vicinanza ai damoni (King), spingendo le pedine a starne alla larga, questo perch&egrave; un damone disponde di pi&ugrave; mosse possibili e quindi risulta essere pi&ugrave; pericoloso.<br><br>
-		Questa funzione di valutazione risulta essere tendendente alla difensiva, tuttavia ha ottimi risultati arrivando a vincere il 50% delle partite nei test ufficiali.<br><br>
+		Il movimento verso il centro &egrave; molto incentivato, perchè come detto per la funzione 3, il possesso del centro della scacchiera permette di bloccare l'avversario.<br>
+		L'euristica incentiva anche il movimento verso i bordi: questo tipo di spostamento rende le pedine pi&ugrave; sicure e difficilmente catturabili.<br>
+		Ovvimante essendo un'euristica completa tiene in consiederazione anche la vicinanza alle (King), spingendo le pedine a starne alla larga. Una dama dispone di pi&ugrave;
+		mosse possibili e risulta quindi essere pi&ugrave; pericoloso.<br><br>
+		Questa funzione di valutazione risulta essere tendente alla difensiva, tuttavia ha ottimi risultati arrivando a vincere il 50% delle partite nei test ufficiali.<br>
 		&Egrave; necessario sottolineare che in questo caso si tiene conto in modo marginale delle pedine avversarie col solo fine di raffinare ulteriormente la valutazionde dello stato.<br>
 		Il core dell'euristica &egrave; :<br><br>
 		<pre class="java"><code>
@@ -617,14 +635,15 @@
                     }
 		</code></pre>
 
-		La funzione risulta essere tra le migliori di quelle studiate, perch&egrave; essendo molto completa riesce a vincere un totale di 35 partite su 70. L'euristica ha pareggiato la maggior parte delle restanti 35 partite.<br>
-		Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale, come ad esempio nella tesi: <a href="http://tigerprints.clemson.edu/cgi/viewcontent.cgi?article=1074&context=all_theses">Soar Checkers - An Intelligent Checkers Playing - Jithu Menon - Clemson University</a>.
-
+		La funzione risulta essere tra le migliori di quelle studiate, perch&egrave; essendo molto completa riesce a vincere un totale di 35 partite su 70.
+		L'euristica ha pareggiato la maggior parte delle restanti 35 partite.<br> Questa euristica, &egrave; stata usata in diversi test di Intelligenza Artificiale,
+		come ad esempio nella tesi: <a href="http://tigerprints.clemson.edu/cgi/viewcontent.cgi?article=1074&context=all_theses">Soar Checkers - An Intelligent Checkers Playing
+		- Jithu Menon - Clemson University</a>.
 
 		<h5> Funzione 6: <i>Offensive</i> </h5>
-		Questa euristica, chiamata anche <i>Offensive</i>, ha come obbiettivo principale, quello di attaccare indipendentemente dal resto.<br>
+		Questa euristica, chiamata anche <i>Offensive</i>, ha come obiettivo principale, quello di attaccare indipendentemente dal resto.<br>
 		Ogni mossa valuta se la pedina si sta spostando nelle zone d'attacco della scacchiere e/o sta per mangiare una pedina avversaria.
-		Nello specifico, pi&ugrave; pedine si avranno in attacco maggiore sarà il valore associato allo stato.<br><br>
+		Nello specifico, pi&ugrave; pedine si avranno in attacco, maggiore sarà il valore associato allo stato.<br><br>
 		Il punteggio massimo viene assegnato se la mossa che la pedina sta per eseguire &egrave; un <i>capture</i>, ovvero se sta per mangiare una pedina avversaria.<br><br>
 		Come detto prima, questa euristica non si cura dell'avversario. Il suo unico scopo &egrave; <i>spingersi in avanti e mangiare</i><br>
 
@@ -666,17 +685,21 @@
                     }
 		</code></pre>
 
-		La funzione risulta essere buona e discreta in attacco, tuttavia "attacando indiscriminatamente" non tiene conto della difesa e quindi riesce a vincere solo un totale di 24 partite su 70.<br>
-		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
-		Dai test eseguiti questa euristica risulta essere difensive, risulta piuttosto inefficace contro euristiche basilari e/o bilanciate, mentre sembra essere valida contro euristiche pi&ugrave; bilanciate.
+		La funzione risulta essere buona e discreta in attacco, tuttavia "attacando indiscriminatamente" non tiene conto della difesa e
+		quindi riesce a vincere solo un totale di 24 partite su 70.<br>
+		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University
+		reperibile al link link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
+		Dai test eseguiti, questa euristica risulta essere valida contro euristiche difensive, mentre risulta piuttosto inefficace contro euristiche basilari, bilanciate e aggressive.
 
 		<h5> Funzione 7: <i>Defensive</i> </h5>
-		Questa euristica, chiamata anche <i>Defensive</i>, ha come obbiettivo principale di difendersi indipendentemente dal resto.<br>
-		Questa ueristica assegna un punteggio maggiore a quegli stati che hanno il maggior numero di pedine protette.<br>
-		Nello specifico, pi&ugrave; protetta sar&agrave; la pedina, maggiore sarà il valore verra aggiunto allo stato.<br>
-		Prima di procedere, &egrave; necessario spiegare cosa si intende per zona difesa. Per zona difesa si intende una zona in cui la pedina sia <i>coperta</i> da una coppia di pedine, o da una pedina singola, in modo che l'avversario non possa attaccare.<br><br>
-		Ovvimante, essere coperti da una coppia di pedine da una difesa migliore rispetto alla copertura fatta da una pedina singola, quindi il valore assegnato sar&agrave; maggiore.<br>
-		C'&egrave; da aggiungere che vengono penalizzate le mosse in cui le pedine si spostano vicino a uno o pi&ugrave; avversari; maggiore &egrave; il numero di avversari a cui la pedina si avvicina, peggiore sar&agrave; il punteggio assegnato.
+		Questa euristica, chiamata anche <i>Defensive</i>, ha come obiettivo principale di difendersi indipendentemente dal resto.<br>
+		La funzione assegna un punteggio maggiore a quegli stati che hanno il maggior numero di pedine protette.<br>
+		Nello specifico, pi&ugrave; protetta sar&agrave; la pedina, maggiore sarà il valore che verrà aggiunto allo stato.<br>
+		Prima di procedere, &egrave; necessario spiegare cosa si intende per zona difesa. Per zona difesa si intende una zona in cui
+		la pedina sia <i>coperta</i> da una coppia di pedine o da una pedina singola; le pedine difese non possono essere mangiate.<br><br>
+		Ovvimante, essere coperti da una coppia di pedine offre una difesa migliore rispetto alla copertura fatta da una pedina singola, quindi il valore assegnato sar&agrave; maggiore.<br>
+		In aggiunta, vengono penalizzate le mosse in cui le pedine si spostano vicino a uno o pi&ugrave; avversari;
+		maggiore &egrave; il numero di avversari a cui la pedina si avvicina, peggiore sar&agrave; il punteggio assegnato.
 		Il core della funzione &egrave; :<br><br>
 
 		<pre class="java"><code>
@@ -721,16 +744,22 @@
 
                     }
 		</code></pre>
-		La funzione risulta essere buona e molto forte in difesa, nonostante sia una tecnica difensiva riesce a vincere il totale di 37 partite su 70.
-		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University reperibile a questo link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
+		La funzione risulta essere buona e molto forte in difesa, nonostante sia una tecnica difensiva riesce a vincere 37 partite su 70.
+		Questa euristica è stata presa utilizzando come spunto un <i>assignment</i> della New York University
+		reperibile al link: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
 
 		<h5>Funzione 8: <i>Kings Forcing</i></h5>
-		Questa euristica, chiamata anche <i>Kings Forcing</i>, ha come obbiettivo principale quello di muovere i damoni spostandoli verso il centro per attaccare.<br>
-		Ogni mossa valuta se la damona si sta spostando in una zona centrale della scacchiera, se si sta per attaccare se ci si sta spostando verso un damone e se ci si sta allontanando dagli angoli o i bordi della scacchiera.<br>
-		Nello specifico, pi&ugrave; il damone si sposter&agrave; verso il centro o tenter&agrave; di attaccare, maggiore sarà il valore dello stato.<br>Se invece lo stato prevede che il damone venga spostato in pozioni defilate, come bordi o angoli allora verr&agrave; penalizzato.
+		Questa euristica, chiamata anche <i>Kings Forcing</i>, ha come obiettivo principale quello di muovere le dame spostandole verso il centro per attaccare.<br>
+		Ogni mossa valuta le segiemto cose: se la dama si sta spostando in una zona centrale della scacchiera, se si sta per attaccare, se ci si sta spostando verso un'altra dama e se
+		ci si sta allontanando dagli angoli o i bordi della scacchiera.<br>
+		Nello specifico, se la dama si sposter&agrave; verso il centro o tenter&agrave; di attaccare,
+		sarà maggiore il valore dello stato.<br>
+		Se invece lo stato prevede che la dama venga spostato in pozioni defilate, come bordi o angoli allora verr&agrave; penalizzato.
 
-		Questa euristica viene usata come <i>rinforzo</i> poich&egrave;, spesso, nelle partite si rischia di arrivare a delle situazioni di stallo che possono essere risolte tramite la forzatura ad attaccare.<br>
-		Nell'implementazione abbiamo deciso di utilizzare questa euristica nel caso di partite con un numero di turni maggiore o uguale ad 70, poich&egrave; dallo studio fatto risulta essere il turno medio dopo il quale la quantit&agrave; di damoni &egrave; maggiore &egrave; pi&ugrave; influente.<br>
+		Questa euristica viene usata come <i>rinforzo</i> poich&egrave;, spesso, nelle partite si rischia di arrivare a delle situazioni di stallo che possono essere risolte
+		tramite la forzatura ad attaccare.<br>
+		Nell'implementazione si è deciso di utilizzare questa euristica nel caso di partite con un numero di turni maggiore a 70. Dallo studio fatto risulta essere il turno medio
+		dopo il quale la totalita o la quasi totalità delle pedine rimaste sono dame.<br>
 		Il core di questa funzione &egrave; :<br><br>
 
 		<pre class="java"><code>
@@ -780,9 +809,10 @@
                     }
 		</code></pre>
 
-		Come si pu&ograve; notare questa euristica spinge molto sul movimento dei damoni e predilige, in genere, l'attacco; oltre a ci&ograve; questa euristica da un peso maggiore ai damoni, e quindi ne incentiva la creazione.
-		Questa euristica &egrave; stata creata tramite un attento studio della situazione, prendendo il considerazione il fatto che, durante le fasi finali di una partita, il numero di damoni &egrave; maggiore e quindi &egrave; necessario agire su di essi per riforzare le euristiche normali.
-
+		Come si pu&ograve; notare questa euristica spinge molto sul movimento dei damoni e predilige, in genere, l'attacco; oltre a ci&ograve;, questa euristica da un peso maggiore alle dame
+		e quindi ne incentiva la creazione.
+		Questa euristica &egrave; stata creata tramite un attento studio della situazione, prendendo il considerazione il fatto che,
+		durante le fasi finali di una partita, il numero di dame &egrave; maggiore e quindi &egrave; necessario agire su di essi per rinforzare le euristiche normali.
 
 		</p>
 
@@ -790,22 +820,27 @@
 			3.4 Ottimizzazione
 		</h4>
 		<p>
-			Durante lo sviluppo del progetto ci siamo trovati in difficolt&agrave; a causa dell'utilizzo massiccio di memoria degli algoritmi.<br>
-			In generale l'algoritmo MinMax soffre dello stesso problema delle ricerche in profondit&agrave; e ampiezza: l'utilizzo di memoria.<br><br>
+			Durante lo sviluppo del progetto si è notata l'elevata complessità, in termini di memoria, richiesta dall'algoritmo Minimax con un numero di ply superiore a 6.<br>
+			In generale l'algoritmo MinMax soffre dello stesso problema delle ricerche in profondit&agrave; e ampiezza: l'utilizzo di una grande quantità di memoria.<br><br>
 			Per far fronte a tale problema esistono diverse tecniche come ad esempio:
 			<ul>
 				<li>Ricerca di Quiescenza</li>
 				<li>Memoization</li>
 			</ul>
 
-		La ricerca di quiescenza, &egrave; una tecninca che permette all'algoritmo di <i>tagliare</i> la ricerca quando, la funzione di valutazione, per una serie di nodi non cambia di molto, ovvero quando il valore di un set di nodi oscilla in un certo range deciso a priori.
+		La ricerca di quiescenza, &egrave; una tecninca che permette all'algoritmo di <i>tagliare</i> la ricerca quando, la funzione di valutazione,
+		per una serie di nodi non cambia di molto, ovvero quando il valore di un set di nodi oscilla in un certo <span lang="en"><i>range</i><span></span> deciso a priori.
 		Questa tecnica &egrave; molto utilizzata e permette di risparmiare memoria che pu&ograve; essere utilizzata nei passi succcessivi per scoprire nodi pi&ugrave; promettenti.
-		Tuttavia la nostra scelta non &egrave; ricaduta su questa tecnnica, perchè avrebbe notevolmente aumentato la complessit&agrave; del codice e soprattutto, per come e&grave; stata progettata l'intelligenza, non avrebbe portato gradni benefici<br><br>
+		Tuttavia la nostra scelta non &egrave; ricaduta su questa tecnnica, perchè avrebbe notevolmente aumentato la complessit&agrave; del codice e
+		soprattutto, per come e&grave; stato progettato l'albero, non avrebbe portato grandi benefici.<br>
 
-		La memoization, &egrave; una tecninca che permette all'algoritmo di risparmiare memoria andando a creare un <i>hashtable</i> in cui salvare i nodi generati, in modo tale da riutilizzare uno stesso nodo invece di crearne uno di nuovo.
-		Nello specifico, ogni qualvolta viene costruito l'albero di ricerca, si va a controllare se il nodo che sta per essere creato esiste gi&agrave; o se invece deve essere creato da zero. Nel caso in cui questo esista gi&agrave; allora viene utilizzato, evitando di crearne uno nuovo e quindi risparmiando memoria.
+		La memoization, &egrave; una tecninca che permette all'algoritmo di risparmiare memoria grazie alla creazione di una <i>hashtable</i> in cui salvare i nodi generati,
+		in modo tale da riutilizzare uno stesso nodo invece di crearne uno di nuovo se già esistente. Nello specifico, ogni qualvolta viene costruito l'albero di ricerca,
+		si va a controllare se il nodo che sta per essere creato esiste gi&agrave; o se invece deve essere creato da zero. Nel caso in cui questo esista gi&agrave;
+		allora viene utilizzato, evitando di crearne uno nuovo e quindi risparmiando memoria.
 
-		Nel progetto, per attuare questa tecnica abbiamo deciso di creare, come gi&agrave; detto, una <i>hashtable</i> la cui chiave, per poter essere univoca per ongi nodo generato, &egrave; data dall'hasing di diversi parametri:
+		Nel progetto, per attuare questa tecnica abbiamo deciso di creare, come gi&agrave; detto, una <i>hashtable</i> la cui chiave, per poter essere univoca per ongi nodo generato,
+		&egrave; data dall'hashing di diversi parametri:
 		<ul>
 			<li>Nome del pezzo</li>
 			<li>Mossa</li>
@@ -815,7 +850,7 @@
 			<li>Stato della scacchiera</li>
 		</ul>
 
-		L'unione di questi campi crea una chiave univoca che corrisponde solo ad un possibile nodo perchè dipende dallo  anche dallo stato e dalla scacchiera.<br>
+		L'unione di questi campi crea una chiave univoca che corrisponde solo ad un possibile nodo perchè dipende anche dallo stato e dalla scacchiera.<br>
 		Nello specifico il codice che questo &egrave;:<br><br>
 
 		<pre class="java"><code>
@@ -827,12 +862,14 @@
         }
 		</code></pre>
 
-		Questa ottimizzazione risulta essere vantaggiosa. Se avessimo usato una cache persistente, come ad esempio una cache Redis o Memcache, le prestazioni sarebbero ulteriormente incrementate, poiech&egrave; sarebbe come avere un database con tutte le possibili mosse.<br><br>
-		Un altra considerazione da fare potrebbe essere quella di aggiungere un fattore <i>giovinezza</i> ai nodi presenti nella cache, in modo da eliminare quei nodi che sono presenti da molto tempo e che difficilmente saranno utilizzati.<br><br>
-		Molto importante e spiegare come, al fine di massimizzare l'efficenza computazionale, nelle funzioni euristiche che usano come base la 1, si &egrave; scelto di duplicare il codice.<br>
-		La causa principale risiede nei cicli <i>for</i>, che permettono la scansione della scacchiera. La duplicazione del codice ha permesso di evitare l'esecuzione doppia dei cilci for, ottimizzando le prestazioni.<br><br>
-
-		L'intenzione comunque e quella di rilasciare, in futuro, ulteriori versioni del progetto, che possano usare diverse ottimizzazioni.
+		Questa ottimizzazione risulta essere vantaggiosa. Se si fosse usata una cache persistente, come ad esempio una cache Redis o Memcache, le prestazioni sarebbero ulteriormente
+		incrementate, perch&egrave; sarebbe stato come avere un database con tutte le possibili mosse.<br><br>
+		Un'altra considerazione da fare potrebbe essere quella di aggiungere un fattore <i>giovinezza</i> ai nodi presenti nella cache, in modo da eliminare quei nodi che sono presenti
+		da molto tempo e che difficilmente saranno utilizzati.<br><br>
+		Molto importante e spiegare come, al fine di massimizzare l'efficenza computazionale, nelle funzioni euristiche che usano come base la 1, si sia scelto di duplicare il codice.<br>
+		Pi&ugrave; precisamente la causa principale risiede nei cicli <i>for</i> che effettuano la scansione della scacchiera. La duplicazione del codice ha permesso di evitare
+		l'esecuzione doppia dei cilci for, ottimizzandone le prestazioni.<br><br>
+		L'intenzione comune nel team &egrave; quella di rilasciare, in futuro, ulteriori versioni del progetto che possano usare diverse ottimizzazioni.
 		</p>
 		<a href="#menu">
 			Torna all'indice
@@ -1363,19 +1400,72 @@
 		<p>
 		</p>
 		<h4 id="considerazioniEuristiche">
-		5.1 Considerazioni sulle euristiche
+		5.1 Considerazioni sulle funzioni di valutazione
 	</h4>
-		<p>
-			Queste euristiche sono tutte derivate da tecniche di gioco del mondo reale, e spesso sono tecniche studiate appostitamente per creare Intelligenze Artificiali pi&ugrave; performanti.
-			In genere, tali funzioni, vengono spesso usate contemporaneamente, in modo da tenere conto di pi&ugrave; variabili ed avere una maggior Intelligenza.<br><br>
-			E&grave; molto interessante osservare come l'euristica <i>Randomize</i> abbia risultati inaspettati. Essendo per definizione una euristica che <i>fa mosse casuali</i> tendenzialmente non dovrebbe avere molto successo.
-			Dai nostri test, tuttavia, &egrave; emerso che, in media, tale euristica vince il 20% delle partite arrivando al 40% nel caso affronti se stessa.<br>
-			E&grave; ulteriormente interessante osservare che in molti casi l'euristica &egrave; riescita anche a paraggiare.
-		</p>
-		<a href="#menu">
-			Torna all'indice
-		</a>
-		<hr>
+	<p>
+		Le funzioni di valutazione implementate sono tutte derivate da tecniche di gioco del mondo reale e spesso sono tecniche studiate appostitamente per creare
+		intelligenze artificiali performanti.
+		In genere tali funzioni vengono usate contemporaneamente, in modo da tenere conto di pi&ugrave; variabili ed offrire migliori risultati.
+	</p>
+	<p>
+		E&grave; molto interessante osservare come la funzione di valutazione 2, <i>Randomize</i>, abbia risultati inaspettati. Essendo per definizione un'euristica che
+		esegue mosse casuali, tendenzialmente non dovrebbe avere molto successo.
+		Dai test effettuati, tuttavia, &egrave; emerso che, in media, tale euristica vince il 20% delle partite arrivando al 40% nel caso affronti se stessa.
+		E&grave; ulteriormente interessante osservare che in molti casi l'euristica &egrave; riescita anche a paraggiare.
+	</p>
+	<p>
+		Un'altra considerazione interessante riguarda la funzione di valutazione 8. Allo scadere del settantesimo turno essa si attiva per ogni altra funzione, per spingere la partita verso la
+		conclusione. Tale funzione è risultata molto debole, specialmente contro avversari umani. Se da un lato cerca di spingere le proprie pedine verso il centro,
+		con lo scopo di bloccare l'avversario sui lati, dall'altro lato considera come meno importante l'impatto che potrebbe avere nella fase finale del gioco, la perdita di un pezzo. Da questo
+		punto di vista, è di sicuro una funzione che avrebbe bisogno di miglioramenti, prevalentemente per risultare competitiva con dei giocatori umani.
+	</p>
+	<p>
+		Un'ultima considerazione riguarda la taratura dei valori utilizzati all'interno delle funzioni di valutazione. Neglio scontri tra funzioni di valutazione e giocatori umani, si è notato
+		che parte delle funzioni, in particolare la 6 e la 7, non forniscono sempre dei buoni risultati, effettuando mosse che un giocatore umano avrebbe ritenuto avventate. Questi eventi
+		eccezionali si verificano principalmente quando l'avversario fa dama o quando entrambi i giocatori hanno pochi pezzi. In taluni casi, capita che alcune pedine vengano perse in maniera ingenua.
+		Una diversa taratura di alcuni valori potrebbe portare con molto probabilità dei benefici per queste fasi del gioco.
+	</p>
+	<h4 id="conlusioniTest">
+		5.2 Risultati dei test
+	</h4>
+	<p>
+		Come si può notare dai risultati del primo test, l'utilizzo della tecnica del pruning migliora la complessità computazionale, riducendo il tempo medio necessario al giocatore per svolgere una mossa.
+		Questo accade fino ad un numero di ply (profondità dell'albero) pari a 4. Per profondità superiori si nota che l'effetto sortito è l'opposto non apportando miglioramenti, bensì peggioramenti
+		alla complessità. Questo può essere spiegato facilmente se si considera il modo in cui si svolge l'esecuzione dell'algoritmo di ricerca. Inizialmente viene generato l'intero albero, con la
+		profondità prestabilita. In seguito, partendo dai nodi foglia, si assegnano i valori risultanti dalle funzioni di valutazione. Queste operazioni che hanno un grosso impatto sia sulla complessità
+		computazione sia su quella legata alla memoria, vengono eseguite sia che si usi il pruning sia che non lo si faccia. Quello che evita la tecnica del pruning è che si eviti di considerare alcuni nodi
+		durante il backtracking, tuttavia per farlo sono necessarie delle operazioni in più. Di conseguenza, per come è stato realizzato l'algoritmo di Minimax,
+		il beneficio che apporta il pruning è limitato e considerevole soltanto nel caso di profondità o numero di ply molto basso.
+	</p>
+	<p>
+		Il secondo tipo di test ci offre una serie di risultati interessanti. Le funzioni di valutazione che risultano più performanti, garantenodosi un maggior numero di vittorie, sono la numero 4 (backrows)
+		e la 1. Entrambe queste funzioni non prevalentemente sull'attacco o sulla difesa, ma basano la loro strategie su scelte diverse, che si rivelano buone anche tra i giocatori umani. Una di queste,
+		scelta dalla funzione 4, è quella di mantenere occupate le righe di fondo, dove l'avversario può fare dama. Questo offre come garanzia quella di mangiare almeno 4 pedine avversarie al costo massimo
+		di 4 e blocca la formazione di dame, che si traduce in una minore vulnerabilità. La funzione 1 invece assegna punteggi sulla base delle pedine mangiate, quindi cerca di evitare grandi perdite;
+		questa euristica di certo è una di quelle che funziona meglio. I test tra le funzioni sono stati eseguiti sia con alberi a profondità 6, che a profondità 7 (queste ultime riportate nella relazione).
+		Quello che si è notato è che la funzione 1 ha vinto quasi contro tutte le altre a profondità 6, diversamente è accaduto per un numero di ply uguale a 7 o superiore. Ne emerge che parte delle
+		funzioni considerate funzionano meglio per profondità maggiori e risultano abbastanza deboli per ply minori a 7.
+	</p>
+	<p>
+		L'ultimo test ha innanzitutto mostrato la debolezza di questi algoritmi per profondità basse (quella considerata è la profondità 6). A tale profondità gli algoritmi utilizzati difficilmente
+		riescono a competere con giocatori umani. Nessuna funzione è riuscita a battere nessuno dei tre giocatori considerati. Tuttavia, bisogna fare una considerazione importante:
+		in alcuni casi, le funzioni sono riuscite ad arrivare allo stadio finale della partita con un buon numero di pezzi e di dame anche molto superiore a quello dell'avversario umano.
+		In questi casi, in cui un giocatore umano avrebbe concluso la partita con facilità, la funzione di valutazione non ha saputo agire nella maniera più corretta.
+		Il problema è causato principalmente dall'utilizzo della funzione di valutazione 8. Questa funzione si attiva dopo il settantesimo turno, per ogni altra funzione di valutazione usata.
+		Quello che cerca di fare è di spingere le pedine rimaste, in genere quasi tutte dame, verso il centro, così da permettere che il gioco finisca e per evitare situazioni di stallo.
+		In molti casi la funzione ha spinto le pedine a farsi mangiare, procurando al giocatore artificiale ingenti perdite. Questo problema potrebbe aver avuto un effetto negativo o comunque
+		di errore sul test precedente, provocando sconfitte laddove ci sarebbero potute essere delle vittorie.
+		Una considerazione importante si può fare considerando i risultati del secondo e del terzo test. Se per un momento si esclude il fattore sconfitta nel terzo test e si considera la durata
+		delle partite ne emerge un ulteriore risultato. Il numero di turni che è durata la partita può essere vista come la resistenza di una funzione agli attacchi e alle mosse dell'avversario umano.
+		Sotto quest'ottica, valori superiori di durata vanno visti come positivi, così come il numero di vittorie nel secondo test. Questo mette in luce quest'ultimo aspetto: le funzioni di valutazione
+		che hanno riportato un numero maggiore di vittorie nel secondo test sono le stesse che hanno dimostrato una maggiore competitività e resistenza nel terzo test. Questo significa, che per il numero
+		di ply considerato nei test, entrambe le esecuzioni mostrano gli stessi risultati, mettendo in luce quali siano le funzioni migliori.
+
+	</p>
+	<a href="#menu">
+		Torna all'indice
+	</a>
+	<hr>
 	</section>
 	<section id="fonti">
 		<h3>
@@ -1426,11 +1516,7 @@
 					Studio di possibili euristiche e metodolige di lavoro con i giochi
 					<a href="ggp.stanford.edu/readings/cluneplayer.pdf">Heuristic Evaluation Functions for General Game Playing - James Clune - UCLA University</a>
 				</li>
-
-
-
-
-	</ul>
+			</ul>
 		</p>
 		<a href="#menu">
 			Torna all'indice
