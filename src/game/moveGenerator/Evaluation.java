@@ -95,14 +95,36 @@ public class Evaluation {
     private static Float heuristicThree(Node node){
 
         Spot [][] board = node.getState().getBoard();
-        Float partial = Evaluation.heuristicOne(node);
         Float result = 0f;
+        float black = 0;
+        float white = 0;
+        float blackKings = 0;
+        float whiteKings = 0;
+
         Player player = node.getPlayer();
 
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 8; j ++){
+        for(int i = 0; i <8; i++){
+            for(int j = 0; j < 8; j++){
                 if( board[i][j] != null && board[i][j].getOccupier() != null){
+
                     Piece piece = board[i][j].getOccupier();
+                    if(piece.isKing()){
+
+                        if(piece.isWhite()){
+                            whiteKings += 1;
+                        }
+                        else{
+                            blackKings += 1;
+                        }
+                    }
+                    else{
+                        if(piece.isWhite()){
+                            white += 1;
+                        }
+                        else{
+                            black += 1;
+                        }
+                    }
                     /* setting values for each move */
                     float negative = 0;
                     float positive = 0;
@@ -138,7 +160,13 @@ public class Evaluation {
                 }
             }
         }
-        return partial + result;
+        if(player.isWhite()){
+            return (white-black + Evaluation.KINGS_EVAL*(whiteKings-blackKings)) + result;
+        }
+        else{
+            //if black
+            return (black - white + Evaluation.KINGS_EVAL*(blackKings-whiteKings)) +result;
+        }
     }
 
 
@@ -150,13 +178,36 @@ public class Evaluation {
      */
     private static Float heuristicFour(Node node){
         Spot [][] board = node.getState().getBoard();
-        Float partial = Evaluation.heuristicOne(node);
         Float result = 0f;
+        float black = 0;
+        float white = 0;
+        float blackKings = 0;
+        float whiteKings = 0;
+
         Player player = node.getPlayer();
-        for(int i = 0; i < 8; i++){
+
+        for(int i = 0; i <8; i++){
             for(int j = 0; j < 8; j++){
                 if( board[i][j] != null && board[i][j].getOccupier() != null){
+
                     Piece piece = board[i][j].getOccupier();
+                    if(piece.isKing()){
+
+                        if(piece.isWhite()){
+                            whiteKings += 1;
+                        }
+                        else{
+                            blackKings += 1;
+                        }
+                    }
+                    else{
+                        if(piece.isWhite()){
+                            white += 1;
+                        }
+                        else{
+                            black += 1;
+                        }
+                    }
                     /* setting values for each move */
                     float negative = 0;
                     float positive = 0;
@@ -191,7 +242,13 @@ public class Evaluation {
                 }
             }
         }
-        return partial + result;
+        if(player.isWhite()){
+            return (white-black + Evaluation.KINGS_EVAL*(whiteKings-blackKings)) + result;
+        }
+        else{
+            //if black
+            return (black - white + Evaluation.KINGS_EVAL*(blackKings-whiteKings)) +result;
+        }
     }
 
     /**
@@ -207,14 +264,38 @@ public class Evaluation {
      * @return
      */
     private static Float heuristicFive(Node node){
-        Float partial = Evaluation.heuristicOne(node);
+
         Spot [][] board = node.getState().getBoard();
         Float result = 0f;
+        float black = 0;
+        float white = 0;
+        float blackKings = 0;
+        float whiteKings = 0;
+
         Player player = node.getPlayer();
-        for(int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+
+        for(int i = 0; i <8; i++){
+            for(int j = 0; j < 8; j++){
                 if( board[i][j] != null && board[i][j].getOccupier() != null){
+
                     Piece piece = board[i][j].getOccupier();
+                    if(piece.isKing()){
+
+                        if(piece.isWhite()){
+                            whiteKings += 1;
+                        }
+                        else{
+                            blackKings += 1;
+                        }
+                    }
+                    else{
+                        if(piece.isWhite()){
+                            white += 1;
+                        }
+                        else{
+                            black += 1;
+                        }
+                    }
                     /* setting values for each move */
                     float negative = 0.5f;
                     float positive = 1f;
@@ -256,7 +337,13 @@ public class Evaluation {
                 }
             }
         }
-        return partial+result;
+        if(player.isWhite()){
+            return (white-black + Evaluation.KINGS_EVAL*(whiteKings-blackKings)) + result;
+        }
+        else{
+            //if black
+            return (black - white + Evaluation.KINGS_EVAL*(blackKings-whiteKings)) +result;
+        }
     }
 
 
