@@ -81,13 +81,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#considerazioniEuristiche">
-                                    3.4 Considerazioni sulle euristiche
-                                </a>
-                            </li>
-                            <li>
                                 <a href="#ottimizzazione">
-                                    3.5 Ottimizzazione
+                                    3.4 Ottimizzazione
                                 </a>
                             </li>
                         </ul>
@@ -116,8 +111,15 @@
                     </li>
 				 	<li>
 				 		<a href="#conclusioni">
-				 			5. Conclusioni finali
+				 			5. Conclusioni
 				 		</a>
+						 <ul>
+							 <li>
+								 <a href="#considerazioniEuristiche">
+									 5.1 Considerazioni sulle euristiche
+								 </a>
+							 </li>
+						 </ul>
 				 	</li>
 					 <li>
 						 <a href="#fonti">
@@ -779,18 +781,9 @@
 
 
 		</p>
-		<h4 id="considerazioniEuristiche">
-			3.4 Considerazioni sulle euristiche
-		</h4>
-		<p>
-			Queste euristiche sono tutte derivate da tecniche di gioco del mondo reale, e spesso sono tecniche studiate appostitamente per creare Intelligenze Artificiali pi&ugrave; performanti.
-			In genere, tali funzioni, vengono spesso usate contemporaneamente, in modo da tenere conto di pi&ugrave; variabili ed avere una maggior Intelligenza.<br><br>
-			E&grave; molto interessante osservare come l'euristica <i>Randomize</i> abbia risultati inaspettati. Essendo per definizione una euristica che <i>fa mosse casuali</i> tendenzialmente non dovrebbe avere molto successo.
-			Dai nostri test, tuttavia, &egrave; emerso che, in media, tale euristica vince il 20% delle partite arrivando al 40% nel caso affronti se stessa.<br>
-			E&grave; ulteriormente interessante osservare che in molti casi l'euristica &egrave; riescita anche a paraggiare.
-		</p>
+
 		<h4 id="ottimizzazione">
-			3.5 Ottimizzazione
+			3.4 Ottimizzazione
 		</h4>
 		<p>
 			Durante lo sviluppo del progetto ci siamo trovati in difficolt&agrave; a causa dell'utilizzo massiccio di memoria degli algoritmi.<br>
@@ -853,12 +846,15 @@
 			4.1 Tempi medi di esecuzione
 		</h4>
 		<p>
-			L'esecuzione...
-			Misurati con profondità x =
+			Come anticipato nella sezione precedente, il primo test effettuato ha avuto come scopo quello di verificare la qualità del <span lang="en">pruning</span>. In particolare, verificare in che modo
+			il suo utilizzo diminuisce la complessità computazionale. Per questo test sono state effettuatue una serie di test, tenendo come costante l'euristica e cambiando il resto delle variabili.
+			Ogni partita ha avuto come giocatore costante, un'intelligenza artificiale che facesse uso della funzione di valutazione 5. Per ogni diversa profondità dell'albero da esso utilizzato, sono
+			state disputate 20 diverse partite, ognuna contro giocatori diversi; 10 partite sono state giocate da un'intelligenza che facesse uso del pruning e 10 da una che non lo utilizzasse. Sono stati
+			registrati i tempi medi richiesti per ogni mossa in ogni partita e si è calcolata infine una media dei tempi richiesti alle diverse profondità. La tabella seguente mostra i risultati ottenuti.
 		</p>
 		<table class="table">
 			<caption>
-				Tempi medi per mossa in millisecondi
+				Tempi medi per mossa, in millisecondi, a diverse prodondità
 			</caption>
 			<tr>
 				<th>
@@ -887,6 +883,17 @@
 					3
 				</td>
 				<td>
+					4,80
+				</td>
+				<td>
+					4,90
+				</td>
+			</tr>
+			<tr>
+				<td>
+					4
+				</td>
+				<td>
 					11,34
 				</td>
 				<td>
@@ -895,7 +902,7 @@
 			</tr>
 			<tr>
 				<td>
-					4
+					5
 				</td>
 				<td>
 					35,32
@@ -906,7 +913,7 @@
 			</tr>
 			<tr>
 				<td>
-					5
+					6
 				</td>
 				<td>
 					152,56
@@ -917,24 +924,13 @@
 			</tr>
 			<tr>
 				<td>
-					6
-				</td>
-				<td>
-					-
-				</td>
-				<td>
-					-
-				</td>
-			</tr>
-			<tr>
-				<td>
 					7
 				</td>
 				<td>
-					-
+					1461,85
 				</td>
 				<td>
-					-
+					1034,85
 				</td>
 			</tr>
 			<tr>
@@ -942,32 +938,10 @@
 					8
 				</td>
 				<td>
-					-
+					4892,64
 				</td>
 				<td>
-					-
-				</td>
-			</tr>
-			<tr>
-				<td>
-					9
-				</td>
-				<td>
-					-
-				</td>
-				<td>
-					-
-				</td>
-			</tr>
-			<tr>
-				<td>
-					10
-				</td>
-				<td>
-					-
-				</td>
-				<td>
-					-
+					3386,58
 				</td>
 			</tr>
 		</table>  
@@ -975,8 +949,10 @@
 			4.2 Partite tra giocatori di diversi livelli
 		</h4>
 		<p>
-			Le partite...
-			Nella tabella sottostante è riportata la percentuale di vittorie del giocatore in colonna contro quello in riga. Ogni giocatore comandato dalla CPU ha utilizzato l'algoritmo Minimax con pruning, con una profondità di 
+			In seguito al primo test, sono state disputate un buon numero di partite tra IA che utilizzassero funzioni di valutazione diverse, con un albero Minimax di profondità 7. Per ogni combinazione
+			di giocatori, sono state effettuate più partite, con lo scopo di verificare quale funzione riportasse risultati migliore e quindi un maggior numero di vittorie.
+			Nella tabella sottostante sono riportati i risultati delle partite. La tabella dev'essere letta nel seguente modo: il contenuto di ogni casella
+			consiste nel numero di partite vinte (in percentuale) dal giocatore in colonna, contro quello in riga.
 		</p>
 		<table class="table">
 			<caption>
@@ -1007,31 +983,30 @@
 				<th>
 					(7)
 				</th>
-				<th>
-					Media vittorie
-				</th>
 			<tr>
 				<td>
 					(1)
 				</td> 
-				<td>					
+				<td>
+					100%
 				</td>
 				<td>
-				</td> 
-				</td> 
-				<td>					
+					20%
 				</td>
 				<td>
+					0%
+				</td>
+				<td>
+					50%
 				</td>  
-				</td> 
-				<td>					
+				<td>
+					100%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					0%
 				</td>
 				<td>
+					0%
 				</td>
 			</tr> 
 			<tr>
@@ -1039,149 +1014,204 @@
 					(2)
 				</td>
 				<td>
-				</td> 
-				</td> 
-				<td>					
+					80%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					40%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					60%
 				</td>
 				<td>
-				</td>  
+					40%
+				</td>
 				<td>
-				</td>  
+					50%
+				</td>
+				<td>
+					40%
+				</td>
+				<td>
+					20%
+				</td>
 			</tr> 
 			<tr>
 				<td>
 					(3)
 				</td>
 				<td>
-				</td> 
-				</td> 
-				<td>					
+					100%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					20%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					100%
 				</td>
 				<td>
-				</td>  
+					100%
+				</td>
 				<td>
-				</td>  
+					pari
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					pari
+				</td>
 			</tr> 
 			<tr>
 				<td>
 					(4)
 				</td>
 				<td>
-				</td> 
-				</td> 
-				<td>					
+					50%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					0%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					0%
 				</td>
 				<td>
-				</td>  
+					100%
+				</td>
 				<td>
-				</td>  
+					50%
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					100%
+				</td>
 			</tr> 
 			<tr>
 				<td>
 					(5)
 				</td>
 				<td>
-				</td> 
-				</td> 
-				<td>					
+					0%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					20%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					pari
 				</td>
 				<td>
-				</td>  
+					50%
+				</td>
 				<td>
-				</td>  
+					100%
+				</td>
+				<td>
+					pari
+				</td>
+				<td>
+					50%
+				</td>
 			</tr> 
 			<tr>
 				<td>
 					(6)
 				</td>
 				<td>
-				</td> 
-				</td> 
-				<td>					
+					100%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					20%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					50%
 				</td>
 				<td>
-				</td>  
+					50%
+				</td>
 				<td>
-				</td>  
+					pari
+				</td>
+				<td>
+					100%
+				</td>
+				<td>
+					100%
+				</td>
 			</tr> 
 			<tr>
 				<td>
 					(7)
 				</td>
 				<td>
-				</td> 
-				</td> 
-				<td>					
+					50%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					20%
 				</td>
 				<td>
-				</td>  
-				</td> 
-				<td>					
+					pari
 				</td>
 				<td>
-				</td>  
+					0%
+				</td>
 				<td>
-				</td>   
+					50%
+				</td>
+				<td>
+					0%
+				</td>
+				<td>
+					100%
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Media vittorie:
+				</td>
+				<td>
+					48/70
+				</td>
+				<td>
+					14/70
+				</td>
+				<td>
+					21/70
+				</td>
+				<td>
+					53/70
+				</td>
+				<td>
+					35/70
+				</td>
+				<td>
+					24/70
+				</td>
+				<td>
+					37/70
+				</td>
 			</tr>
 		</table>
         <h4 id="human">
             4.3 Partite tra giocatori umani e IA
         </h4>
+		<p>
+			Il terzo test aveva come scopo quello di verificare quanto buone fossero le funzioni di valutazioni applicate all'interno di partite contro giocatori umani.
+			Sono stati scelti 3 diversi giocatori umani:
+			<ul>
+				<li>
+					1 dilettante, che non utilizza alcuna strategia: cerca di non farsi mangiare le pedine, commette saltuariamente errori;
+				</li>
+				<li>
+					1 esperto, che gioca sulla difensiva e cerca di evitare che le proprie pedine vengano mangiate;
+				</li>
+				<li>
+					1 esperto, che gioca sull'attacco e punta su diverse strategie: fornisce esche per poi mangiare qualche pedina in più dell'avversario e fare dama.
+				</li>
+			</ul>
+			Ogni giocatore ha disputato una partita contro ogni IA e ogni IA utilizzava per ogni partita una funzione di valutazione diversa e un albero Minimax con profondità costante 6.
+			Premettendo che le partite sono state vinte tutte dai giocatori umani, e del perchè se ne discuterà nelle conclusioni, per ogni partita ne è stata registrata la sua durata, in turni.
+		</p>
         <table class="table">
             <caption>
                 Percentuale vittorie nelle partite tra giocatori umani e IA
@@ -1324,9 +1354,19 @@
 	</section> 	
 	<section id="conclusioni">
 		<h3>
-			5. Conclusioni finali
+			5. Conclusioni
 		</h3>
 		<p>
+		</p>
+		<h4 id="considerazioniEuristiche">
+		5.1 Considerazioni sulle euristiche
+	</h4>
+		<p>
+			Queste euristiche sono tutte derivate da tecniche di gioco del mondo reale, e spesso sono tecniche studiate appostitamente per creare Intelligenze Artificiali pi&ugrave; performanti.
+			In genere, tali funzioni, vengono spesso usate contemporaneamente, in modo da tenere conto di pi&ugrave; variabili ed avere una maggior Intelligenza.<br><br>
+			E&grave; molto interessante osservare come l'euristica <i>Randomize</i> abbia risultati inaspettati. Essendo per definizione una euristica che <i>fa mosse casuali</i> tendenzialmente non dovrebbe avere molto successo.
+			Dai nostri test, tuttavia, &egrave; emerso che, in media, tale euristica vince il 20% delle partite arrivando al 40% nel caso affronti se stessa.<br>
+			E&grave; ulteriormente interessante osservare che in molti casi l'euristica &egrave; riescita anche a paraggiare.
 		</p>
 		<a href="#menu">
 			Torna all'indice
@@ -1339,6 +1379,20 @@
 		</h3>
 		<p>
 			<ul>
+				<li>
+					Slide sui giochi del professore A. Sperduti:
+					<a href="http://www.math.unipd.it/~sperduti/AI15/giochi.pdf">
+						http://www.math.unipd.it/~sperduti/AI15/giochi.pdf
+					</a>
+				</li>
+				<li>
+					Libro di testo:
+					<a href="http://aima.cs.berkeley.edu/index.html">
+						S. Russell & P. Norvig, "Artificial Intelligence: A Modern Approach", Prentice Hall, terza edizione, 2010
+					</a>
+				</li>
+
+
 				<li>
 					L'implementazione della dama presa come punto di partenza:
 					<a href="https://github.com/khaledalissa/simple-checkers">

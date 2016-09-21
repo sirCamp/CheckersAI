@@ -47,7 +47,6 @@ public class CSVExporter {
         Float p1Mean = Float.valueOf(p1Counter)/Float.valueOf(p1Rounds);
         Float p2Mean = Float.valueOf(p2Counter)/Float.valueOf(p2Rounds);
         String tmp =("\nMean1, "+p1Mean+";\nMean2, "+p2Mean).replace(".",",");
-        //System.out.println(tmp);
         CSVExporter.CONTAINER+=tmp;
     }
 }

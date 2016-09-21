@@ -65,7 +65,7 @@ public class Main {
 			}else winner = "p1 (black) ";
             System.out.println(winner + "won the game!");
 		}
-		System.out.println(roundCounter);
+		System.out.println("The game ended in " + roundCounter + " rounds.");
 	}
 
 	private static Player createPlayer(Boolean isFirst) throws IOException {
