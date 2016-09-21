@@ -789,7 +789,7 @@
 		Questa ottimizzazione risulta essere vantaggiosa. Se avessimo usato una cache persistente, come ad esempio una cache Redis o Memcache, le prestazioni sarebbero ulteriormente incrementate, poiech&egrave; sarebbe come avere un database con tutte le possibili mosse.<br><br>
 		Un altra considerazione da fare potrebbe essere quella di aggiungere un fattore <i>giovinezza</i> ai nodi presenti nella cache, in modo da eliminare quei nodi che sono presenti da molto tempo e che difficilmente saranno utilizzati.<br><br>
 		Molto importante e spiegare come, al fine di massimizzare l'efficenza computazionale, nelle funzioni euristiche che usano come base la 1, si &egrave; scelto di duplicare il codice.<br>
-		La causa principale risiede nei cicli <i>for</i>, che permettono la scansione della scacchiera. La duplicazione del codice ha permesso di passare da una complessit&agrave; O(m * 2n<sup>2</sup>) ad una complessit&agrave; di 0(m * n<sup>2</sup>); il vantaggio sembra essere esiguo ma se si considera che il fattore m corrisponde al numero di volte che viene eseguita la funzione di valutazione risulta evidente l'ottimizzazione.<br><br>
+		La causa principale risiede nei cicli <i>for</i>, che permettono la scansione della scacchiera. La duplicazione del codice ha permesso di evitare l'esecuzione doppia dei cilci for, ottimizzando le prestazioni.<br><br>
 
 		L'intenzione comunque e quella di rilasciare, in futuro, ulteriori versioni del progetto, che possano usare diverse ottimizzazioni.
 		</p>
