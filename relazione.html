@@ -19,6 +19,9 @@
 		<div class="container">
 			<div class="title">
 				<div class="col-sx-12">
+					<img id="logo" src="css/logo.png" alt="logo unipd" />
+				</div>
+				<div class="col-sx-12">
 					<h1 style="text-align:center">
 						Progetto di intelligenza artificiale
 					</h1>
@@ -27,7 +30,12 @@
 					<h2 style="text-align:center"> 
 						Checkers AI : Checkers Automaton Italo
 					</h2>
-				</div>	 
+				</div>
+				<div class="col-sx-12">
+					<h5 style="text-align:center">
+						Dedicato ad un damista che non c'è più
+					</h5>
+				</div>
 			</div>	
 		</div>
 		
@@ -111,6 +119,11 @@
 				 			5. Conclusioni finali
 				 		</a>
 				 	</li>
+					 <li>
+						 <a href="#fonti">
+							 Appendice A: fonti
+						 </a>
+					 </li>
 				 </ul>
 			</div>	 
 		</div>
@@ -121,7 +134,7 @@
 			1. La dama
 		</h3>
 		<p>
-			La dama è un gioco da tavolo tradizionale per due giocatori. I due giocatori, disposti ai lati opposti della scacchiera, muovono a turno i propri pezzi. Un giocatore ha i pezzi bianchi, l'altro quelli neri. I pezzi possono essere mossi solo di una casella in avanti, in diagonale: si muovono sulle caselle nere. Una pedina può mangiarne una dell'avversario scavalcandola diagonalmente; la pedina scavalcata ("mangiata"), viene rimossa dalla damiera. Quando una pedina raggiunge la riga più distante nella sua direzione di marcia, diventa dama. La dama si muove come una qualsiasi altra pedina, ma in qualsiasi direzione, sempre sulla diagonale. Esistono determinate varianti nazionali del gioco. La variante scelta per il progetto è quella inglese in cui ogni pedina, anche se dama, può essere catturata da ogni altra pedina. Tutte le pedine, comprese le dame, si muovono di una casella ad ogni turno. Se una pedina può essere mangiata in un turno, essa deve essere mangiata, inoltre è possibile concatenare le catture: se una pedina ha mangiato un'altra pedina nel suo turno e può ancora mangiare, allora deve farlo. Un giocatore perde quando non ha più pedine, perchè sono state tutte prese, o quando non può muoverne nessuna di quelle rimaste.
+			La dama è un gioco da tavolo tradizionale per due giocatori. I due giocatori, disposti ai lati opposti della scacchiera, muovono a turno i propri pezzi. Un giocatore ha i pezzi bianchi, l'altro quelli neri. Il giocatore con i pezzi neri inizia la partita facendo la prima mossa. I pezzi possono essere mossi solo di una casella in avanti, in diagonale: si muovono sulle caselle nere. Una pedina può mangiarne una dell'avversario scavalcandola diagonalmente; la pedina scavalcata ("mangiata"), viene rimossa dalla damiera. Quando una pedina raggiunge la riga più distante nella sua direzione di marcia, diventa dama. La dama si muove come una qualsiasi altra pedina, ma in qualsiasi direzione, sempre sulla diagonale. Esistono determinate varianti nazionali del gioco. La variante scelta per il progetto è quella inglese in cui ogni pedina, anche se dama, può essere catturata da ogni altra pedina. Tutte le pedine, comprese le dame, si muovono di una casella ad ogni turno. Se una pedina può essere mangiata in un turno, essa deve essere mangiata, inoltre è possibile concatenare le catture: se una pedina ha mangiato un'altra pedina nel suo turno e può ancora mangiare, allora deve farlo. Un giocatore perde quando non ha più pedine, perchè sono state tutte prese, o quando non può muoverne nessuna di quelle rimaste.
 		</p>
 		<a href="#menu">
 			Torna all'indice
@@ -303,19 +316,50 @@
 			3. Il progetto e i suoi scopi
 		</h3>
 		<p>
+			Il progetto <span lang="en">Checkers AI</span> ha avuto come scopi principali la realizzazione di un'intelligenza artificiale che sapesse giocare in maniera discreta a dama e la sua analisi.
+			Per l'implementazione del programma si è scelto Java e sono stati presi in considerazione una serie di programmi già realizzati, che implementavano il gioco della dama
+			e in alcuni casi un'intelligenza artificiale. L'esempio di partenza scelto
 			<a href="https://github.com/khaledalissa/simple-checkers">
-				Esempio considerato (link)
+		 	(link)
 			</a>
+			consiste nell'implementazione di una dama in cui i giocatori utilizzano 6 pedine a testa. Il gioco preso in esempio è una buona semplificazione del gioco della dama inglese, ma non è stato possibile
+			riutilizzarlo a causa della qualità del codice. Nonostante questo, esso ha fornito un buon punto di partenza per capire in che modo sarebbe stato più sensato sviluppare il gioco della dama e
+			quale flusso di esecuzione avrebbe dovuto seguire il programma. In un primo momento si è quindi trattato di implementare in toto il gioco della dama, includendo sia le sue regole e la sua logica, che
+			l'aggiornamento della damiera visualizzata. Alla fine di ciò era possibile disputare partite tra due giocatori umani, che per giocare dovevano inserire a turno, come input, la mossa da far
+			compiere alle proprie pedine. E' stato quindi sviluppato l'algoritmo di Minimax che poi è stato ottimizzato e completato con l'aggiunta di diverse funzioni di valutazione e di funzionalità come
+			per esempio la possibilità di utilizzare il <span lang="en">pruning</span> su di esso.
+		</p>
+		<p>
+			Dopo questa prima fase, prevalentemente di implementazione, si è passati all'analisi della bontà dell'algoritmo di intelligenza artificiale e delle funzioni di valutazione utilizzate.
+			Sono state effettuate un grande nunmero di partite per verificare vari aspetti del programma. Prima di tutto la qualità dell'azione del <span lang="en">pruning</span>: per fare questo, si è scelto di usare
+			un IA che faceva uso della funzione di valutazione 5 e che in alcune partite utilizzasse il <span lang="en">pruning</span> e in altre no. Più precisamente, per ogni profondità dell'albero,
+			sono state disputate 10 partite con il suo utilizzo e 10 senza. Questo per verificare che impatto avesse l'utilizzo del <span lang="en">pruning</span> al crescere della dimensione
+			dell'albero.
+			In secondo luogo, sono state eseguite delle partite tra intelligenze artificiali che facevano uso di funzioni di valutazione diverse per verificare quale fosse la migliore.
+			Infine sono state disputate delle partite in cui si confrontavano giocatori umani contro intelligenze artificiali che facevano uso delle diverse funzioni di valutazione.
+			I risultati dei test sono riportati nella sezione 4 e discussi nella sezione 5.
 		</p>
 		<h4 id="compilazEsecuz">
 			3.1 Compilazione ed esecuzione del programma programma
 		</h4>
+		<p>
+		Il programma della dama è stato realizzato tramite il linguaggio di programmazione Java e può essere eseguito a seguito della sua compilazione. Per effettuarla è necessario aprire una finestra di terminale e spostarsi all'interno della cartella "src".
+		Per generare i file contenenti il bytecode (.class) che possono essere eseguiti sulla Java Virtual Machine, si invocherà quindi il comando
+		<pre class="java"><code>
+		make
+		</code></pre>
+		Alla fine del processo, se non sono stati sollevati errori, sarà possibile avviare il programma attraverso il seguente input:
+		<pre class="java"><code>
+		java game.Main
+		</code></pre>
+		</p>
 		<h4 id="istruzioni">
 			3.2 Istruzioni per giocare
 		</h4> 
 		<p>
 			Una volta avviata la partita si dovranno scegliere le caratteristiche dei due giocatori. Prima di tutto si chiederà se il giocatore che si sta creando è umano o
-			se invece è comandato dalla CPU. Nel secondo caso, si dovrà specificare quindi quale tipo di euristica utilizzerà per compiere le sue scelte, che profondità avrà l'albero Minimax che utilizzerà e se userà il Pruning sull'albero. Creati i giocatori, il programma sceglierà casualmente quale giocatore dovrà iniziare il gioco (nella realtà, nella dama inglese inizierebbe sempre il nero).
+			se invece è comandato dalla CPU. Nel secondo caso, si dovrà specificare quindi quale tipo di euristica utilizzerà per compiere le sue scelte,
+			che profondità avrà l'albero Minimax utilizzato e se si userà il Pruning sul suddetto albero. Creati i giocatori, il programma avvierà la partita ed il nero dovrà compiere la prima mossa.
 			Ogni volta che verrà eseguita una mossa, essa verrà stampata e sarà seguita dalla stampa della scacchiera o damiera aggiornata.
 			Le mosse accettate avranno una forma uguale alla seguente: "pedina mossa", dove pedina dovrà avere come valore il nome della pedina scelta dal giocatore, mentre mossa conterrà una delle seguenti stringhe:
 			<ul>
@@ -1288,7 +1332,27 @@
 			Torna all'indice
 		</a>
 		<hr>
-	</section> 
+	</section>
+	<section id="fonti">
+		<h3>
+			Appendice A: fonti
+		</h3>
+		<p>
+			<ul>
+				<li>
+					L'implementazione della dama presa come punto di partenza:
+					<a href="https://github.com/khaledalissa/simple-checkers">
+					https://github.com/khaledalissa/simple-checkers
+					</a>
+
+				</li>
+			</ul>
+		</p>
+		<a href="#menu">
+			Torna all'indice
+		</a>
+		<hr>
+	</section>
 	</main>
 	</body>
 </html>

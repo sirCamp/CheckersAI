@@ -17,12 +17,12 @@ public class Main {
 
 	private static void startGame() throws IOException, CloneNotSupportedException {
 		Random ran = new Random();
-		Integer round = 0;//(ran.nextInt(10) % 2); // who starts?
+		Integer round = 0; // black starts
 		Integer roundCounter = 0;
 		System.out.println("Players creation...");
 
-		Player p1 = new Player("5-pc", "p1", "b", 8); //createPlayer(true);
-		Player p2 = new Player("7-pc", "p2", "w", 3); //createPlayer(false);
+		Player p1 = createPlayer(true);
+		Player p2 = createPlayer(false);
 
 		System.out.println("["+p1.getName()+", "+p1.getAlgorithm()+"] VS ["+p2.getName()+", "+p2.getAlgorithm()+"]");
 		if(round == 0){
@@ -72,9 +72,9 @@ public class Main {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		if (isFirst) {
-			System.out.println("First player:");
+			System.out.println("First player (black):");
 		} else {
-			System.out.println("Second player:");
+			System.out.println("Second player (white):");
 		}
 		Boolean done = false;
 		Integer choice;
@@ -99,9 +99,9 @@ public class Main {
 		Integer heuristic = 1;
 		done = false;
 		do {
-			System.out.println("Which heuristic should it use? (1)-(6)");
+			System.out.println("Which heuristic should it use? (1)-(7)");
 			heuristic = Character.getNumericValue(br.readLine().charAt(0));
-			if(heuristic>=1 && heuristic<=6) {
+			if(heuristic>=1 && heuristic<=7) {
 				done = true;
 			}else{
 					System.out.println("Insert a valid number!");
@@ -111,18 +111,17 @@ public class Main {
 		Integer depth = 3;
 		do {
 			System.out.println("Which depth should it have the decision tree? [Suggested: (3)-(7)]");
-			heuristic = Character.getNumericValue(br.readLine().charAt(0));
-			if(heuristic>=2 && heuristic<=20){
+			depth = Character.getNumericValue(br.readLine().charAt(0));
+			if(depth>=2 && depth<=20){
 				done = true;
 			}else{
 				System.out.println("Insert a valid number!");
 			}
 		} while (!done);
-		done = false;
 		String pruning = "";
 		System.out.println("Should it use pruning? (y) or (n)");
-		char decision = br.readLine().charAt(0);
-		if(decision == 'y'){
+		Character decision = br.readLine().charAt(0);
+		if(decision.equals('y')){
 			pruning = "-pruning";
 		}
 		if (isFirst) {

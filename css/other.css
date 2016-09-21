@@ -5,3 +5,8 @@ h5{
 h4{
     text-decoration: underline;
 }
+
+img#logo{
+    display: block;
+    margin: auto;
+}
