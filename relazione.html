@@ -329,7 +329,10 @@
 			quale flusso di esecuzione avrebbe dovuto seguire il programma. In un primo momento si è quindi trattato di implementare in toto il gioco della dama, includendo sia le sue regole e la sua logica, che
 			l'aggiornamento della damiera visualizzata. Alla fine di ciò era possibile disputare partite tra due giocatori umani, che per giocare dovevano inserire a turno, come input, la mossa da far
 			compiere alle proprie pedine. E' stato quindi sviluppato l'algoritmo di Minimax che poi è stato ottimizzato e completato con l'aggiunta di diverse funzioni di valutazione e di funzionalità come
-			per esempio la possibilità di utilizzare il <span lang="en">pruning</span> su di esso.
+			per esempio la possibilità di utilizzare il <span lang="en">pruning</span> su di esso. L'algoritmo genera un albero i cui nodi sono gli stati della damiera in seguito all'esecuzione di una
+			mossa. La profondità dell'albero viene decisa dall'utente. Una volta generato l'albero si assegnano i valori tramite backtracking sulla struttura dati. I valori assegnati ai nodi sono
+			generati tramite una funzione di valutazione associata allo specifico albero e decisa anch'essa dall'utente, all'inizio della partita. Nel caso in cui si scelga di utilizzare il <span lang="en">pruning</span>,
+			alcuni nodi non verranno considerati: questo produrrà un beneficio dal punto di vista della complessità computazionale.
 		</p>
 		<p>
 			Dopo questa prima fase, prevalentemente di implementazione, si è passati all'analisi della bontà dell'algoritmo di intelligenza artificiale e delle funzioni di valutazione utilizzate.
@@ -1392,8 +1395,6 @@
 						S. Russell & P. Norvig, "Artificial Intelligence: A Modern Approach", Prentice Hall, terza edizione, 2010
 					</a>
 				</li>
-
-
 				<li>
 					L'implementazione della dama presa come punto di partenza:
 					<a href="https://github.com/khaledalissa/simple-checkers">

@@ -98,7 +98,7 @@ public class Main {
 		Integer heuristic = 1;
 		done = false;
 		do {
-			System.out.println("Which heuristic should it use? (1)-(7)");
+			System.out.println("Which evaluation function should it use? (1)-(7)");
 			heuristic = Character.getNumericValue(br.readLine().charAt(0));
 			if(heuristic>=1 && heuristic<=7) {
 				done = true;
