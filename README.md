@@ -1,2 +1,2 @@
-# CheckersAI
-CheckersAI
+# Checkers AI : Checkers Automaton Italo
+
