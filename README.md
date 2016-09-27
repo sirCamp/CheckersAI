@@ -1,2 +1,2 @@
-# project_dama
-Project Dama
+# CheckersAI
+CheckersAI
