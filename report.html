@@ -1,0 +1,1427 @@
+<html lang="en">
+<head> 
+	<meta charset="UTF-8" />
+	<meta name="description" content="A report related to a project for the AI (Artificial Intelligence) course at University of Padua. The project name is 'Checkers AI: Checkers Automaton Italo'" />
+	<meta name="keywords" content="checkers, ai, ia, artificial, intelligence, checkers"/>  
+	<meta name="author" content="Enrico Savoca, Stefano Campese" />
+	<meta name="robot" content="index, follow" />
+	<meta name="base" content="/" /> 
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/other.css">
+    <link rel="stylesheet" type="text/css" href="css/styles/darcula.css">
+	<script src="js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<title> Checkers AI : Checkers Automaton Italo </title>
+</head>
+	<body>
+	<header>
+		<div class="container">
+			<div class="title">
+				<div class="col-sx-12">
+					<img id="logo" src="css/logo.png" alt="logo unipd" />
+				</div>
+				<div class="col-sx-12">
+					<h1 style="text-align:center">
+						Artificial Intelligence Project
+					</h1>
+				</div>
+				<div class="col-sx-12">	
+					<h2 style="text-align:center"> 
+						Checkers AI : Checkers Automaton Italo
+					</h2>
+				</div>
+				<div class="col-sx-12">
+					<h5 style="text-align:center">
+						Dedicated to a strong Checkers player who is no longer here. 
+					</h5>
+				</div>
+			</div>
+		</div>
+		
+	</header>
+	<main class="container"> 
+	<section id="menu">
+		<div class="row">
+            <div class="col-sx-12">
+                <h5>
+					<span class="authors"> Authors: Enrico Savoca and Stefano Campese - University of Padua</span>
+                </h5>
+            </div>
+			<div class="col-sx-12">
+				<h3>
+					 	Index: 
+					 </h3> 
+			</div>
+			<div class="col-sx-12">
+				 <ul>
+				 	<li>
+				 		<a href="#dama">
+				 			1. Checkers
+				 		</a>
+				 	</li>
+					 <li>
+						 <a href="#consuntivo">
+							 2. Final balance (in hours)
+						 </a>
+					 </li>
+				 	<li>
+				 		<a href="#progetto">
+				 			3. The project
+				 		</a>
+                        <ul>
+                            <li>
+                                <a href="#compilazEsecuz">
+                                    3.1 Program compilation and execution
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#istruzioni">
+                                    3.2 How to play
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#euristiche">
+                                    3.3 Evaluation functions
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#ottimizzazione">
+                                    3.4 Optimization
+                                </a>
+                            </li>
+                        </ul>
+				 	</li>
+                     <li>
+                         <a href="#test">
+                             4. Tests
+                         </a>
+                         <ul>
+                             <li>
+                                 <a href="#tempi">
+                                     4.1 Mean times of execution
+                                 </a>
+                             </li>
+                             <li>
+                                 <a href="#partite">
+                                     4.2 Matches between players of different levels
+                                 </a>
+                             </li>
+                             <li>
+                                 <a href="#human">
+                                     4.3 Matches between humans and AI players
+                                 </a>
+                             </li>
+                         </ul>
+                    </li>
+				 	<li>
+				 		<a href="#conclusioni">
+				 			5. Conclusions
+				 		</a>
+						 <ul>
+							 <li>
+								 <a href="#considerazioniEuristiche">
+									 5.1 Considerations on the evaluation functions
+								 </a>
+							 </li>
+							 <li>
+								 <a href="#conlusioniTest">
+									 5.2 Test results
+								 </a>
+							 </li>
+						 </ul>
+				 	</li>
+					 <li>
+						 <a href="#fonti">
+							 Appendix A: sources
+						 </a>
+					 </li>
+				 </ul>
+			</div>	 
+		</div>
+		<hr>	 
+	</section>
+	<section id="dama">
+		<h3>
+			1. Checkers
+		</h3>
+		<p>
+			Checkers is a traditional board game for two players. The two players, arranged at the opposite sides of the checkersboard, have to move alternately their pieces. One player has 12 white pieces, the other one has 12 black pieces. The player with black pieces has to begin the game making his move. Each piece
+			can be moved of one step diagonally forward. They can only be moved on black squares. A piece can capture an enemy's one by jumping over it, if there is 
+			an empty square beyond it. The captured piece is removed from the board. When a player captures all the pieces of his opponent, he wins. He also wins when the opponent can't perform any move. When a piece reaches the kings row (the farthest row forward), it becomes a king. The king can be moved in the same way of the other pieces. Also, it can be moved backward. There exist a lot of different national variants of this game. The chosen one is the english variant where each piece (king included) can be captured by every other piece. Every piece is moved from a square to another at each round. If it's possible to capture a piece in a round, then it must be captured. Also, captures can (and must) be cuncatenated if possible. 
+		</p>
+		<a href="#menu">
+			Return to index
+		</a>
+		<hr>
+	</section> <section id="consuntivo">
+		<h3>
+			2. Final balance (in hours)
+		</h3>
+		<p>
+			The following table shows how many hours were nececessary to accomplish all the project tasks. The present balance includes the time used to implement the program features, the research time and test time. The project was completed in 60 hours. Each member of the group worked for 30 hours.
+		</p>
+		<table class="table">
+			<caption>
+				Final balance (in hours)
+			</caption>
+			<tr>
+				<th>
+					Task
+				</th>
+				<th>
+					Author
+				</th>
+				<th>
+					Spent time (in hour)
+				</th>
+				<th>
+					Type of job
+				</th>
+			</tr>
+			<tr>
+				<td>
+					Design, implementation of base components
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					1+9
+				</td>
+				<td>
+					Algorithms implementation, base components implementation of checkers (classes: Piece, Player, Spot, Board)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Design, implementation of base components
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					1+5
+				</td>
+				<td>
+					Algorithms implementation, base components implementation of checkers (classes: King, Main)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Minimax implementation
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					12
+				</td>
+				<td>
+					Minimax algorithms implementation (classes: MinimaxTree, Node)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Pruning
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					3
+				</td>
+				<td>
+					Pruning algorithms implementation (classes: MinimaxTree)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Evaluation functions
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					14
+				</td>
+				<td>
+					Research and implementation of Evaluation Functions algorithms (classes: Evaluation)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Optimization
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					2
+				</td>
+				<td>
+					Cache implementation for Minimax Tree nodes (classes: MinimaxTree)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Test
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					2
+				</td>
+				<td>
+					Test execution: performance, heuristics and various algorithms analysis
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Test
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					3
+				</td>
+				<td>
+					Test execution: performance, heuristics and various algorithms analysis and data collection
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Report, Presentation
+				</td>
+				<td>
+					Enrico Savoca
+				</td>
+				<td>
+					3
+				</td>
+				<td>
+					Report realization (sections: Checkers, The Project), Presentation realization
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Report, Presentation
+				</td>
+				<td>
+					Stefano Campese
+				</td>
+				<td>
+					5
+				</td>
+				<td>
+					Report realization (sezioni: Final Balance, Test, Conclusions), Presentation realization
+				</td>
+			</tr>
+		</table>
+		<a href="#menu">
+			Return to index
+		</a>
+		<hr>
+	</section>
+	<section id="progetto">
+		<h3>
+			3. The project
+		</h3>
+		<p>
+			The project Checkers AI has different aims. First of all the implementation of an AI that can play quite well at Checkers. The second task was to analyze it and its performance against human or AI players.
+			The program language Java was chosen for the program implementation. Different programs were considered to decide which of them to use as base for the project algorithm. At the following link can be found the chosen Checkers implementation:
+			<a href="https://github.com/khaledalissa/simple-checkers">
+		 	(link)
+			</a>
+			It consists on a Checkers implementation where each player has only 6 pieces and there aren't kings. The game considered was a simplification of the english checkers game. It wasn't reused in the project. However, it provides a good starting point for the project classes organization and programming. 
+			So, the first task was to develop the checkers game. At the end of this process, it was possible to play a match between two human players.
+			The following step was the Minimax algorithm implementation. It was developed, optimized and integrated with lots of features like pruning. The algorithm generates a tree where nodes are the board states after the execution of different moves. The tree depth (plies number) is decided by the program user. After tree generation, the algorithm assigns values to each node during a backtracking process. Each value is generated by a function, chosen by the program users, that consists to a specific evaluation function. Each AI player uses only a function during the whole game. If pruning is used on the tree, some nodes won't be considered during backtracking: this is an optimization considering computational complexity!
+		</p>
+		<p>
+			After the program implementation, a bunch of time was spent in analysis and tests. Analysis of the used algorithms and test of the performance.
+			Lots of checkers matches were executed to verify some aspects of the realized program. Firstly the pruning optimization quality: is the mean time execution for each move reduced using pruning? how much is it? To answer this question a specific AI was used in the whole test instances set. The chosen AI uses the fifth evaluation function (fifth in the program) with pruning and without it, with a tree with different depths for each test instance. 10 test instances were executed using pruning and 10 without it. This to verify the impact of it on performances at different tree depths.
+			The second test was made to compare different evaluation function performances. To accomplish this task, a reasonable number of matches were made between all the pairs of evaluation functions. The third test was to evaluate the performance of the different AI that were created against human players. Test results are reported in the 4th section and discussed in the conclusions, section 5.
+		</p>
+		<h4 id="compilazEsecuz">
+			3.1 Program compilation and execution
+		</h4>
+		<p>
+		Checkers AI was developed using the program language Java. It can be executed after its compilation. To compile it, it's necessary to open a terminal window and move into the "src" folder. To generate the bytecode files (.class) that can be executed on the Java Virtual Machine, the following command must be invoked:
+		<pre class="bash"><code>
+		make
+		</code></pre>
+		At the end of the process, if no exceptions were launched, it will be possible to start the program with the following input:
+		<pre class="bash"><code>
+		java game.Main
+		</code></pre>
+		</p>
+		<h4 id="istruzioni">
+			3.2 How to play
+		</h4> 
+		<p>
+			When the game starts, gamers features must be set. First of all the program asks if the players that user is going to create is a human or an AI. 
+			Then, if it's an AI, it will be asked which type of heuristic to use, which depth must have the AI's tree and if it must use pruning on it or not. After ending players creation, the match starts and the player with black pieces makes its first move. After each move, the checkboard will be updated and re-printed. Moves will be inserted as input as follows: "piece move", where a piece has as value the name of the chosen one and move will contain one of the following strings:
+			<ul>
+				<li>
+					moveRight : piece is moved right and forward
+				</li>
+				<li>
+					moveLeft : piece is moved left and forward
+				</li>
+				<li>
+					moveDownRight : piece is moved right and backward (only kings can)
+				</li>
+				<li>
+					moveDownLeft : piece is moved right and backward (only kings can)
+				</li>
+				<li>
+					captureRight : piece capture the opponent's piece right and forward
+				</li>
+				<li>
+					captureLeft : piece capture the opponent's piece left and forward
+				</li>
+				<li>
+					captureDownRight : piece capture the opponent's piece right and backward (only kings can)
+				</li>
+				<li>
+					captureDownLeft : piece capture the opponent's piece left and backward (only kings can)
+				</li>
+			</ul>
+			Right and left, in moves, are absolute, related to the checkboard orientation (and not to the players orientation). Simply, a move right and forward consists on a move to the right of the screen. Idem for the left. The game is over when one of the player can't make any move or he has finished its pieces. The other player will be the winner.
+		</p>
+		<h4 id="euristiche">
+			3.3 Evaluation functions
+		</h4>
+		<p>
+			Evalutation functions returns values of utility. These results are inserted in the tree nodes used in the AI algorithm. 
+			In order to execute a bigger number of tests, it was decided to use more than one heuristic in the project. This allows to compare them and verify their performances. 
+			Before their explanation, it must be noticed that they are the result of a thorough study of specific famous human techniques in checkers. Each of them has a different strategy (example: striker, defensive...).<br>
+			All the developed functions have a common base that can be used to generate a base value for each node; this value is finished throuhg the application of different game techniques, as said before.
+			<h5>Function 1: <i>Standard</i></h5>
+			This heuristic is the common base function used by all the others.<br>
+
+			In this function each piece has value 1. Each king has an higher weight, between 1.4 and 3, according to the national chosen variant of the game.<br>
+		    The weight is higher for kings in order to increase their generation rate and meanwhile to preserve their existence.<br><br>
+			The base idea is to consider the number of the owned pieces and subctract the number of opponent's pieces, returning this result as value to the tree node.
+		    With this approach attack and defence are balanced offering good results. <br>
+			Heuristic's core:<br><br>
+
+
+		<pre><code class="java">
+	for(int i = 0; i <8; i++){
+            for(int j = 0; j < 8; j++){
+                if( board[i][j] != null && board[i][j].getOccupier() != null){
+
+                    Piece piece = board[i][j].getOccupier();
+                    if(piece.isKing()){
+
+                        if(piece.isWhite()){
+                            whiteKings += 1;
+                        }
+                        else{
+                            blackKings += 1;
+                        }
+                    }
+                    else{
+                        if(piece.isWhite()){
+                            white += 1;
+                        }
+                        else{
+                            black += 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(player.isWhite()){
+            return (white-black + Evaluation.KINGS_EVAL*(whiteKings-blackKings));
+        }
+        else{
+            //if black
+            return (black - white + Evaluation.KINGS_EVAL*(blackKings-whiteKings));
+        }
+
+		</code></pre>
+			As can be read, if the player has white pieces, the function returns the difference between white and black pieces (kings included). The opposite happened when the player is black. 
+		<br>
+			This heuristic is really balanced and can win against unbalanced heuristic with a mean of 48/70 (won matches/played matches).<br>
+			The function can be used alone, it doesn't require a refinement. 
+		</p>
+		<p>
+			<h5>Function 2: <i>Random</i></h5>
+			This evaluation function consists on a dumb heuristic. It assigns random values to the Minimax tree nodes. This is the only function, in the set, that isn't based to the function 1. To use a big number of random values, it was chosen to use values between 1 and 20. <br>
+		Heuristic's core: <br><br>
+
+		<pre><code class="java">
+			Random rand = new Random();
+			Integer randomNum = rand.nextInt((20 - 1) + 1) + 1;
+			return randomNum.floatValue();
+		</code></pre>
+
+			The function wins against the other heuristics 20% of the matches, with a mean of 14/70 won games. 
+		</p>
+		<p>
+		<h5>Function 3: <i>Centrality</i></h5>
+
+		This heuristic's main aim is to move pieces to the center of the board, trying to push the opponent's pieces to move towards the borders of the board.
+		There's also a penalty if the opponent has an higher number of pieces in the center of the board than the owned. 
+
+		Heuristic's core: <br><br>
+		<pre class="java"><code>
+		    float negative = 1;
+                    float positive = 1;
+                    if( Utils.isInCenter(i,j) ) {
+                        negative = 10;
+                        positive = 8;
+                    }
+                    else if(Utils.isInCenterRows(i)){
+                        negative = 8;
+                        positive = 6;
+                    }
+                    else if(Utils.isInCenterColumns(j)){
+                        negative = 6;
+                        positive = 4;
+                    }
+                    /* if piece is white and I want white */
+                    if (piece.isWhite() && player.isWhite()) {
+                        result += positive;
+                    }
+                    /* if piece is white and I want black */
+                    else if (piece.isWhite() && player.isBlack()) {
+                        result -= negative;
+                    }
+                    /* if piece is black and I want black */
+                    else if (piece.isBlack() && player.isBlack()) {
+                        result += positive;
+                    }
+                    /* if piece is black and I want white */
+                    else {
+                        result -= negative;
+                    }
+		</code></pre>
+
+		As can be noticed, this heuristic strongly tries to control the center of the board. It tries to block the enemy to push him on the borders, trapping him. 
+		This function prefers draws to victories: 21/70 won games. It is decent against offensive heuristics. It was used in various tests like for instance in the paper: <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">
+		Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>, because it appears really good.
+
+		<h5>Function 4: <i>Backrows</i></h5>
+		This function's aim is to leave occupied the king row, in order to avoid a generation of opponent's kings. It also promotes movements in the direction of the enemy king row, in order to stimulate the generation of owned kings. More specifically, an higher value is assigned if the movement is to the owned defence line or the enemy's one. Thanks to that it appears offensive and the same time defensive. <br>
+		Differently from function 3, it doesn't gives a weight to centrality because the first aim is to defend positions and to create new kings. <br>
+		A penalty is added if the enemy makes move that the heuristic considers good/useful to win the game.<br>
+		Heuristic's core:<br><br>
+
+		<pre class="java"><code>
+		    float negative = 0;
+                    float positive = 0;
+                    if( Utils.isInBackrow(i)) {
+                        negative = 10;
+                        positive = 8;
+                    }
+
+                    else if (Utils.isInMiddleBackrow(i)){
+                        negative = 8;
+                        positive = 6;
+                    }
+                    /* if piece is white and I want white */
+                    if (piece.isWhite() && player.isWhite()) {
+                        result += positive;
+                    }
+                    /* if piece is white and I want black */
+                    else if (piece.isWhite() && player.isBlack()) {
+
+                        result -= negative;
+                    }
+                    /* if piece is black and I want black */
+                    else if (piece.isBlack() && player.isBlack()) {
+
+                        result += positive;
+                    }
+                    /* if piece is black and I want white */
+                    else {
+
+                        result -= negative;
+                    }
+		</code></pre>
+
+		Tree nodes with an higher value are the ones with more pieces in the kings' rows.
+		This is the best studied function because of its being defensive and offensive at the same time. It wins 53 games on 70 against the other functions. 
+		It was used in various tests like for instance in the paper:  <a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers -
+		Department of Computing Science Of Alberta Univerisity</a>.
+
+		<h5>Function 5: <i>Complete</i></h5>
+		This heuristic's main aim is to evaluate different factors in order to make the best choice. Each type of move is considered in a different way:
+		<ul>
+			<li>Moving towards the center</li>
+			<li>Moving towards borders </li>
+			<li>Moving towards a king </li>
+		</ul>
+		Moving towards is promoted as said in the function 3: it's important to dominate the board and block the enemy. <br>
+		Movements towards borders are promoted: pieces on borders can't be captured. <br>
+		Being it a complete heuristic it also considers the nearness of a piece to a king, giving a penalty if they are near to them. This because kings are more dangerous than other pieces. <br><br>
+		This evaluation function is really defensive and obtaines good results: it wins 50% matches considering the official tests.<br>
+		Opponent's pieces, in this function, are considered marginally. The only aim is to finish the known heuristic. <br>
+		Heuristic's core:<br><br>
+		<pre class="java"><code>
+		     if (Utils.isInCenter(i, j)) {
+                        positive = 5;
+                        negative = 2;
+                    }
+                    if (Utils.isInEdge(j)) {
+                        positive = 2;
+                        negative = 1;
+                    }
+                    if(Utils.isNearKing(i, j, board, piece)){
+                        positve_king = -3;
+                        negative_king = 1;
+                    }
+                    /* if piece is white and I want white */
+                    if (piece.isWhite() && player.isWhite()) {
+                        result += positive;
+                        result += positve_king;
+                    }
+                    /* if piece is white and I want black */
+                    else if (piece.isWhite() && player.isBlack()) {
+                        result -= negative;
+                        result -= negative_king;
+                    }
+                    /* if piece is black and I want black */
+                    else if (piece.isBlack() && player.isBlack()) {
+                        result += positive;
+                        result += positve_king;
+                    }
+                    /* if piece is black and I want white */
+                    else {
+                        result -= negative;
+                        result -= negative_king;
+                    }
+		</code></pre>
+
+		The function is one of the best studied, winning a total of 35 games on 70.
+		It often brings to a draw in the other matches.<br> It was used in various tests like for instance in the paper: <a href="http://tigerprints.clemson.edu/cgi/viewcontent.cgi?article=1074&context=all_theses">Soar Checkers - An Intelligent Checkers Playing
+		- Jithu Menon - Clemson University</a>.
+
+		<h5> Function 6: <i>Offensive</i> </h5>
+		The main aim of this function is to attack. There's a bonus on the made actions if a piece is moved to the attack zone or if it will capture an opponent's piece. More clearly, if the number of pieces in this situation is higher, the heuristic value increased.<br><br>
+		The maximum value will be given if an owned piece is going to capture an opponent's one. <br><br>
+		This function doesn't consider the enemy's pieces state: it only push to move pieces forward, to capture the opponent ones.<br>
+
+		Heuristic's core:<br><br>
+
+		<pre class="java"><code>
+		      if (player.isWhite() && piece.isWhite()) {
+
+                        if(Utils.isInMiddleSide(i)){
+
+                            result += 2;
+                        }
+
+                        if(Utils.isInHighSide(i)){
+                            result += 5;
+                        }
+
+                        if(node.getMove().contains("capture")){
+
+                            result += 7;
+                        }
+
+
+                    } else if(player.isBlack() && piece.isBlack()) {
+
+                        if(Utils.isInMiddleSide(i)){
+
+                            result += 2;
+                        }
+
+                        if(Utils.isInLowerSide(i)){
+                            result += 5;
+                        }
+
+                        if(node.getMove().contains("capture")){
+
+                            result += 7;
+                        }
+                    }
+		</code></pre>
+
+		The heuristic is good and decent as striker. However, it only attacks not considering a defensive strategy. For this reason, it wins only 24 games on 70.<br>
+		This heuristic was taken from an assignment of the New York University: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
+		According to test results this function is valid against defensive heuristics, but it's ineffective against balanced, aggressive and basic functions.
+
+		<h5> Function 7: <i>Defensive</i> </h5>
+		
+		The aim of this function is to defend all its pieces.<br>
+An higher value is assigned to board states where there is a big number of pieces that are in a protected position.<br>
+	The more a piece is protected, the more the assigned value increases.<br>
+		A piece is protected if, thanks to pieces that are behind it, it can't be captured.<br><br> Obviously the defense is stronger if there is a pair of pieces instead of one that protect a considered piece. <br>
+		There's a penalty for states where pieces are moved near to the opponent's pieces;
+the penalty increases with the number of opponent's pieces near to the one considered.
+		Heuristic's core:<br><br>
+
+		<pre class="java"><code>
+		      if (player.isWhite() && piece.isWhite()) {
+
+                       if(Utils.isNearOneWhite(i,j,board)){
+
+                           result += 1;
+                       }
+                       else if(Utils.isNearMoreThanOneWhite(i,j,board)){
+
+                           result += 2;
+                       }
+                       else if(Utils.isNearOneOpponent(i,j,board,piece)){
+
+                           result -= 2;
+
+                       }
+                       else if(Utils.isNearMoreThanOneOpponent(i,j,board,piece)){
+                           result -= 3;
+                       }
+
+
+                    } else if(player.isBlack() && piece.isBlack()) {
+
+
+                        if(Utils.isNearOneBlack(i,j,board)){
+                            result += 1;
+                        }
+
+                        if(Utils.isNearMoreThanOneBlack(i,j,board)){
+                            result += 2;
+                        }
+                        else if(Utils.isNearOneOpponent(i,j,board,piece)){
+
+                            result -= 2;
+
+                        }
+                        else if(Utils.isNearMoreThanOneOpponent(i,j,board,piece)){
+                            result -= 3;
+                        }
+
+                    }
+		</code></pre>
+		It is a function with a strong defence and it wins 37 matches on 70.
+		This heuristic was taken from an assignment of the New York University: <a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2</a>
+
+		<h5>Function 8: <i>Kings Forcing</i></h5>
+		The main aim of the function is to push kings to the center of the board and to push them to capture.<br>
+		The function considers if a piece is moving towards the center, if it's going to attack, if it's going near to another piece/king or far from it and if it's moving toward a border.<br> Movements towards center and captures gives an higher value. Differently there's a penalty. 
+
+		This reinforcement function is used to avoid deadlocks in the final part of the game.<br>
+		The function is always activated after the 70th round. Indeed, after this rounds a deadlock is more probable because there are a few pieces that can be moved in every direction (kings).<br>
+		Heuristic's core:<br><br>
+
+		<pre class="java"><code>
+		      if(piece.isKing()) {
+
+
+                        if (Utils.isNearMoreThanOneOpponent(i,j,board,piece)) {
+
+                            result += 5;
+                        }
+
+                        if (Utils.isNearOneOpponent(i,j,board,piece)) {
+
+                            result += 7;
+                        }
+
+                        if (Utils.isInCenter(i, j)) {
+
+                            result += 7;
+                        }
+
+                        if(node.getMove().contains("capture")){
+
+                            result += 15;
+                        }
+
+                        if (Utils.isInEdge(j)) {
+
+                            result -= 4;
+                        }
+
+                        if (Utils.isInBackrowByColor(i, piece)) {
+
+                            result -= 7;
+                        }
+
+                        if (Utils.isInAngle(i, j)) {
+
+                            result -= 10;
+                        }
+                    }
+                    else{
+                        if(node.getMove().contains("capture")){
+
+                            result += 10;
+                        }
+                    }
+		</code></pre>
+		The function prefers the kings movement and their attack; also, it promotes, with a bonus value, the kings generation. 
+		</p>
+
+		<h4 id="ottimizzazione">
+			3.4 Optimization
+		</h4>
+		<p>
+			During the project development was noticed a huge complexity of the program, considering the memory complexity. The Minimax algorithm, indeed, requires a huge quantity of memory for a number of plies higher than 6. <br>
+			The algorithm has the same problem of depth and breadth searches: they use a massive quantity of memory.<br><br>
+			The problem can be solved in various ways:
+			<ul>
+				<li>Quiescence search</li>
+				<li>Memoization</li>
+			</ul>
+
+		Quiescence search allows to cut the tree when evaluation function values don't vary a lot in near nodes. The value oscillates in a certain range decided in advance. This technique is very used and reduces drastically memory complexity. However, it wasn't used for an incompatibility of the Minimax tree algorithm with the present optimization.<br>
+
+		Memoization is an optimization based on a hashtable creation. In this table all nodes are stored. In this way, if a node has already been generated and it's present in the table, it doesn't have (it mustn't!) be recreated. Thanks to this optimization, less memory is used. 
+the hashing unique key is composed by the hash of the following elements:
+		<ul>
+			<li>piece name</li>
+			<li>move</li>
+			<li>father</li>
+			<li>depth</li>
+			<li>player</li>
+			<li>state</li>
+		</ul>
+
+		Each key corresponds to a single key.<br>
+		The specific code is the following:<br><br>
+
+		<pre class="java"><code>
+	Integer hash = Objects.hash(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
+        if(MiniMaxTree.cache.containsKey(hash)){
+            tmp =  MiniMaxTree.cache.get(hash);
+        }else{
+            tmp = new Node(piece.getName() +" "+ move, father, depth, copyOfPlayer, copyOfBoard);
+        }
+		</code></pre>
+
+		This optimization brings a considerable advantage. With a persistent cache like cache Redis or Memcache, would surely have increased  because it would have been like having a database.<br><br>
+		Another important consideration is related to the addition of a youth factor in order to remove elder nodes that quite surely won't be used again.<br><br>
+		Another implementation was made to the evaluation function 1 and its duplication.<br>
+		More precisely the main problem is related to cycles that examine the board state.Duplication let avoid a double execution of for cycles, optymizing performances. <br><br>
+		</p>
+		<a href="#menu">
+			Return to index
+		</a>
+		<hr>
+	</section> 
+	<section id="test">
+		<h3>
+			4. Tests
+		</h3>
+		<p>
+			Three types of tests were made. The first one consisted on the measurement of the time required to the AI to make a move using the pruning algorithm on its tree or avoiding it. The comparing of these times offers interesting results. The other tests consisted on the execution of a huge number of matches between AI and human players in order to establish if the produced algorithms were good and how much good they were compared to human minds.
+		</p>
+		<h4 id="tempi">
+			4.1 Mean times of execution
+		</h4>
+		<p>
+		As said in the preceding section, the first test task was to evaluate the impact of pruning on the algorithm performances. Precisely, to verify if it reduces the computational complexity. A series of tests were made to accomplish this aim, keeping as costant the heuristic of the AI taken as subject on this study.
+		For each different depth of the tree, 20 matches were made: in 10 of them the AI used pruning, while in the other 10 it didn't use it. Times required for each round were recorded for each move in the game and mean was calculated for each different depth.  
+Results are shown in the following table: 
+		</p>
+		<table class="table">
+			<caption>
+				Mean time of execution for each move, in milliseconds, at different depths
+			</caption>
+			<tr>
+				<th>
+					Depth
+				</th>
+				<th>
+					with Pruning (ms)
+				</th>
+				<th>
+					without Pruning (ms)
+				</th>
+            </tr>
+			<tr>
+				<td>
+					2
+				</td>
+				<td>
+					1,11
+				</td>
+				<td>
+					1,52
+				</td>
+			</tr>
+			<tr>
+				<td>
+					3
+				</td>
+				<td>
+					4,80
+				</td>
+				<td>
+					4,90
+				</td>
+			</tr>
+			<tr>
+				<td>
+					4
+				</td>
+				<td>
+					11,34
+				</td>
+				<td>
+					11,83
+				</td>
+			</tr>
+			<tr>
+				<td>
+					5
+				</td>
+				<td>
+					35,32
+				</td>
+				<td>
+					28,85
+				</td>
+			</tr>
+			<tr>
+				<td>
+					6
+				</td>
+				<td>
+					152,56
+				</td>
+				<td>
+					120,66
+				</td>
+			</tr>
+			<tr>
+				<td>
+					7
+				</td>
+				<td>
+					1461,85
+				</td>
+				<td>
+					1034,85
+				</td>
+			</tr>
+			<tr>
+				<td>
+					8
+				</td>
+				<td>
+					4892,64
+				</td>
+				<td>
+					3386,58
+				</td>
+			</tr>
+		</table>  
+		<h4 id="partite">
+			4.2 Matches between players of different levels
+		</h4>
+		<p> 
+			The aim of the second test was to measure the quality level of the different AI, making matches between all the possible pairs of them. Each of them used a minimax tree depth of 7. For each pair of AI, more than one game was executed in order to record a percentage of won game on the total. The following table must be read as follows: the content of a cell is the number of won game (in percentage) of the column player against the row one. 
+		</p>
+		<table class="table">
+			<caption>
+				Number of matches, % won games
+			</caption>
+			<tr>
+				<th>
+					VS (num. of won games / num. of games)
+				</th>
+				<th>
+					1-Standard
+				</th>
+				<th>
+					2-Random
+				</th>				
+				<th>
+					3-Centrality
+				</th>
+				<th>
+					4-Backrows
+				</th>
+				<th>
+					5-Complete
+				</th>				
+				<th>
+					6-Offensive
+				</th>
+				<th>
+					7-Defensive
+				</th>
+			<tr>
+				<td>
+					1-Standard
+				</td> 
+				<td>
+					100%
+				</td>
+				<td>
+					20%
+				</td>
+				<td>
+					0%
+				</td>
+				<td>
+					50%
+				</td>  
+				<td>
+					100%
+				</td>
+				<td>
+					0%
+				</td>
+				<td>
+					0%
+				</td>
+			</tr> 
+			<tr>
+				<td>
+					2-Random
+				</td>
+				<td>
+					80%
+				</td>
+				<td>
+					40%
+				</td>
+				<td>
+					60%
+				</td>
+				<td>
+					40%
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					40%
+				</td>
+				<td>
+					20%
+				</td>
+			</tr> 
+			<tr>
+				<td>
+					3-Centrality
+				</td>
+				<td>
+					100%
+				</td>
+				<td>
+					20%
+				</td>
+				<td>
+					100%
+				</td>
+				<td>
+					100%
+				</td>
+				<td>
+					pari
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					pari
+				</td>
+			</tr> 
+			<tr>
+				<td>
+					4-Backrows
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					0%
+				</td>
+				<td>
+					0%
+				</td>
+				<td>
+					100%
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					100%
+				</td>
+			</tr> 
+			<tr>
+				<td>
+					5-Complete
+				</td>
+				<td>
+					0%
+				</td>
+				<td>
+					20%
+				</td>
+				<td>
+					pari
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					100%
+				</td>
+				<td>
+					pari
+				</td>
+				<td>
+					50%
+				</td>
+			</tr> 
+			<tr>
+				<td>
+					6-Offensive
+				</td>
+				<td>
+					100%
+				</td>
+				<td>
+					20%
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					pari
+				</td>
+				<td>
+					100%
+				</td>
+				<td>
+					100%
+				</td>
+			</tr> 
+			<tr>
+				<td>
+					7-Defensive
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					20%
+				</td>
+				<td>
+					pari
+				</td>
+				<td>
+					0%
+				</td>
+				<td>
+					50%
+				</td>
+				<td>
+					0%
+				</td>
+				<td>
+					100%
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Media vittorie:
+				</td>
+				<td>
+					48/70
+				</td>
+				<td>
+					14/70
+				</td>
+				<td>
+					21/70
+				</td>
+				<td>
+					53/70
+				</td>
+				<td>
+					35/70
+				</td>
+				<td>
+					24/70
+				</td>
+				<td>
+					37/70
+				</td>
+			</tr>
+		</table>
+        <h4 id="human">
+            4.3 Matches between humans and AI players
+        </h4>
+		<p>
+			The third test's aim is to verify the quality level of the evaluation functions applied in the matches against human players. 
+			3 human players of 3 different levels were chosen:
+			<ul>
+				<li>
+					1 amateur player, without a strategy: he tries to avoid captures of his pieces, and sometimes makes errors;
+				</li>
+				<li>
+					1 expert player, defensive : it tries to avoid captures of his pieces and creation of opponent's kings; 
+				</li>
+				<li>
+					1 Expert player striker and strategic: he provides baits to receive a successive reward eating more pieces than the opponent or making kings.
+				</li>
+			</ul>
+			Each human gamer played against every AI. Each AI is different from the other base on the evaluation function that it uses. All the AI gamers use a minimax tree depth of 6. 
+			All the matches were won by human players. It will be discussed why in the Conclusions section. For each match, round durations was recorded. 
+		</p>
+        <table class="table">
+            <caption>
+                Percentage of winned games on matches between humans and AI players.
+            </caption>
+            <tr>
+                <th>
+                    Heuristics:
+                </th>
+                <th>
+					1-Standard
+                </th>
+                <th>
+                    2-Random
+                </th>
+                <th>
+                    3-Centrality
+                </th>
+                <th>
+                    4-Backrows
+                </th>
+                <th>
+                    5-Complete
+                </th>
+                <th>
+                    6-Offensive
+                </th>
+                <th>
+                    7-Defensive
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    Amateur player
+                </td>
+                <td>
+					87
+                </td>
+                <td>
+					34
+                </td>
+                <td>
+					41
+                </td>
+                <td>
+					92
+                </td>
+                <td>
+					58
+                </td>
+                <td>
+					42
+                </td>
+				<td>
+					91
+				</td>
+            </tr>
+			<tr>
+				<td>
+					Expert player (defensive-backrows)
+				</td>
+				<td>
+					92
+				</td>
+				<td>
+					33
+				</td>
+				<td>
+					50
+				</td>
+				<td>
+					74
+				</td>
+				<td>
+					75
+				</td>
+				<td>
+					39
+				</td>
+				<td>
+					96
+				</td>
+			</tr>
+            <tr>
+                <td>
+                    Expert player (striker-strategic)
+                </td>
+                <td>
+					42
+                </td>
+                <td>
+					42
+                </td>
+                <td>
+					38
+                </td>
+                <td>
+					88
+                </td>
+                <td>
+					62
+                </td>
+                <td>
+					53
+                </td>
+				<td>
+					48
+				</td>
+            </tr>
+            <tr>
+                <td>
+					Mean:
+                </td>
+                <td>
+					74
+                </td>
+                <td>
+					36
+                </td>
+                <td>
+					43
+                </td>
+                <td>
+					85
+                </td>
+                <td>
+					65
+                </td>
+                <td>
+					45
+                </td>
+				<td>
+					78
+				</td>
+            </tr>
+        </table>
+		<a href="#menu">
+			Return to index
+		</a>
+		<hr>
+	</section> 	
+	<section id="conclusioni">
+		<h3>
+			5. Conclusions
+		</h3>
+		<p>
+		</p>
+		<h4 id="considerazioniEuristiche">
+		5.1 Considerations on the evaluation functions
+	</h4>
+	<p>
+		All the implemented evaluation functions derive from some real-world game techniques. Also, they are studied by experts to produce performant AIs.
+		Usually these AIs are used together to obtain the best result.
+	</p>
+	<p>
+		It's really interesting to observe that the evaluation function 2, <i>Randomize</i>, gests unexpected results. As defined, the heuristic makes random moves, so it shouldn't win lots of matches. From the executed tests, it can be noted that it won the 20% of matches. In some cases it managed to end the game with a draw.
+	</p>
+	<p>
+		Another interesting consideration is related to the evaluation function 8. After the 70° round, it is activated and it substitutes the other evaluation function (for each type of eval. function). This heuristic's aim is to make the game end. It's a heuristic weak, because it often doesn't consider as penalty the loss of a piece, that is REALLY important in the final phases of the game. It tries to move pieces to center, trying to block the other player on the board borders. The heuristic wasn't considered as good as the others that were used. 
+	</p>
+	<p>
+		The last consideration is realted to the calibration of used values in the evaluation functions. In matches between evaluation functions and human players, especially heuristics 6 and 7, make moves that a human player would have consider reckless.
+		These exceptional events can be seen primely when the opponent has a king or when both players have a few pieces. Maybe, a different calibration could bring to best heuristics, giving a higher weight to the presence of kings on the board.
+	</p>
+	<h4 id="conlusioniTest">
+		5.2 Tests results
+	</h4>
+	<p>
+		As can be read on the first test, when the number of plies (tree depth) is less or equal to 4, the computational complexity decreases: less time is spent in doing moves where pruning is used. This doesn't happen for higher depths; also, it increases the time complexity. This can be explained considering the algorithm flux. First of all the minimax tree with all the nodes is created. Then values are put, using evaluation functions, to some nodes. Only after the whole tree creation, clearly on the backtracking part of the program, pruning is applied. Thus, the benefit obtained by its application isn't enought to counteract the complexity required to build the whole tree, because it is always entirely built. Also, applying pruning there are more operations to do during backtracking. 
+		So, the application of pruning didn't sort a good effect on performance because of the structure of the algorithm that builds the Minimax tree. 
+	</p>
+	<p>
+		The second test offers a series of interesting results. The evaluation functions that offer more performant results, winning a bigger number of matches than the other, are the 4th (backrows) and the 1st one. Boths aren't oriented to defence or attack: their strategy is based on diferent choice that are considered good by human player. One of these (4) is to block the bottom row, in order to avoid the creation of opponent's kings. In addition, thanks to this strategy, 4 pieces of the other player will be eaten for sure. The first function assigns scores according to the number of captured pieces, trying to avoid loss of pieces.
+		This is a good heuristic. Indeed, it won against all the other evaluation functions with a depth equal to 6. It didn't happen for a higher depth. Thus, it's clear that some of the heuristics work better with a higher depth.
+	</p>
+	<p>
+		The last test has shown the weakness of these algorithms for small depth values (for instance 6). With this value algorithms can't compete with human players.
+		No function was able to win against human. However, there's an important consideration to be done. In some matches, during the final rounds, AI player has more pieces than the human player. In these cases a human player in the condition of the AI one would win. However, the AI loses. This happens because of the function used in the last part of the game: the 8th function. It isn't, as said before, a good heuristic. Its aim is to avoid deadlocks. Often, the function tries to avoid this situation losing pieces: a really incorrect choice. Thus, the main problem is binded to the used function.
+		Now, considering all the matches, it's known that all of them were lost by AI players. For a while, let's assume that all of them tried to compete against a perfect and unfailing player. Now, with this absumption, it's trivially true that an AI player would lost. So, how can we measure the quality of the player? A good metric could be to count the number of rounds that it resists to the optimal player. The result of this test shows that AI players that resist more are the same that won an higher number of matches: 1 and 4. 
+
+	</p>
+	<a href="#menu">
+		Return to index
+	</a>
+	<hr>
+	</section>
+	<section id="fonti">
+		<h3>
+			Appendix A: sources
+		</h3>
+		<p>
+			<ul>
+				<li>
+					Slides about AI on games of professor A. Sperduti:
+					<a href="http://www.math.unipd.it/~sperduti/AI15/giochi.pdf">
+						http://www.math.unipd.it/~sperduti/AI15/giochi.pdf
+					</a>
+				</li>
+				<li>
+					Book:
+					<a href="http://aima.cs.berkeley.edu/index.html">
+						S. Russell & P. Norvig, "Artificial Intelligence: A Modern Approach", Prentice Hall, terza edizione, 2010
+					</a>
+				</li>
+				<li>
+					Starting point for Checkers implementation:
+					<a href="https://github.com/khaledalissa/simple-checkers">
+					https://github.com/khaledalissa/simple-checkers
+					</a>
+
+				</li>
+				<li>
+					Centrality heuristic
+					<a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>
+				</li>
+				<li>
+					Backrows heuristic
+					<a href="https://webdocs.cs.ualberta.ca/~jonathan/PREVIOUS/Papers/Papers/olympiad.ps">Reviving the game of checkers - Department of Computing Science Of Alberta Univerisity</a>
+				</li>
+				<li>
+					Offensive heuristic
+					<a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2 - New York University</a>
+				</li>
+				<li>
+					Defensive heuristic
+					<a href="http://cs.nyu.edu/courses/spring12/CSCI-UA.0472-001/checkers2.pdf">Checkers 2 - New York University</a>
+				</li>
+				<li>
+					Complete heuristic and useful sources for AI algorithm implementation
+					<a href="http://tigerprints.clemson.edu/cgi/viewcontent.cgi?article=1074&context=all_theses">Soar Checkers - An Intelligent Checkers Playing - Jithu Menon - Clemson University</a>.
+				</li>
+				<li>
+					Study of possible heuristics and job methodologies on games
+					<a href="ggp.stanford.edu/readings/cluneplayer.pdf">Heuristic Evaluation Functions for General Game Playing - James Clune - UCLA University</a>
+				</li>
+			</ul>
+		</p>
+		<a href="#menu">
+			Return to index
+		</a>
+		<hr>
+	</section>
+	</main>
+	</body>
+</html>
